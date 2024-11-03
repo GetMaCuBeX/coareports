@@ -23,6 +23,8 @@ class Jb_coa extends CI_Controller {
     private $mp_school_ppe_annex_c_division = 'jb/coa/mediaprint/annex/school_ppe_annex_c_division';
     //
     private $fcreate_ppe_list = 'jb/coa/form/create/ppe_list';
+    //
+    private $test_page = 'jb/coa/page/test';
 
     public function __construct() {
         parent::__construct();
@@ -252,7 +254,8 @@ class Jb_coa extends CI_Controller {
             $this->load->view($this->partials . 'sidebar', $this->values);
             $this->load->view($this->fcreate_ppe_list);
             $this->load->view($this->partials . 'footer', $this->values);
-        } else {  
+        } else {
+            
         }
     }
 
@@ -265,12 +268,9 @@ class Jb_coa extends CI_Controller {
         if (isset($_SESSION['username']) && isset($_SESSION['position'])) {
 // ADMIN
             if ($_SESSION['position'] == 'ADMIN') {
-                $count = $this->jb_emailrequest_M->_count_all_request_isdone_false();
-                $this->values["REQUEST_COUNT_ISDONE_FALSE"] = $count;
 // REGULAR USER
             } else {
-                $count = $this->jb_emailrequest_M->_count_request_isdone_false($_SESSION['username']);
-                $this->values["REQUEST_COUNT_ISDONE_FALSE"] = $count;
+                
             }
         } else {
             return false;
@@ -308,12 +308,24 @@ class Jb_coa extends CI_Controller {
 // TEST
 // ------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------
+    public function test() {
+        $rs['rs'] = $this->jb_ppe_list_M->get_object_list_of_group();
+        $this->object_print_r($rs);
+    }
+
+    public function object_print_r($rs) {
+        $this->load->view($this->partials . 'header', $this->values);
+        $this->load->view($this->partials . 'topbar', $this->values);
+        $this->load->view($this->partials . 'sidebar', $this->values);
+        $this->load->view($this->test_page, $rs);
+        $this->load->view($this->partials . 'footer', $this->values);
+    }
+
 // ------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------
 // HANDLE ERROR
 // ------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------
-
     private function handleError($message) {
 // Log the error for debugging (not shown to the user)
         log_message('error', $message);

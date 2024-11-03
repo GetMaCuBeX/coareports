@@ -4,13 +4,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class jb_ppe_school_M extends CI_Model {
 
+    // DEFAULT CONSTRUCTOR
     public function __construct() {
         parent::__construct(); // DEFAULT CONSTRUCTOR
         // $this->db_1 = $this->load->database($this->db_1, TRUE); // INITIALIZE NEW DATABASE, LOAD DATABASE
         // $this->db_2 = $this->load->database($this->db_2, TRUE); // INITIALIZE NEW DATABASE, LOAD DATABASE
     }
 
-    //
     // NOT USED
     public function mp_school_ppe_annex_b_by_division($division_id) {
         $sql = " 
@@ -91,8 +91,7 @@ WHERE
         return $rs;
     }
 
-    //
- 
+    // 
     public function ftbl_schools_annex_a() {
 
         $sql = "  
@@ -324,7 +323,6 @@ WHERE
     }
 
     //
-
     public function ftbl_schools_annex_b() {
         $sql = "
 WITH SchoolTotals AS (
@@ -853,4 +851,6 @@ WHERE
 
         return $rs;
     }
+    
+
 }

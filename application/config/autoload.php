@@ -132,9 +132,7 @@ $autoload['language'] = array();
   |
   |	$autoload['model'] = array('first_model' => 'first');
  */
-$autoload['model'] = array(
-    'jb_dashboard_M',
-    'jb_emailrequest_M',
+$autoload['model'] = array( 
     'jb_ppe_list_M',
     'jb_ppe_school_M'
 );
