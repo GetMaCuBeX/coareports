@@ -52,4 +52,20 @@ FROM
     public function get_id_by_group_article_name() {
         
     }
+
+// ------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------
+// DROPDOWN MENU - RELATIONSHIPS
+// ------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------ 
+    // Get groups from jb_coa_ppe_group
+    public function get_groups() {
+        return $this->db->get('jb_coa_ppe_group')->result(); // Fetch all groups
+    }
+
+    // Get articles based on selected group from jb_coa_ppe_group_article
+    public function get_articles($groupId) {
+        $this->db->where('group_id', $groupId); // Assuming 'group_id' is the foreign key in jb_coa_ppe_group_article
+        return $this->db->get('jb_coa_ppe_group_article')->result(); // Fetch articles
+    }
 }

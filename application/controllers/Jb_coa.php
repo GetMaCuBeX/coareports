@@ -42,21 +42,28 @@ class Jb_coa extends CI_Controller {
 
     public function index() {
 
-        if ($this->_IS_IN_SESSION_schID()) { // CHECK IF SESSION LOGIN
-            $this->values["PAGE"] = "DASHBOARD";
-            $this->_set_values();
-            $this->load->view($this->partials . 'header', $this->values);
-            $this->load->view($this->partials . 'topbar', $this->values);
-            $this->load->view($this->partials . 'sidebar', $this->values);
-            if ($this->_IS_AN_ADMIN_schID()) { // ADMIN USER
-                $this->load->view($this->p_ppe_admin);
-            } else { // REGULAR USER
-                $this->load->view($this->p_ppe);
-            }
-            $this->load->view($this->partials . 'footer', $this->values);
-        } else {
-            
-        }
+//        if ($this->_IS_IN_SESSION_schID()) { // CHECK IF SESSION LOGIN
+//            $this->values["PAGE"] = "DASHBOARD";
+//            $this->_set_values();
+//            $this->load->view($this->partials . 'header', $this->values);
+//            $this->load->view($this->partials . 'topbar', $this->values);
+//            $this->load->view($this->partials . 'sidebar', $this->values);
+//            if ($this->_IS_AN_ADMIN_schID()) { // ADMIN USER
+//                $this->load->view($this->p_ppe_admin);
+//            } else { // REGULAR USER
+//                $this->load->view($this->p_ppe);
+//            }
+//            $this->load->view($this->partials . 'footer', $this->values);
+//        } else {
+//            
+//        }
+
+        $data['groups'] = $this->jb_ppe_list_M->get_groups(); // Get groups for the first dropdown 
+        $this->load->view($this->partials . 'header', $this->values);
+        $this->load->view($this->partials . 'topbar', $this->values);
+        $this->load->view($this->partials . 'sidebar', $this->values);
+        $this->load->view($this->test_page, $data); // Load the view
+        $this->load->view($this->partials . 'footer', $this->values);
     }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -305,24 +312,6 @@ class Jb_coa extends CI_Controller {
 
 // ------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------
-// TEST
-// ------------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------------------
-    public function test() {
-        $rs['rs'] = $this->jb_ppe_list_M->get_object_list_of_group();
-        $this->object_print_r($rs);
-    }
-
-    public function object_print_r($rs) {
-        $this->load->view($this->partials . 'header', $this->values);
-        $this->load->view($this->partials . 'topbar', $this->values);
-        $this->load->view($this->partials . 'sidebar', $this->values);
-        $this->load->view($this->test_page, $rs);
-        $this->load->view($this->partials . 'footer', $this->values);
-    }
-
-// ------------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------------------
 // HANDLE ERROR
 // ------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------
@@ -336,5 +325,48 @@ class Jb_coa extends CI_Controller {
 
 // Or show a generic error message
 // $this->load->view('error_view', ['message' => 'An error occurred.']);
+    }
+
+// ------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------
+// TEST
+// ------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------
+    public function test() {
+        redirect($this->index());
+    }
+
+    public function get_articles() {
+        $groupId = $this->input->get('id'); // Get the selected group ID
+        $articles = $this->jb_ppe_list_M->get_articles($groupId); // Get articles for the selected group
+        echo json_encode($articles); // Return as JSON
+    }
+
+    public function get_items() {
+        $articleId = $this->input->get('id'); // Get the selected article ID
+        $items = $this->jb_ppe_list_M->get_items($articleId); // Get items for the selected article
+        echo json_encode($items); // Return as JSON
+    }
+
+    public function save_ppe_list() {
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            // Get the selected values from the form
+            $groupId = $this->input->post('group', true);     // XSS Filtering
+            $articleId = $this->input->post('article', true); // XSS Filtering
+            echo $groupId;
+            echo '<br>';
+            echo $articleId;
+            
+            
+            // Validate the inputs
+            if (!empty($groupId) && !empty($articleId)) { 
+                
+            } else { 
+                
+            }
+        } else {
+            // If not a POST request, redirect or show an error
+            show_error('Invalid request method', 405); // 405 Method Not Allowed
+        }
     }
 }

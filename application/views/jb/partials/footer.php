@@ -62,7 +62,7 @@
 <script src="<?= base_url(); ?>assets/js/app.min.js"></script>
 <!-- Plugins js -->
 <script src="<?= base_url(); ?>assets/libs/moment/moment.min.js"></script>
- 
+
 
 <!-- SweetAlert2 script -->
 <script src="<?= base_url(); ?>assets/js/pages/sweetalert2@11.js"></script>
@@ -157,7 +157,11 @@
 
 <!-- TABLE EXPORT TO EXCEL --> 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script> 
- 
+
+
+<!--AJAX COMBOX BOX AUTO SELECT FOREIGN KEY VALUES BASE ON SELECTED PRIMARY KEY VALUE-->
+<!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+
 
 </body>
 
