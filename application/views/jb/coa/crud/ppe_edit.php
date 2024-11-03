@@ -28,27 +28,28 @@
     <button type="submit">Update Selection</button>
 </form>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script>
-            $(document).ready(function () {
-                // When a group is selected
-                $('#group').change(function () {
-                    var groupId = $(this).val();
-                    $('#article').empty().append('<option value="">Select</option>');
 
-                    if (groupId) {
-                        $.ajax({
-                            url: '<?= base_url('jb_coa/get_articles'); ?>', // Endpoint for fetching articles
-                            type: 'GET',
-                            data: {id: groupId},
-                            success: function (data) {
-                                var articles = JSON.parse(data);
-                                articles.forEach(function (item) {
-                                    $('#article').append('<option value="' + item.id + '">' + item.name + '</option>');
-                                });
-                            }
+<script src="<?= base_url(); ?>assets/js/jb/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // When a group is selected
+        $('#group').change(function () {
+            var groupId = $(this).val();
+            $('#article').empty().append('<option value="">Select</option>');
+
+            if (groupId) {
+                $.ajax({
+                    url: '<?= base_url('jb_coa/get_articles'); ?>', // Endpoint for fetching articles
+                    type: 'GET',
+                    data: {id: groupId},
+                    success: function (data) {
+                        var articles = JSON.parse(data);
+                        articles.forEach(function (item) {
+                            $('#article').append('<option value="' + item.id + '">' + item.name + '</option>');
                         });
                     }
                 });
-            });
-        </script>
+            }
+        });
+    });
+</script>

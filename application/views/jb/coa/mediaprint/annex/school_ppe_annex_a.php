@@ -154,7 +154,7 @@
                             </tr>
                         <?php } ?>
 
-                            
+
                         <!--GROUP NAME-->
                         <?php if ($row->_R2 == 1) { ?>
                             <tr>
@@ -162,7 +162,7 @@
                             </tr>
                         <?php } ?>
 
-                            
+
                         <!--TABLE BODY-->
                         <tbody>
                             <!--VALUES-->
@@ -176,7 +176,24 @@
                                 <td style="text-align: center;"><?= ($row->quantity_per_property_card) ?></td>
                                 <td style="text-align: center;"><?= ($row->quantity_per_physical_count) ?></td>
                                 <td style="text-align: right; <?= ($row->is_existing == 0) ? ' color: red;' : ''; ?>"><?= ($row->total_value) ?></td>
-                                <td style="text-align: center;"><?= ($row->date_acquired) ?></td>
+                                <td style="text-align: center;">
+                                   <?php 
+    $dateAcquired = $row->date_acquired; // Assuming this is coming from your data source
+
+    // Check if date is null
+    if (!is_null($dateAcquired)) {
+        $date = new DateTime($dateAcquired);
+
+        // Check if the month is January and the day is 1
+        if ($date->format('m') === '01' && $date->format('d') === '01') {
+            echo $date->format('Y'); // Display year only
+        } else {
+            echo $date->format('Y-m-d'); // Display full date or any other format you prefer
+        }
+    }
+    ?>
+
+                                </td>
                                 <td><?= ($row->condition_name) ?></td>
                                 <td class="maxwidth-remarks"><?= ($row->remarks) ?></td> 
                             </tr>

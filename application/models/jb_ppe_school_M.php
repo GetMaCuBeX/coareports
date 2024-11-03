@@ -620,7 +620,7 @@ ORDER BY
 
         return $rs;
     }
-    
+
     public function ftbl_schools_annex_c() {
         $sql = "
 WITH SchoolTotals AS (
@@ -851,6 +851,80 @@ WHERE
 
         return $rs;
     }
-    
 
+    // FOR DISPLAY
+    public function get_all_records_by_school_id($school_idnumber) {
+        $sql = " 
+SELECT
+	jb_coa_ppe_list.id,
+	jb_district.`name` as `DISTRICT`,    
+	jb_school.school_idnumber as `SCHOOLID`, 
+	jb_school.`name` as `SCHOOLNAME`, 
+  #ROW_NUMBER() OVER (PARTITION BY jb_school.school_idnumber) AS `_R2`,
+	IF(ROW_NUMBER() OVER (PARTITION BY jb_district.`name`,jb_school.`name`)=1,
+	CONCAT(jb_school.`name`,' - ',
+	FORMAT(SUM(jb_coa_ppe_list.total_value) OVER (PARTITION BY jb_district.`name`,jb_school.`name`),2)
+	),
+	NULL) as `SCH NAME`, 
+	
+	COUNT(*) OVER (PARTITION BY jb_district.`name`, jb_school.name ) AS `_R4`,
+  ROW_NUMBER() OVER (PARTITION BY 	jb_district.`name`,jb_school.`name`) AS `_R1`,
+	
+	
+	FORMAT(SUM(jb_coa_ppe_list.total_value) OVER (PARTITION BY jb_district.`name`,jb_school.`name`),2) AS `GRAND_TOTAL`,
+	FORMAT(SUM(jb_coa_ppe_list.total_value) OVER (PARTITION BY jb_district.`name`,jb_school.`name`,jb_coa_ppe_group.id),2) as `SUM_PER_GROUP`,
+	
+  ROW_NUMBER() OVER (PARTITION BY 	jb_district.`name`,jb_school.name,	jb_coa_ppe_group.id) AS `_R2`,
+	COUNT(*) OVER (PARTITION BY jb_district.`name`, jb_school.name, jb_coa_ppe_group.id) AS `_R3`,
+	
+	IF(ROW_NUMBER() OVER (PARTITION BY jb_district.`name`,jb_school.`name`,jb_coa_ppe_group.id)=1,
+	CONCAT(jb_coa_ppe_group.`name`,' [',
+	COUNT(*) OVER (PARTITION BY jb_district.`name`, jb_school.name, jb_coa_ppe_group.id),'] - ',
+	FORMAT(SUM(jb_coa_ppe_list.total_value) OVER (PARTITION BY jb_district.`name`,jb_school.`name`,jb_coa_ppe_group.id),2)
+	),
+	null) as `_GROUPCONCAT`, 
+	jb_coa_ppe_group.`name` AS GROUP_NAME,
+  #ROW_NUMBER() OVER (PARTITION BY jb_coa_ppe_group.`name`) AS `_R3`,
+	jb_coa_ppe_group_article.`name` as `ARTICLE`, 
+	jb_coa_ppe_list.description as `DESCRIPTION`, 
+	jb_coa_ppe_list.person_accountable as `PERSON_ACCOUNTABLE`,
+	jb_coa_ppe_list.old_property_no_assigned, 
+	jb_coa_ppe_list.new_property_no_assigned, 
+	jb_coa_ppe_list.article_id as `ARTICLE_ID`, 
+	jb_coa_ppe_list.unit_of_measure, 
+	FORMAT(jb_coa_ppe_list.unit_value,2) as unit_value, 
+	jb_coa_ppe_list.quantity_per_property_card, 
+	jb_coa_ppe_list.quantity_per_physical_count, 
+	FORMAT(jb_coa_ppe_list.total_value,2) as total_value, 
+	jb_coa_ppe_list.date_acquired, 
+	jb_coa_ppe_list.localtion_whereabouts, 
+	jb_coa_ppe_list.condition_name, 
+	jb_coa_ppe_list.remarks, 
+	jb_coa_ppe_list.is_existing
+FROM
+	jb_coa_ppe_list
+	INNER JOIN
+	jb_coa_ppe_group_article
+	ON 
+		jb_coa_ppe_list.article_id = jb_coa_ppe_group_article.id
+	INNER JOIN
+	jb_coa_ppe_group
+	ON 
+		jb_coa_ppe_group_article.group_id = jb_coa_ppe_group.id
+	INNER JOIN
+	jb_district
+	INNER JOIN
+	jb_school
+	ON 
+		jb_district.district_id = jb_school.district_id AND
+		jb_coa_ppe_list.school_idnumber = jb_school.school_idnumber
+WHERE
+	jb_school.school_idnumber = " . $school_idnumber . "
+        ";
+
+        $query = $this->db->query($sql);
+        $rs = $query->result();
+
+        return $rs;
+    }
 }

@@ -2,8 +2,8 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Dependent Dropdowns</title> 
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <title>Dependent Dropdowns</title>  
+        <script src="<?= base_url(); ?>assets/js/jb/jquery-3.6.0.min.js"></script>
     </head>
     <body>
 

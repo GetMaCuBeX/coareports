@@ -17,12 +17,12 @@ class Jb_coa extends CI_Controller {
 //
     private $ftbl_annex_c = 'jb/coa/form/table/annex_c';
     private $mp_school_ppe_annex_c = 'jb/coa/mediaprint/annex/school_ppe_annex_c';
-//
+//    
+    private $ftbl_school_ppe_list = 'jb/coa/form/table/school_ppe_list';
+    //
     private $mp_school_ppe_annex_a_division = 'jb/coa/mediaprint/annex/school_ppe_annex_a_division';
     private $mp_school_ppe_annex_b_division = 'jb/coa/mediaprint/annex/school_ppe_annex_b_division';
     private $mp_school_ppe_annex_c_division = 'jb/coa/mediaprint/annex/school_ppe_annex_c_division';
-    //
-    private $fcreate_ppe_list = 'jb/coa/form/create/ppe_list';
     //
     private $test_page = 'jb/coa/page/test';
     //
@@ -125,6 +125,19 @@ class Jb_coa extends CI_Controller {
         echo 'SESSION UNSET';
         echo '<br>';
         echo 'SESSION DESTROY';
+    }
+
+    public function school_ppe() {
+        $this->values["PAGE"] = "129157";
+
+        $rs['groups'] = $this->jb_ppe_list_M->get_groups(); // Get groups for the first dropdown 
+        $rs['rs'] = $this->jb_ppe_school_M->get_all_records_by_school_id(129157);
+
+        $this->load->view($this->partials . 'header', $this->values);
+        $this->load->view($this->partials . 'topbar', $this->values);
+        $this->load->view($this->partials . 'sidebar', $this->values);
+        $this->load->view($this->ftbl_school_ppe_list, $rs);
+        $this->load->view($this->partials . 'footer', $this->values);
     }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -249,6 +262,26 @@ class Jb_coa extends CI_Controller {
 // ------------------------------------------------------------------------------------------------------------
 
     public function create_school_ppe_list() {
+        if ($this->_IS_IN_SESSION_schID()) { // CHECK IF SESSION LOGIN
+            $this->values["PAGE"] = "DASHBOARD";
+            $this->_set_values();
+            $this->load->view($this->partials . 'header', $this->values);
+            $this->load->view($this->partials . 'topbar', $this->values);
+            $this->load->view($this->partials . 'sidebar', $this->values);
+            $this->load->view($this->fcreate_ppe_list);
+            $this->load->view($this->partials . 'footer', $this->values);
+        } else {
+            
+        }
+    }
+
+// ------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------
+// FORMS - UPDATE
+// ------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------
+
+    public function update_school_ppe_list() {
         if ($this->_IS_IN_SESSION_schID()) { // CHECK IF SESSION LOGIN
             $this->values["PAGE"] = "DASHBOARD";
             $this->_set_values();

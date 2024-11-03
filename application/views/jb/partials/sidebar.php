@@ -21,10 +21,10 @@
                         <!--<span class="badge badge-info badge-pill float-right"> 3 </span>-->
                     </a>
                     <ul class="nav-second-level" aria-expanded="false"> 
+                        <li><a href="<?= base_url(); ?>jb_coa/school_ppe">SCHOOL</a></li>   
                         <li><a href="<?= base_url(); ?>jb_coa/annex_a">ANNEX A</a></li>                                     
                         <li><a href="<?= base_url(); ?>jb_coa/annex_b">ANNEX B</a></li>                      
                         <li><a href="<?= base_url(); ?>jb_coa/annex_c">ANNEX C</a></li>                      
-                        <li><a href="<?= base_url(); ?>jb_coa/create_school_ppe_list">CREATE</a></li>        
                         <li><a href="<?= base_url(); ?>jb_coa/set_session">SET SESSION</a></li>        
                         <li><a href="<?= base_url(); ?>jb_coa/unset_session">UNSET SESSION</a></li>    
                         <li><a href="<?= base_url(); ?>jb_coa/test">TEST</a></li>                            
