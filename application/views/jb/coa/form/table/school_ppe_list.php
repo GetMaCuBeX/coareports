@@ -170,10 +170,12 @@
                         <!--VALUES-->
                         <tr>  
                             <td class="hover-red  " style="text-align: center; vertical-align: middle;">
-                                <form method="post" class="form-horizontal" action="<?= base_url('jb_coa/edit') ?>" style="display: inline;">
+                                <form method="post" class="form-horizontal" action="<?= base_url('jb_coa/school_ppe') ?>" style="display: inline;">
                                     <input type="hidden" name="ppe_list_id" value="<?= htmlspecialchars($row->id); ?>">
                                     <input type="hidden" name="article_id" value="<?= htmlspecialchars($row->ARTICLE_ID); ?>">
-                                    <p class="submit-link" style="cursor: pointer; color: blue; margin: 0;">
+
+        <!-- <p> element with onclick event to submit the form -->
+                                    <p class="submit-link" style="cursor: pointer; color: blue; margin: 0;" onclick="this.parentNode.submit();">
                                         <?= str_pad($row->id, 5, '0', STR_PAD_LEFT); ?>
                                     </p>
                                 </form>
@@ -295,7 +297,7 @@
 
 
 
-
+<!--DROPDOWN GET ARTICLE BASE ON SELECTED GROUP-->
 <script>
     $(document).ready(function () {
         // When a group is selected
@@ -318,11 +320,9 @@
             }
         });
     });
-
-
-
 </script>
 
+<!--SUBMIT FOR FOR UPDATE-->
 <script>
     document.querySelectorAll('.submit-link').forEach(function (link) {
         link.addEventListener('click', function (event) {

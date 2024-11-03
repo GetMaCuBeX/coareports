@@ -130,7 +130,25 @@ class Jb_coa extends CI_Controller {
     public function school_ppe() {
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $ppe_list_id = isset($_POST['ppe_list_id']) ? htmlspecialchars($_POST['ppe_list_id']) : null;
+            $article_id = isset($_POST['article_id']) ? htmlspecialchars($_POST['article_id']) : null;
+            if ($ppe_list_id) {
+//                echo "PPE ID: " . $ppe_list_id;
+//                echo "<br>";
+//                echo "ARTICLE ID:" . $article_id; 
+                // Fetch the existing data for the given ID
+                $data['existing_data'] = $this->jb_ppe_list_M->get_selection_by_id($article_id); // get the id, group_id, name of jb_coa_ppe_group_article
+                // Fetch all groups for the dropdown
+                $data['groups'] = $this->jb_ppe_list_M->get_all_groups(); // Implement this method in your model
+                $data['articles'] = $this->jb_ppe_list_M->get_articles_by_group_id($data['existing_data']->group_id);
+                // Pass the existing article ID for preselection 
+                $this->load->view($this->partials . 'header', $this->values);
+                $this->load->view($this->partials . 'topbar', $this->values);
+                $this->load->view($this->partials . 'sidebar', $this->values);
+                $this->load->view($this->crud_ppe_edit, $data);
+                $this->load->view($this->partials . 'footer', $this->values);
+            } else {
                 $action = $_POST['action'] ?? '';
                 $action = isset($_POST['action']) ? $_POST['action'] : '';
                 if ($action === 'save') {
@@ -152,7 +170,7 @@ class Jb_coa extends CI_Controller {
                     // Handle unknown action
                     // Example: show an error or redirect
                 }
-            }
+            } 
         } else {
             $this->values["PAGE"] = "129157";
             $rs['groups'] = $this->jb_ppe_list_M->get_groups(); // Get groups for the first dropdown 
@@ -484,6 +502,9 @@ class Jb_coa extends CI_Controller {
             echo "<br>";
             echo "group id: " . $groupId;
 
+            
+            redirect($this->school_ppe());
+            
             // Validate the inputs
             if (!empty($groupId) && !empty($articleId)) {
                 

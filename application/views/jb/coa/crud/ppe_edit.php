@@ -1,6 +1,4 @@
 <form id="myForm" method="post" action="<?= site_url('jb_coa/update_selection/' . $existing_data->id); ?>">
-
-
     <div>
         <label for="group">Select Group:</label>
         <select id="group" name="group" required>
@@ -24,11 +22,10 @@
             <?php } ?>
         </select>
     </div>
-
     <button type="submit">Update Selection</button>
 </form>
 
-
+<!--DROPDOWN GET ARTICLE BASE ON SELECTED GROUP-->
 <script src="<?= base_url(); ?>assets/js/jb/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
