@@ -86,6 +86,24 @@ WHERE
 
         return $rs;
     }
+    
+    public function get_ppe_list_data_by_id($ppe_list_id){
+                $sql = "
+SELECT
+	jb_coa_ppe_list.*
+FROM
+	jb_coa_ppe_list
+WHERE
+	jb_coa_ppe_list.id = " . $ppe_list_id . "
+    ";
+
+        $query = $this->db->query($sql);
+        $rs = $query->result();
+
+        return $rs;
+    }
+    
+    
 
 // FOR EDIT
     public function get_selection_by_id($id) {

@@ -135,6 +135,8 @@ class Jb_coa extends CI_Controller {
             $ppe_list_id = isset($_POST['ppe_list_id']) ? htmlspecialchars($_POST['ppe_list_id']) : null;
             $article_id = isset($_POST['article_id']) ? htmlspecialchars($_POST['article_id']) : null;
 
+            
+//            EDIT
             if ($ppe_list_id) {
 //                echo "PPE ID: " . $ppe_list_id;
 //                echo "<br>";
@@ -144,6 +146,9 @@ class Jb_coa extends CI_Controller {
                 // Fetch all groups for the dropdown
                 $data['groups'] = $this->jb_ppe_list_M->get_all_groups(); // Implement this method in your model
                 $data['articles'] = $this->jb_ppe_list_M->get_articles_by_group_id($data['existing_data']->group_id);
+                $data['ppe_list_selected'] = $this->jb_ppe_list_M->get_ppe_list_data_by_id($ppe_list_id);
+//                echo '<pre>';
+//                print_r($data);
                 // Pass the existing article ID for preselection 
                 $this->load->view($this->partials . 'header', $this->values);
                 $this->load->view($this->partials . 'topbar', $this->values);
@@ -154,7 +159,7 @@ class Jb_coa extends CI_Controller {
 
 
 
-
+//SAVE
                 $action = $_POST['action'] ?? '';
                 $action = isset($_POST['action']) ? $_POST['action'] : '';
                 if ($action === 'save') {
@@ -507,6 +512,7 @@ class Jb_coa extends CI_Controller {
 
             echo "PPE ID: " . $ppe_list_id;
 
+            echo "<br>";
             echo "article id: " . $articleId;
             echo "<br>";
             echo "group id: " . $groupId;

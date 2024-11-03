@@ -1,6 +1,12 @@
  
 <form id="myForm" method="post" action="<?= site_url('jb_coa/update_selection/' . $existing_data->id); ?>">
-    <input type="hidden" name="ppe_list_id" value="<?= htmlspecialchars($existing_data->id); ?>">
+    <input type="hidden" name="ppe_list_id" value="
+
+           <?php foreach ($ppe_list_selected as $row) { ?>
+           <?= htmlspecialchars($row->id); ?>
+           <?php } ?>
+           
+           ">
     <div>
         <label for="group">Select Group:</label>
         <select id="group" name="group" required>
