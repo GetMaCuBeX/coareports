@@ -1,61 +1,24 @@
- 
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <h4 class="page-title">SCHOOL DETAILS</h4>
+            <div class="page-title-right">
+                <ol class="breadcrumb p-0 m-0">
+                    <!--<li class="breadcrumb-item"><a href="<?php //echo base_url();                      ?>jb_coa/school_ppe_annex_a_all_division" target="_blank">Print All</a></li>--> 
+                    <!--<li class="btn btn-primary waves-effect waves-light"><a href="#" data-toggle="modal" data-target=".bs-example-modal-lg">Add Data</a></li>-->
+                    <button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-lg">Add Data</button>
+                    <!--<li class="breadcrumb-item active">Dashboard 3</li>-->
+                </ol> 
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div> <!-- end page title -->
+
+
 
 <style>
-
-    /*https://www.docuseal.co/blog/css-print-page-style*/
-    @media print {
-        @page {
-            size: A4 landscape;
-            margin-top: 0.4in;
-            margin-bottom: 0.4in;
-            margin-left: 0.15in;
-            margin-right: 0.15in;
-        }
-
-        .no-outline{
-            border: none;
-            outline: none;
-        }
-
-        .signature-area, .grand-total{
-            page-break-inside: avoid;
-        }
-
-        .table-title table {
-            page-break-before: avoid;
-            page-break-after: avoid;
-            page-break-inside: avoid;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-        .no-print {
-            display: none;
-        }
-
-
-        table {
-            width: 100%;
-            border: 1px solid gray;
-            border-collapse: collapse;
-
-            thead, th, td {
-                font-size: 9px;
-            }
-            .maxwidth-description{
-                max-width: 400px;
-            }
-            .maxwidth-remarks{
-                max-width: 400px;
-            }
-            .maxwidth-article {
-                max-width: 150px;
-            }
-        }
-
-
-
-    }  /*end of @media print*/
-
     table {
         width: 100%;
         border: 1px solid gray;
@@ -102,27 +65,6 @@
 
 <body>
     <div>
-
-
-
-        <!-- start page title -->
-        <div class="row">
-            <div class="col-12">
-                <div class="page-title-box">
-                    <h4 class="page-title">SCHOOL DETAILS</h4>
-                    <div class="page-title-right">
-                        <ol class="breadcrumb p-0 m-0">
-                            <!--<li class="breadcrumb-item"><a href="<?php //echo base_url();                                          ?>jb_coa/school_ppe_annex_a_all_division" target="_blank">Print All</a></li>--> 
-                            <!--<li class="btn btn-primary waves-effect waves-light"><a href="#" data-toggle="modal" data-target=".bs-example-modal-lg">Add Data</a></li>-->
-                            <button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-lg">Add Data</button>
-                            <!--<li class="breadcrumb-item active">Dashboard 3</li>-->
-                        </ol> 
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-            </div>
-        </div> <!-- end page title -->
-
 
 
         <?php $row_count = 1; ?>
@@ -183,8 +125,8 @@
                         <!--VALUES-->
                         <tr> 
                             <td class="hover-red" style="text-align: center;">
-                                <a href="#" class="update-group" data-id="<?= htmlspecialchars($row->id); ?>">
-                                    <strong>&nbsp;<?= str_pad($row->id, 4, '0', STR_PAD_LEFT) ?>&nbsp;</strong>
+                                <a href="#">
+                                    <strong>&nbsp;<?= str_pad($row_count++, 2, '0', STR_PAD_LEFT) ?>&nbsp;</strong>
                                 </a>
                             </td>
                             <td class="maxwidth-article"><?= ($row->ARTICLE) ?></td>
@@ -253,12 +195,6 @@
         <?php else: ?>
             <p>No records found.</p>
         <?php endif; ?>
-
-
-
-
-
-
     </div>
 
 </body>
@@ -276,7 +212,7 @@
             <div class="modal-body">
                 <!--START FORM-->
 
-                <form id="myForm" method="post" action="<?= base_url('jb_coa/school_ppe'); ?>">
+                <form id="myForm" method="post" action="<?= base_url('jb_coa/save_ppe_list'); ?>">
                     <div>
                         <label for="group">Select Group:</label>
                         <select id="group" name="group" required>
@@ -297,10 +233,33 @@
                         </select>
                     </div>
 
-                    <button type="submit" name="action" value="save" id="submitBtn">Save Selection</button>
-                    <button type="submit" name="action" value="update" id="updateBtn">Update Selection</button>
-
+                    <button type="submit">Save Selection</button>
                 </form>
+
+                <script>
+                    $(document).ready(function () {
+                        // When a group is selected
+                        $('#group').change(function () {
+                            var groupId = $(this).val();
+                            $('#article').empty().append('<option value="">Select</option>');
+
+                            if (groupId) {
+                                $.ajax({
+                                    url: '<?= base_url('jb_coa/get_articles'); ?>', // Endpoint for fetching articles
+                                    type: 'GET',
+                                    data: {id: groupId},
+                                    success: function (data) {
+                                        var articles = JSON.parse(data);
+                                        articles.forEach(function (item) {
+                                            $('#article').append('<option value="' + item.id + '">' + item.name + '</option>');
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    });
+                </script>
+
                 <!--END FORM-->
             </div>
         </div>
@@ -309,57 +268,3 @@
     <!-- /.modal-dialog -->
 </div>
 
-
-
-<form id="myForm" method="post" action="<?= base_url('jb_coa/school_ppe'); ?>">
-    <div>
-        <label for="group">Select Group:</label>
-        <select id="group" name="group" required>
-            <option value="">Select</option>
-            <?php foreach ($groups as $row) { ?>
-                <option value="<?= htmlspecialchars($row->id); ?>">
-                    <?= htmlspecialchars($row->name); ?>
-                </option> 
-            <?php } ?>
-        </select>
-    </div>
-
-    <div>
-        <label for="article">Select Article:</label>
-        <select id="article" name="article" required>
-            <option value="">Select</option>
-            <!-- This will be populated based on the first dropdown -->
-        </select>
-    </div>
-
-    <button type="submit" name="action" value="save" id="submitBtn">Save Selection</button>
-    <button type="submit" name="action" value="update" id="updateBtn">Update Selection</button>
-
-</form>
-
-
-
-
-<script>
-    $(document).ready(function () {
-        // When a group is selected
-        $('#group').change(function () {
-            var groupId = $(this).val();
-            $('#article').empty().append('<option value="">Select</option>');
-
-            if (groupId) {
-                $.ajax({
-                    url: '<?= base_url('jb_coa/get_articles'); ?>', // Endpoint for fetching articles
-                    type: 'GET',
-                    data: {id: groupId},
-                    success: function (data) {
-                        var articles = JSON.parse(data);
-                        articles.forEach(function (item) {
-                            $('#article').append('<option value="' + item.id + '">' + item.name + '</option>');
-                        });
-                    }
-                });
-            }
-        });
-    });
-</script>

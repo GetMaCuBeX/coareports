@@ -128,16 +128,41 @@ class Jb_coa extends CI_Controller {
     }
 
     public function school_ppe() {
-        $this->values["PAGE"] = "129157";
 
-        $rs['groups'] = $this->jb_ppe_list_M->get_groups(); // Get groups for the first dropdown 
-        $rs['rs'] = $this->jb_ppe_school_M->get_all_records_by_school_id(129157);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $action = $_POST['action'] ?? '';
+                $action = isset($_POST['action']) ? $_POST['action'] : '';
+                if ($action === 'save') {
+                    $this->values["PAGE"] = "134717";
+                    $groupId = $this->input->post('group', true);     // XSS Filtering
+                    $articleId = $this->input->post('article', true); // XSS Filtering 
+                    $rs['groups'] = $this->jb_ppe_list_M->get_groups(); // Get groups for the first dropdown 
+                    $rs['rs'] = $this->jb_ppe_school_M->get_all_records_by_school_id(134717);
 
-        $this->load->view($this->partials . 'header', $this->values);
-        $this->load->view($this->partials . 'topbar', $this->values);
-        $this->load->view($this->partials . 'sidebar', $this->values);
-        $this->load->view($this->ftbl_school_ppe_list, $rs);
-        $this->load->view($this->partials . 'footer', $this->values);
+                    $this->load->view($this->partials . 'header', $this->values);
+                    $this->load->view($this->partials . 'topbar', $this->values);
+                    $this->load->view($this->partials . 'sidebar', $this->values);
+                    $this->load->view($this->ftbl_school_ppe_list, $rs);
+                    $this->load->view($this->partials . 'footer', $this->values);
+                } elseif ($action === 'update') {
+                    echo "UPDATING";
+                } else {
+                    // Handle unknown action
+                    // Example: show an error or redirect
+                }
+            }
+        } else {
+            $this->values["PAGE"] = "305514";
+            $rs['groups'] = $this->jb_ppe_list_M->get_groups(); // Get groups for the first dropdown 
+            $rs['rs'] = $this->jb_ppe_school_M->get_all_records_by_school_id(305514);
+
+            $this->load->view($this->partials . 'header', $this->values);
+            $this->load->view($this->partials . 'topbar', $this->values);
+            $this->load->view($this->partials . 'sidebar', $this->values);
+            $this->load->view($this->ftbl_school_ppe_list, $rs);
+            $this->load->view($this->partials . 'footer', $this->values);
+        }
     }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -387,14 +412,15 @@ class Jb_coa extends CI_Controller {
     }
 
     public function save_ppe_list() {
-        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $action = $_POST['action'] ?? '';
+
             // Get the selected values from the form
             $groupId = $this->input->post('group', true);     // XSS Filtering
             $articleId = $this->input->post('article', true); // XSS Filtering
-            echo $groupId;
-            echo '<br>';
-            echo $articleId;
-
+//            echo $groupId;
+//            echo '<br>';
+//            echo $articleId;
             // Validate the inputs
             if (!empty($groupId) && !empty($articleId)) {
                 
