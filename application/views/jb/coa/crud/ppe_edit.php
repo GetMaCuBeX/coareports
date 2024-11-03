@@ -1,4 +1,6 @@
+ 
 <form id="myForm" method="post" action="<?= site_url('jb_coa/update_selection/' . $existing_data->id); ?>">
+    <input type="hidden" name="ppe_list_id" value="<?= htmlspecialchars($existing_data->id); ?>">
     <div>
         <label for="group">Select Group:</label>
         <select id="group" name="group" required>
@@ -22,6 +24,7 @@
             <?php } ?>
         </select>
     </div>
+     <!--<button type="submit" name="action" value="update" id="submitBtn">Save Selection</button>--> 
     <button type="submit">Update Selection</button>
 </form>
 

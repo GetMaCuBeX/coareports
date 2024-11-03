@@ -131,8 +131,10 @@ class Jb_coa extends CI_Controller {
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+
             $ppe_list_id = isset($_POST['ppe_list_id']) ? htmlspecialchars($_POST['ppe_list_id']) : null;
             $article_id = isset($_POST['article_id']) ? htmlspecialchars($_POST['article_id']) : null;
+
             if ($ppe_list_id) {
 //                echo "PPE ID: " . $ppe_list_id;
 //                echo "<br>";
@@ -149,6 +151,10 @@ class Jb_coa extends CI_Controller {
                 $this->load->view($this->crud_ppe_edit, $data);
                 $this->load->view($this->partials . 'footer', $this->values);
             } else {
+
+
+
+
                 $action = $_POST['action'] ?? '';
                 $action = isset($_POST['action']) ? $_POST['action'] : '';
                 if ($action === 'save') {
@@ -170,7 +176,7 @@ class Jb_coa extends CI_Controller {
                     // Handle unknown action
                     // Example: show an error or redirect
                 }
-            } 
+            }
         } else {
             $this->values["PAGE"] = "129157";
             $rs['groups'] = $this->jb_ppe_list_M->get_groups(); // Get groups for the first dropdown 
@@ -495,16 +501,16 @@ class Jb_coa extends CI_Controller {
         // Check if the request is a POST request
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             // Get the selected values from the form
+            $ppe_list_id = $this->input->post('ppe_list_id');
             $groupId = $this->input->post('group', true);
             $articleId = $this->input->post('article', true);
+
+            echo "PPE ID: " . $ppe_list_id;
 
             echo "article id: " . $articleId;
             echo "<br>";
             echo "group id: " . $groupId;
 
-            
-            redirect($this->school_ppe());
-            
             // Validate the inputs
             if (!empty($groupId) && !empty($articleId)) {
                 
