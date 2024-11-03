@@ -112,7 +112,7 @@
                     <h4 class="page-title">SCHOOL DETAILS</h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb p-0 m-0">
-                            <!--<li class="breadcrumb-item"><a href="<?php //echo base_url();                                          ?>jb_coa/school_ppe_annex_a_all_division" target="_blank">Print All</a></li>--> 
+                            <!--<li class="breadcrumb-item"><a href="<?php //echo base_url();                                              ?>jb_coa/school_ppe_annex_a_all_division" target="_blank">Print All</a></li>--> 
                             <!--<li class="btn btn-primary waves-effect waves-light"><a href="#" data-toggle="modal" data-target=".bs-example-modal-lg">Add Data</a></li>-->
                             <button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-lg">Add Data</button>
                             <!--<li class="breadcrumb-item active">Dashboard 3</li>-->
@@ -183,7 +183,7 @@
                         <!--VALUES-->
                         <tr> 
                             <td class="hover-red" style="text-align: center;">
-                                <a href="#" class="update-group" data-id="<?= htmlspecialchars($row->id); ?>">
+                                <a href="#" class="update-group" data-id="<?= htmlspecialchars($row->ARTICLE_ID); ?>">
                                     <strong>&nbsp;<?= str_pad($row->id, 4, '0', STR_PAD_LEFT) ?>&nbsp;</strong>
                                 </a>
                             </td>
@@ -276,31 +276,8 @@
             <div class="modal-body">
                 <!--START FORM-->
 
-                <form id="myForm" method="post" action="<?= base_url('jb_coa/school_ppe'); ?>">
-                    <div>
-                        <label for="group">Select Group:</label>
-                        <select id="group" name="group" required>
-                            <option value="">Select</option>
-                            <?php foreach ($groups as $row) { ?>
-                                <option value="<?= htmlspecialchars($row->id); ?>">
-                                    <?= htmlspecialchars($row->name); ?>
-                                </option> 
-                            <?php } ?>
-                        </select>
-                    </div>
 
-                    <div>
-                        <label for="article">Select Article:</label>
-                        <select id="article" name="article" required>
-                            <option value="">Select</option>
-                            <!-- This will be populated based on the first dropdown -->
-                        </select>
-                    </div>
 
-                    <button type="submit" name="action" value="save" id="submitBtn">Save Selection</button>
-                    <button type="submit" name="action" value="update" id="updateBtn">Update Selection</button>
-
-                </form>
                 <!--END FORM-->
             </div>
         </div>
@@ -308,8 +285,6 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-
-
 
 <form id="myForm" method="post" action="<?= base_url('jb_coa/school_ppe'); ?>">
     <div>
@@ -332,12 +307,10 @@
         </select>
     </div>
 
+
     <button type="submit" name="action" value="save" id="submitBtn">Save Selection</button>
     <button type="submit" name="action" value="update" id="updateBtn">Update Selection</button>
-
 </form>
-
-
 
 
 <script>
@@ -363,3 +336,4 @@
         });
     });
 </script>
+
