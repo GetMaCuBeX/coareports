@@ -9,6 +9,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <!-- App favicon -->
         <link rel="shortcut icon" href="<?= base_url(); ?>assets/images/favicon.ico">
+        <!-- App css --> 
         <style>
             /*https://www.docuseal.co/blog/css-print-page-style*/
             @media print {
@@ -177,21 +178,20 @@
                                 <td style="text-align: center;"><?= ($row->quantity_per_physical_count) ?></td>
                                 <td style="text-align: right; <?= ($row->is_existing == 0) ? ' color: red;' : ''; ?>"><?= ($row->total_value) ?></td>
                                 <td style="text-align: center;">
-                                   <?php 
-    $dateAcquired = $row->date_acquired; // Assuming this is coming from your data source
+                                    <?php
+                                    $dateAcquired = $row->date_acquired; // Assuming this is coming from your data source
+                                    // Check if date is null
+                                    if (!is_null($dateAcquired)) {
+                                        $date = new DateTime($dateAcquired);
 
-    // Check if date is null
-    if (!is_null($dateAcquired)) {
-        $date = new DateTime($dateAcquired);
-
-        // Check if the month is January and the day is 1
-        if ($date->format('m') === '01' && $date->format('d') === '01') {
-            echo $date->format('Y'); // Display year only
-        } else {
-            echo $date->format('Y-m-d'); // Display full date or any other format you prefer
-        }
-    }
-    ?>
+                                        // Check if the month is January and the day is 1
+                                        if ($date->format('m') === '01' && $date->format('d') === '01') {
+                                            echo $date->format('Y'); // Display year only
+                                        } else {
+                                            echo $date->format('Y-m-d'); // Display full date or any other format you prefer
+                                        }
+                                    }
+                                    ?>
 
                                 </td>
                                 <td><?= ($row->condition_name) ?></td>

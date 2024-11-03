@@ -142,7 +142,7 @@
                             <td colspan="9" style="font-size: 24px; text-align: center;"><strong>DEPARTMENT OF EDUCATION</strong></td>
                         </tr>
                         <tr style="text-align: center;">
-                            <th class=" " style="text-align: center;">&nbsp;&nbsp;Edit&nbsp;&nbsp;</th>
+                            <th class=" " style="text-align: center;">View</th>
                             <th class="maxwidth-article">Group / Article</th>
                             <th class="maxwidth-description">Description</th>
                             <!--<th>Old Prty. No.</th>-->
