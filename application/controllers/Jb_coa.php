@@ -139,6 +139,7 @@ class Jb_coa extends CI_Controller {
                     $articleId = $this->input->post('article', true); // XSS Filtering 
                     $rs['groups'] = $this->jb_ppe_list_M->get_groups(); // Get groups for the first dropdown 
                     $rs['rs'] = $this->jb_ppe_school_M->get_all_records_by_school_id(134717);
+                    $rs['school_details'] = $this->jb_ppe_school_M->get_school_info_by_id(134717);
 
                     $this->load->view($this->partials . 'header', $this->values);
                     $this->load->view($this->partials . 'topbar', $this->values);
@@ -153,9 +154,10 @@ class Jb_coa extends CI_Controller {
                 }
             }
         } else {
-            $this->values["PAGE"] = "305514";
+            $this->values["PAGE"] = "129157";
             $rs['groups'] = $this->jb_ppe_list_M->get_groups(); // Get groups for the first dropdown 
-            $rs['rs'] = $this->jb_ppe_school_M->get_all_records_by_school_id(305514);
+            $rs['rs'] = $this->jb_ppe_school_M->get_all_records_by_school_id(129157);
+            $rs['school_details'] = $this->jb_ppe_school_M->get_school_info_by_id(129157);
 
             $this->load->view($this->partials . 'header', $this->values);
             $this->load->view($this->partials . 'topbar', $this->values);
@@ -439,18 +441,32 @@ class Jb_coa extends CI_Controller {
 // ------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------
     public function edit() {
-        $article_id = 26;
-        // Fetch the existing data for the given ID
-        $data['existing_data'] = $this->jb_ppe_list_M->get_selection_by_id($article_id); // get the id, group_id, name of jb_coa_ppe_group_article
-        // Fetch all groups for the dropdown
-        $data['groups'] = $this->jb_ppe_list_M->get_all_groups(); // Implement this method in your model
-        $data['articles'] = $this->jb_ppe_list_M->get_articles_by_group_id($data['existing_data']->group_id);
-        // Pass the existing article ID for preselection 
-        $this->load->view($this->partials . 'header', $this->values);
-        $this->load->view($this->partials . 'topbar', $this->values);
-        $this->load->view($this->partials . 'sidebar', $this->values);
-        $this->load->view($this->crud_ppe_edit, $data);
-        $this->load->view($this->partials . 'footer', $this->values);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Retrieve the group_id from the POST data
+            $ppe_list_id = isset($_POST['ppe_list_id']) ? htmlspecialchars($_POST['ppe_list_id']) : null;
+            $article_id = isset($_POST['article_id']) ? htmlspecialchars($_POST['article_id']) : null;
+
+            if ($ppe_list_id) {
+//                echo "PPE ID: " . $ppe_list_id;
+//                echo "<br>";
+//                echo "ARTICLE ID:" . $article_id; 
+                // Fetch the existing data for the given ID
+                $data['existing_data'] = $this->jb_ppe_list_M->get_selection_by_id($article_id); // get the id, group_id, name of jb_coa_ppe_group_article
+                // Fetch all groups for the dropdown
+                $data['groups'] = $this->jb_ppe_list_M->get_all_groups(); // Implement this method in your model
+                $data['articles'] = $this->jb_ppe_list_M->get_articles_by_group_id($data['existing_data']->group_id);
+                // Pass the existing article ID for preselection 
+                $this->load->view($this->partials . 'header', $this->values);
+                $this->load->view($this->partials . 'topbar', $this->values);
+                $this->load->view($this->partials . 'sidebar', $this->values);
+                $this->load->view($this->crud_ppe_edit, $data);
+                $this->load->view($this->partials . 'footer', $this->values);
+            } else {
+                echo "No Group ID received.";
+            }
+        } else {
+            echo "NO POST REQUEST";
+        }
     }
 
     public function update_selection($id) {

@@ -88,13 +88,18 @@
         outline: none;
     }
 
+
     .hover-red {
-        transition: background-color 0.3s; /* Optional: smooth transition */
+        transition: background-color 0.3s ease; /* Smooth transition */
     }
 
     .hover-red:hover {
-        background-color: red; /* Change background to red on hover */
+        background-color: gray; /* Change to red on hover */
+        color: white; /* Optional: Change text color on hover */
     }
+
+
+
 
 </style>
 
@@ -102,18 +107,15 @@
 
 <body>
     <div>
-
-
-
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box">
-                    <h4 class="page-title">SCHOOL DETAILS</h4>
+                    <?php foreach ($school_details as $row) { ?>
+                        <h4 class="page-title"><?= $row->schidnumber; ?> - <?= $row->schname; ?></h4>
+                    <?php } ?>
                     <div class="page-title-right">
-                        <ol class="breadcrumb p-0 m-0">
-                            <!--<li class="breadcrumb-item"><a href="<?php //echo base_url();                                              ?>jb_coa/school_ppe_annex_a_all_division" target="_blank">Print All</a></li>--> 
-                            <!--<li class="btn btn-primary waves-effect waves-light"><a href="#" data-toggle="modal" data-target=".bs-example-modal-lg">Add Data</a></li>-->
+                        <ol class="breadcrumb p-0 m-0"> 
                             <button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-lg">Add Data</button>
                             <!--<li class="breadcrumb-item active">Dashboard 3</li>-->
                         </ol> 
@@ -129,71 +131,60 @@
         <?php $group_count = 0; ?>
         <?php $school_list_count_all = 0; ?>
         <?php if (!empty($rs)): ?>
-
             <table>
-
-
                 <!--START FOREACH-->
-                <?php foreach ($rs as $row): ?>
 
 
-                    <!--HEADERS-->
-                    <?php if ($school_list_count_all == 0) { ?>
-                        <thead> 
-
-
-                            <tr style="text-align: center;">
-                                <th style="text-align: center;">&nbsp;&nbsp;#&nbsp;&nbsp;</th>
-                                <th class="maxwidth-article">Group / Article</th>
-                                <th class="maxwidth-description">Description</th>
-                                <th>Old Prty. No.</th>
-                                <th>New Prty. No.</th>
-                                <th>Unit of Measure</th>
-                                <th>Unit Value</th>
-                                <th>QTY (Property Card)</th> 
-                                <th>QTY (Physical Count)</th>
-                                <th>Total Value</th>
-                                <th>Date Acquired</th>
-                                <th>Condition</th>
-                                <!--<th class="maxwidth-remarks">Remarks</th>--> 
-                            </tr>  
-                        </thead>
-                    <?php } ?>
-
-
-                    <!--SCHOOL ID - SCHOOL NAME-->    
-                    <?php if ($school_list_count_all == 0) { ?>
+                <!--HEADERS-->
+                <?php if ($school_list_count_all == 0) { ?>
+                    <thead>
                         <tr>
-                            <td colspan="6" style="text-align: left; color: green; border-right: 0;"><strong><?= ($row->SCHOOLID) . ' - ' . strtoupper($row->SCHOOLNAME) ?></strong></td>
-                            <td colspan="6" style="text-align: right; color: blue; border-left: 0;"><strong><?= strtoupper($row->DISTRICT) ?></strong></td>
+                            <td colspan="9" style="font-size: 24px; text-align: center;"><strong>DEPARTMENT OF EDUCATION</strong></td>
                         </tr>
-                    <?php } ?>
-
-
+                        <tr style="text-align: center;">
+                            <th class=" " style="text-align: center;">&nbsp;&nbsp;Edit&nbsp;&nbsp;</th>
+                            <th class="maxwidth-article">Group / Article</th>
+                            <th class="maxwidth-description">Description</th>
+                            <!--<th>Old Prty. No.</th>-->
+                            <!--<th>New Prty. No.</th>-->
+                            <th>Unit of Measure</th>
+                            <th>Unit Value</th>
+                            <!--<th>QTY (Property Card)</th>-->
+                            <th>QTY (Physical Count)</th>
+                            <th>Total Value</th>
+                            <th>Date Acquired</th>
+                            <th>Condition</th>
+                        </tr>
+                    </thead>
+                <?php } ?>
+                <?php foreach ($rs as $row): ?>
                     <!--GROUP NAME-->
                     <?php if ($row->_R2 == 1) { ?>
                         <tr>
-                            <td colspan="12" style="color: red;" class="no-outline"><strong><?= strtoupper($row->GROUP_NAME) ?></strong></td>
+                            <td colspan="9" style="color: red; padding-left: 6px; padding-right: 6px;" class="no-outline"><strong><?= strtoupper($row->GROUP_NAME) ?></strong></td>
                         </tr>
                     <?php } ?>
-
 
                     <!--TABLE BODY-->
                     <tbody>
                         <!--VALUES-->
-                        <tr> 
-                            <td class="hover-red" style="text-align: center;">
-                                <a href="#" class="update-group" data-id="<?= htmlspecialchars($row->ARTICLE_ID); ?>">
-                                    <strong>&nbsp;<?= str_pad($row->id, 4, '0', STR_PAD_LEFT) ?>&nbsp;</strong>
-                                </a>
+                        <tr>  
+                            <td class="hover-red  " style="text-align: center; vertical-align: middle;">
+                                <form method="post" class="form-horizontal" action="<?= base_url('jb_coa/edit') ?>" style="display: inline;">
+                                    <input type="hidden" name="ppe_list_id" value="<?= htmlspecialchars($row->id); ?>">
+                                    <input type="hidden" name="article_id" value="<?= htmlspecialchars($row->ARTICLE_ID); ?>">
+                                    <p class="submit-link" style="cursor: pointer; color: blue; margin: 0;">
+                                        <?= str_pad($row->id, 5, '0', STR_PAD_LEFT); ?>
+                                    </p>
+                                </form>
                             </td>
                             <td class="maxwidth-article"><?= ($row->ARTICLE) ?></td>
                             <td class="maxwidth-description"<?= ($row->is_existing == 0) ? ' style="color: red;"' : ''; ?>><?= ($row->DESCRIPTION) ?></td>
-                            <td><?= ($row->old_property_no_assigned) ?></td>
-                            <td><?= ($row->new_property_no_assigned) ?></td>
+                            <!--<td><?= ($row->old_property_no_assigned) ?></td>-->
+                            <!--<td><?= ($row->new_property_no_assigned) ?></td>-->
                             <td style="text-align: center;"><?= ($row->unit_of_measure) ?></td>
                             <td style="text-align: right;"><?= ($row->unit_value) ?></td>
-                            <td style="text-align: center;"><?= ($row->quantity_per_property_card) ?></td>
+                            <!--<td style="text-align: center;"><?= ($row->quantity_per_property_card) ?></td>-->
                             <td style="text-align: center;"><?= ($row->quantity_per_physical_count) ?></td>
                             <td style="text-align: right; <?= ($row->is_existing == 0) ? ' color: red;' : ''; ?>"><?= ($row->total_value) ?></td>
                             <td style="text-align: center;">
@@ -224,8 +215,8 @@
                         <?php if ($group_count == $row->_R3) { ?>
                             <?php $group_count = 0; ?>
                             <tr>
-                                <td colspan="7" class="no-outline"></td>
-                                <td colspan="2" style="text-align: left;">SUB TOTAL: </td>
+                                <td colspan="5" class="no-outline"></td>
+                                <td colspan="1" style="text-align: left;">SUB TOTAL: </td>
                                 <td style="text-align: right;"><?= ($row->SUM_PER_GROUP) ?></td>
                                 <td colspan="2" class="no-outline"></td>
                             </tr>
@@ -236,8 +227,8 @@
                         <?php if ($school_list_count_all == $row->_R4) { ?>
                             <?php $school_list_count_all = 0; ?>
                             <tr class="grand-total">
-                                <td colspan="7" class="no-outline"></td>
-                                <td colspan="2" style="text-align: left;"><strong>GRAND TOTAL: </strong></td>
+                                <td colspan="5" class="no-outline"></td>
+                                <td colspan="1" style="text-align: left;"><strong>GRAND TOTAL: </strong></td>
                                 <td style="text-align: right; color: red;"><strong><?= ($row->GRAND_TOTAL) ?></strong></td>
                                 <td colspan="2" class="no-outline"></td>
                             </tr>
@@ -250,17 +241,12 @@
                     </tbody>
                 <?php endforeach; ?> <!--END FOREACH-->
             </table>
+
+
         <?php else: ?>
             <p>No records found.</p>
-        <?php endif; ?>
-
-
-
-
-
-
-    </div>
-
+        <?php endif; ?> 
+    </div> 
 </body>
 
 
@@ -276,7 +262,28 @@
             <div class="modal-body">
                 <!--START FORM-->
 
+                <form id="myForm" method="post" action="<?= base_url('jb_coa/school_ppe'); ?>">
+                    <div>
+                        <label for="group">Select Group:</label>
+                        <select id="group" name="group" required>
+                            <option value="">Select</option>
+                            <?php foreach ($groups as $row) { ?>
+                                <option value="<?= htmlspecialchars($row->id); ?>">
+                                    <?= htmlspecialchars($row->name); ?>
+                                </option> 
+                            <?php } ?>
+                        </select>
+                    </div>
 
+                    <div>
+                        <label for="article">Select Article:</label>
+                        <select id="article" name="article" required>
+                            <option value="">Select</option>
+                            <!-- This will be populated based on the first dropdown -->
+                        </select>
+                    </div>
+                    <button type="submit" name="action" value="save" id="submitBtn">Save Selection</button> 
+                </form>
 
                 <!--END FORM-->
             </div>
@@ -286,31 +293,7 @@
     <!-- /.modal-dialog -->
 </div>
 
-<form id="myForm" method="post" action="<?= base_url('jb_coa/school_ppe'); ?>">
-    <div>
-        <label for="group">Select Group:</label>
-        <select id="group" name="group" required>
-            <option value="">Select</option>
-            <?php foreach ($groups as $row) { ?>
-                <option value="<?= htmlspecialchars($row->id); ?>">
-                    <?= htmlspecialchars($row->name); ?>
-                </option> 
-            <?php } ?>
-        </select>
-    </div>
 
-    <div>
-        <label for="article">Select Article:</label>
-        <select id="article" name="article" required>
-            <option value="">Select</option>
-            <!-- This will be populated based on the first dropdown -->
-        </select>
-    </div>
-
-
-    <button type="submit" name="action" value="save" id="submitBtn">Save Selection</button>
-    <button type="submit" name="action" value="update" id="updateBtn">Update Selection</button>
-</form>
 
 
 <script>
@@ -335,5 +318,16 @@
             }
         });
     });
+
+
+
 </script>
 
+<script>
+    document.querySelectorAll('.submit-link').forEach(function (link) {
+        link.addEventListener('click', function (event) {
+            event.preventDefault(); // Prevent default action if needed
+            this.closest('form').submit(); // Submit the closest form
+        });
+    });
+</script>

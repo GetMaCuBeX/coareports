@@ -66,6 +66,27 @@ FROM
         return $this->db->get('jb_coa_ppe_group_article')->result(); // Fetch articles
     }
 
+// QUERY
+    public function get_group_name_by_group_id($group_id) {
+        $sql = "
+SELECT
+	jb_coa_ppe_group.`name`
+FROM
+	jb_coa_ppe_group
+	INNER JOIN
+	jb_coa_ppe_group_article
+	ON 
+		jb_coa_ppe_group.id = jb_coa_ppe_group_article.group_id
+WHERE
+	jb_coa_ppe_group_article.group_id = " . $group_id . "
+    ";
+
+        $query = $this->db->query($sql);
+        $rs = $query->result();
+
+        return $rs;
+    }
+
 // FOR EDIT
     public function get_selection_by_id($id) {
         return $this->db->get_where('jb_coa_ppe_group_article', ['id' => $id])->row(); // Fetch the row with the specified ID
