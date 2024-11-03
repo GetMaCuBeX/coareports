@@ -66,9 +66,9 @@ $route['t'] = 'jb_coa/test3';
 //$route['t'] = 'Jb_emailrequest/test';
 //$route['i'] = 'Jb_emailrequest/index';
 
-$route['jb_coa'] = 'jb_coa/index'; // Route for the main page
-$route['jb_coa/get_articles'] = 'jb_coa/get_articles'; // Route for AJAX request to get articles
-$route['jb_coa/get_items'] = 'jb_coa/get_items'; // Route for AJAX request to get items
+//$route['jb_coa'] = 'jb_coa/index'; // Route for the main page
+//$route['jb_coa/get_articles'] = 'jb_coa/get_articles'; // Route for AJAX request to get articles
+//$route['jb_coa/get_items'] = 'jb_coa/get_items'; // Route for AJAX request to get items
 
 
  

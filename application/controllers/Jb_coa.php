@@ -25,6 +25,9 @@ class Jb_coa extends CI_Controller {
     private $fcreate_ppe_list = 'jb/coa/form/create/ppe_list';
     //
     private $test_page = 'jb/coa/page/test';
+    //
+    private $crud_ppe_create = 'jb/coa/crud/ppe_create';
+    private $crud_ppe_edit = 'jb/coa/crud/ppe_edit';
 
     public function __construct() {
         parent::__construct();
@@ -57,13 +60,6 @@ class Jb_coa extends CI_Controller {
 //        } else {
 //            
 //        }
-
-        $data['groups'] = $this->jb_ppe_list_M->get_groups(); // Get groups for the first dropdown 
-        $this->load->view($this->partials . 'header', $this->values);
-        $this->load->view($this->partials . 'topbar', $this->values);
-        $this->load->view($this->partials . 'sidebar', $this->values);
-        $this->load->view($this->test_page, $data); // Load the view
-        $this->load->view($this->partials . 'footer', $this->values);
     }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -329,11 +325,20 @@ class Jb_coa extends CI_Controller {
 
 // ------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------
-// TEST
+// CREATE
 // ------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------
     public function test() {
-        redirect($this->index());
+//        redirect($this->ppe_create());
+    }
+
+    public function ppe_create() {
+        $data['groups'] = $this->jb_ppe_list_M->get_groups(); // Get groups for the first dropdown 
+        $this->load->view($this->partials . 'header', $this->values);
+        $this->load->view($this->partials . 'topbar', $this->values);
+        $this->load->view($this->partials . 'sidebar', $this->values);
+        $this->load->view($this->crud_ppe_create, $data); // Load the view
+        $this->load->view($this->partials . 'footer', $this->values);
     }
 
     public function get_articles() {
@@ -356,12 +361,58 @@ class Jb_coa extends CI_Controller {
             echo $groupId;
             echo '<br>';
             echo $articleId;
-            
-            
+
             // Validate the inputs
-            if (!empty($groupId) && !empty($articleId)) { 
+            if (!empty($groupId) && !empty($articleId)) {
                 
-            } else { 
+            } else {
+                
+            }
+        } else {
+            // If not a POST request, redirect or show an error
+            show_error('Invalid request method', 405); // 405 Method Not Allowed
+        }
+    }
+
+// ------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------
+// EDIT
+// ------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------
+    public function edit() {
+        $article_id = 26;
+        // Fetch the existing data for the given ID
+        $data['existing_data'] = $this->jb_ppe_list_M->get_selection_by_id($article_id); // get the id, group_id, name of jb_coa_ppe_group_article
+        // Fetch all groups for the dropdown
+        $data['groups'] = $this->jb_ppe_list_M->get_all_groups(); // Implement this method in your model
+        $data['articles'] = $this->jb_ppe_list_M->get_articles_by_group_id($data['existing_data']->group_id);
+        // Pass the existing article ID for preselection 
+        $this->load->view($this->partials . 'header', $this->values);
+        $this->load->view($this->partials . 'topbar', $this->values);
+        $this->load->view($this->partials . 'sidebar', $this->values);
+        $this->load->view($this->crud_ppe_edit, $data);
+        $this->load->view($this->partials . 'footer', $this->values);
+    }
+
+    public function update_selection($id) {
+
+        ECHO 'UPDATING';
+        echo "<br>";
+
+        // Check if the request is a POST request
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            // Get the selected values from the form
+            $groupId = $this->input->post('group', true);
+            $articleId = $this->input->post('article', true);
+
+            echo "article id: " . $articleId;
+            echo "<br>";
+            echo "group id: " . $groupId;
+
+            // Validate the inputs
+            if (!empty($groupId) && !empty($articleId)) {
+                
+            } else {
                 
             }
         } else {
