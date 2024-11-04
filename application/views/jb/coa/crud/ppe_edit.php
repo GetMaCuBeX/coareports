@@ -3,9 +3,9 @@
     <input type="hidden" name="ppe_list_id" value="
 
            <?php foreach ($ppe_list_selected as $row) { ?>
-           <?= htmlspecialchars($row->id); ?>
+               <?= htmlspecialchars($row->id); ?>
            <?php } ?>
-           
+
            ">
     <div>
         <label for="group">Select Group:</label>
@@ -30,7 +30,7 @@
             <?php } ?>
         </select>
     </div>
-     <!--<button type="submit" name="action" value="update" id="submitBtn">Save Selection</button>--> 
+    <!--<button type="submit" name="action" value="update" id="submitBtn">Save Selection</button>--> 
     <button type="submit">Update Selection</button>
 </form>
 
