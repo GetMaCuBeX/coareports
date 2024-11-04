@@ -15,7 +15,7 @@
             margin-bottom: 0.4in;
             margin-left: 0.15in;
             margin-right: 0.15in;
-                    font-family: sans-serif;
+            font-family: sans-serif;
         }
 
         .no-outline{
@@ -180,7 +180,7 @@
                                                     <input type="hidden" name="ppe_list_id" value="<?= htmlspecialchars($row->id); ?>">
                                                     <input type="hidden" name="article_id" value="<?= htmlspecialchars($row->ARTICLE_ID); ?>">
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <!-- <p> element with onclick event to submit the form -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <!-- <p> element with onclick event to submit the form -->
                                                     <p class="submit-link" style="cursor: pointer; color: blue; margin: 0;" onclick="this.parentNode.submit();">
                                                         <?= str_pad($row->id, 5, '0', STR_PAD_LEFT); ?>
                                                     </p>
@@ -301,7 +301,7 @@
                                             <select id="article" name="article" value="" placeholder="" class="form-control" required>
                                                 <option value="">Select</option> 
                                             </select>
-                                        </div>
+                                        </div> 
                                     </div>
                                     <!--2--> 
                                     <div class="form-row"> 
@@ -328,22 +328,22 @@
                                         <!--3.1-->
                                         <div class="form-group col-md-3">
                                             <label for="_opn" class="col-form-label">Old Property No.</label>
-                                            <input  id="_opn" name="_opn" type="text" value="" placeholder="" class="form-control" maxlength="255">
+                                            <input  id="_opn" name="_opn" type="text" placeholder="" class="form-control" maxlength="255">
                                         </div>
                                         <!--3.2-->
                                         <div class="form-group col-md-3">
                                             <label for="_npn" class="col-form-label">New Property No.</label>
-                                            <input  id="_npn" name="_npn" type="text" value="" placeholder="" class="form-control" maxlength="255">
+                                            <input  id="_npn" name="_npn" type="text" placeholder="" class="form-control" maxlength="255">
                                         </div>
                                         <!--3.3-->
                                         <div class="form-group col-md-3">
                                             <label for="_uom" class="col-form-label">Unit of Measure</label>
-                                            <input  id="_uom" name="_uom" type="text" value="" placeholder="" class="form-control" maxlength="255">
+                                            <input id="_uom" name="_uom" type="text" placeholder="Ex. sqm, ha" class="form-control" maxlength="255">
                                         </div>
                                         <!--3.4-->
                                         <div class="form-group col-md-3">
                                             <label for="_uv" class="col-form-label">Unit Value</label>
-                                            <input id="_uv" name="_uv" type="number" value="" placeholder="" class="form-control" maxlength="16">
+                                            <input id="_uv" name="_uv" type="number" placeholder="" class="form-control" min="0" max="9999999999999">
                                         </div>
                                     </div>
                                     <!--4-->
@@ -351,32 +351,59 @@
                                         <!--4.1-->
                                         <div class="form-group col-md-3">
                                             <label for="_qpproc" class="col-form-label">QTY / Property Card</label>
-                                            <input id="_qpproc" name="_qpproc" type="number" value="" placeholder="" class="form-control" maxlength="16">
+                                            <input id="_qpproc" name="_qpproc" type="number"  placeholder="" class="form-control" min="0" max="9999999999999">
                                         </div>
                                         <!--4.2-->
                                         <div class="form-group col-md-3">
                                             <label for="_qpphyc" class="col-form-label">QTY / Physical Count</label>
-                                            <input id="_qpphyc" name="_qpphyc" type="number" value="" placeholder="" class="form-control" maxlength="16">
+                                            <input id="_qpphyc" name="_qpphyc" type="number" placeholder="" class="form-control" min="0" max="9999999999999">
                                         </div>
                                         <!--4.3-->
                                         <div class="form-group col-md-3">
                                             <label for="_tv" class="col-form-label">Total Value</label>
-                                            <input id="_tv" name="_tv" type="number" value="" placeholder="" class="form-control" maxlength="16">
+                                            <input id="_tv" name="_tv" type="number" placeholder="" class="form-control" min="0" max="9999999999999">
                                         </div>
                                         <!--4.4-->
                                         <div class="form-group col-md-3">
                                             <label for="_con" class="col-form-label">Condition</label>
                                             <select id="_con" name="_con" value="" placeholder="" class="form-control" required>
                                                 <option value="">Select</option> 
-                                                <option value="">Good Condition</option> 
-                                                <option value="">Needs Repair</option> 
-                                                <option value="">Unserviceable</option> 
+                                                <option value="Good Condition">Good Condition</option> 
+                                                <option value="Needs Repair">Needs Repair</option> 
+                                                <option value="Unserviceable">Unserviceable</option> 
                                             </select>
+                                        </div>
+                                    </div>                                    
+                                    <!--5-->
+                                    <div class="form-row"> 
+                                        <div class="form-group col-md-6">
+                                            <label for="_lw" class="col-form-label">Location Whereabouts</label> 
+                                            <textarea id="_lw" name="_lw" placeholder="" class="form-control" rows="6"></textarea>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="_rem" class="col-form-label">Remarks</label> 
+                                            <textarea id="_rem" name="_lw" placeholder="" class="form-control" rows="6"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <!--6-->
+                                    <div class="form-row"> 
+                                        <!--6.1-->
+                                        <div class="form-group col-md-6">
+                                            <label for="_pa" class="col-form-label">Person Accountable</label>
+                                            <input  id="_pa" name="_pa" type="text" placeholder="" class="form-control" maxlength="255">
+                                        </div>   
+                                        <div class="form-group col-md-6">
+                                            <label for="_ie" class="col-form-label">Is Existing?</label>
+                                            <input id="_ie"  name="_ie"  type="checkbox" checked data-plugin="switchery" data-color="#039cfd" />
                                         </div>
                                     </div>
 
 
-                                    <input  id="_sin" name="_sin" type="number" value="" placeholder="" class="form-control" disabled="" maxlength="255" hidden="">
+
+
+
+                                    <input id="_sin" name="_sin" type="hidden" value="">
 
                                     <button type="submit" name="action" value="save" id="submitBtn" class="btn btn-primary waves-effect width-md waves-light">Save Selection</button>
                                 </div>  

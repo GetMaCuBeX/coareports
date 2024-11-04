@@ -23,7 +23,7 @@
 
 <!--2 PLUGINS JS-->
 <script src="<?= base_url(); ?>assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
-<script src="<?= base_url(); ?>assets/libs/switchery/switchery.min.js"></script>
+<script src="<?= base_url(); ?>assets/libs/switchery/switchery.min.js"></script> 
 
 <script src="<?= base_url(); ?>assets/libs/select2/select2.min.js"></script>
 <script src="<?= base_url(); ?>assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
