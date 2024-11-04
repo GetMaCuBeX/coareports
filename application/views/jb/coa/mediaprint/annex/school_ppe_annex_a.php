@@ -7,9 +7,22 @@
         <meta content="Responsive bootstrap 4 admin template" name="description" />
         <meta content="Coderthemes" name="author" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <!-- App favicon -->
+       <!--1. APP FAVICON-->
         <link rel="shortcut icon" href="<?= base_url(); ?>assets/images/favicon.ico">
-        <!-- App css --> 
+
+        <!--2. PLUGINS CSS--> 
+
+        <!--3. THIRD PARTY CSS-->
+
+
+        <!--4. APP CSS-->
+   
+
+        <!--DATATABLES CSS-->
+   
+        <!--UNKNOWN CSS-->
+ 
+        
         <style>
             /*https://www.docuseal.co/blog/css-print-page-style*/
             @media print {
@@ -19,6 +32,7 @@
                     margin-bottom: 0.4in;
                     margin-left: 0.15in;
                     margin-right: 0.15in;
+                    font-family: sans-serif;
                 }
 
                 .no-outline{
@@ -66,6 +80,7 @@
             }  /*end of @media print*/
 
             table {
+                font-family: sans-serif;
                 width: 100%;
                 border: 1px solid gray;
                 border-collapse: collapse;

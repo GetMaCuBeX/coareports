@@ -15,6 +15,7 @@
             margin-bottom: 0.4in;
             margin-left: 0.15in;
             margin-right: 0.15in;
+                    font-family: sans-serif;
         }
 
         .no-outline{
