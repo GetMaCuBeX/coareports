@@ -1,4 +1,9 @@
- 
+<!--FOR DROPDOWN SELECTION QUERY DATA-->
+<script src="<?= base_url(); ?>assets/js/jb/jquery-3.6.0.min.js"></script>
+
+
+
+
 
 <style>
 
@@ -174,7 +179,7 @@
                                     <input type="hidden" name="ppe_list_id" value="<?= htmlspecialchars($row->id); ?>">
                                     <input type="hidden" name="article_id" value="<?= htmlspecialchars($row->ARTICLE_ID); ?>">
 
-        <!-- <p> element with onclick event to submit the form -->
+                                                                                                                                                                                                                                                                                                                                                                                <!-- <p> element with onclick event to submit the form -->
                                     <p class="submit-link" style="cursor: pointer; color: blue; margin: 0;" onclick="this.parentNode.submit();">
                                         <?= str_pad($row->id, 5, '0', STR_PAD_LEFT); ?>
                                     </p>
@@ -265,26 +270,104 @@
                 <!--START FORM-->
 
                 <form id="myForm" method="post" action="<?= base_url('jb_coa/school_ppe'); ?>">
-                    <div>
-                        <label for="group">Select Group:</label>
-                        <select id="group" name="group" required>
-                            <option value="">Select</option>
-                            <?php foreach ($groups as $row) { ?>
-                                <option value="<?= htmlspecialchars($row->id); ?>">
-                                    <?= htmlspecialchars($row->name); ?>
-                                </option> 
-                            <?php } ?>
-                        </select>
+
+
+
+                    <div class="row">
+                        <div class="col-12"> 
+
+                            <!--1--> 
+                            <div class="form-row"> 
+                                <!--1.1-->
+                                <div class="form-group col-md-6">
+                                    <label for="group" class="col-form-label">Group:</label>
+                                    <select id="group" name="group" required class="form-control">
+                                        <option value="">Select</option>
+                                        <?php foreach ($groups as $row) { ?>
+                                            <option value="<?= htmlspecialchars($row->id); ?>">
+                                                <?= htmlspecialchars($row->name); ?>
+                                            </option> 
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                                <!--1.2-->
+                                <div class="form-group col-md-6">
+                                    <label for="article" class="col-form-label">Article</label>
+                                    <select id="article" name="article" required class="form-control">
+                                        <option value="">Select</option> 
+                                    </select>
+                                </div>
+                            </div>
+                            <!--2--> 
+                            <div class="form-row"> 
+                                <!--2.1-->
+                                <div class="form-group col-md-12">
+                                    <label for="_des" class="col-form-label">Description</label>
+                                    <input  id="_des" name="_des" type="text" class="form-control"  maxlength="255">
+                                </div>
+                            </div>
+                            <!--3-->
+                            <div class="form-row"> 
+                                <!--3.1-->
+                                <div class="form-group col-md-3">
+                                    <label for="_opn" class="col-form-label">Old Property No.</label>
+                                    <input  id="_opn" name="_opn" type="text" class="form-control" maxlength="255">
+                                </div>
+                                <!--3.2-->
+                                <div class="form-group col-md-3">
+                                    <label for="_npn" class="col-form-label">New Property No.</label>
+                                    <input  id="_npn" name="_npn" type="text" class="form-control" maxlength="255">
+                                </div>
+                                <!--3.3-->
+                                <div class="form-group col-md-3">
+                                    <label for="_uom" class="col-form-label">Unit of Measure</label>
+                                    <input  id="_uom" name="_uom" type="text" class="form-control" maxlength="255">
+                                </div>
+                                <!--3.4-->
+                                <div class="form-group col-md-3">
+                                    <label for="_uv" class="col-form-label">Unit Value</label>
+                                    <input id="_uv" name="_uv" type="number" class="form-control" maxlength="16">
+                                </div>
+                            </div>
+                            <!--4-->
+                            <div class="form-row"> 
+                                <!--4.1-->
+                                <div class="form-group col-md-3">
+                                    <label for="_qpproc" class="col-form-label">Quantity/Property Card</label>
+                                    <input id="_qpproc" name="_qpproc" type="number" class="form-control" maxlength="16">
+                                </div>
+                                <!--4.2-->
+                                <div class="form-group col-md-3">
+                                    <label for="_qpphyc" class="col-form-label">Quantity/Physical Count</label>
+                                    <input id="_qpphyc" name="_qpphyc" type="number" class="form-control" maxlength="16">
+                                </div>
+                                <!--4.3-->
+                                <div class="form-group col-md-3">
+                                    <label for="_tv" class="col-form-label">Total Value</label>
+                                    <input id="_tv" name="_tv" type="number" class="form-control" maxlength="16">
+                                </div>
+                                <!--4.4-->
+                                <div class="form-group">
+                                    <label>Auto Close</label>
+                                    <div>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="mm/dd/yyyy" data-provide="datepicker" data-date-autoclose="true">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <button type="submit" name="action" value="save" id="submitBtn" class="btn btn-primary waves-effect width-md waves-light">Save Selection</button>
+
+                        </div>
                     </div>
 
-                    <div>
-                        <label for="article">Select Article:</label>
-                        <select id="article" name="article" required>
-                            <option value="">Select</option>
-                            <!-- This will be populated based on the first dropdown -->
-                        </select>
-                    </div>
-                    <button type="submit" name="action" value="save" id="submitBtn">Save Selection</button> 
+
                 </form>
 
                 <!--END FORM-->
@@ -297,29 +380,30 @@
 
 
 
+
 <!--DROPDOWN GET ARTICLE BASE ON SELECTED GROUP-->
 <script>
-    $(document).ready(function () {
-        // When a group is selected
-        $('#group').change(function () {
-            var groupId = $(this).val();
-            $('#article').empty().append('<option value="">Select</option>');
+                                        $(document).ready(function () {
+                                            // When a group is selected
+                                            $('#group').change(function () {
+                                                var groupId = $(this).val();
+                                                $('#article').empty().append('<option value="">Select</option>');
 
-            if (groupId) {
-                $.ajax({
-                    url: '<?= base_url('jb_coa/get_articles'); ?>', // Endpoint for fetching articles
-                    type: 'GET',
-                    data: {id: groupId},
-                    success: function (data) {
-                        var articles = JSON.parse(data);
-                        articles.forEach(function (item) {
-                            $('#article').append('<option value="' + item.id + '">' + item.name + '</option>');
-                        });
-                    }
-                });
-            }
-        });
-    });
+                                                if (groupId) {
+                                                    $.ajax({
+                                                        url: '<?= base_url('jb_coa/get_articles'); ?>', // Endpoint for fetching articles
+                                                        type: 'GET',
+                                                        data: {id: groupId},
+                                                        success: function (data) {
+                                                            var articles = JSON.parse(data);
+                                                            articles.forEach(function (item) {
+                                                                $('#article').append('<option value="' + item.id + '">' + item.name + '</option>');
+                                                            });
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                        });
 </script>
 
 <!--SUBMIT FOR FOR UPDATE-->

@@ -1,6 +1,5 @@
 </div> <!-- end container-fluid -->
-</div> <!-- end content -->
-
+</div> <!-- end content --> 
 <!-- Footer Start -->
 <footer class="footer">
     <div class="container-fluid">
@@ -18,13 +17,24 @@
 
 </div> <!-- END wrapper -->
 
-<!-- Vendor js -->
+<!--1. VENDOR JS-->
 <script src="<?= base_url(); ?>assets/js/vendor.min.js"></script>
-<script src="<?= base_url(); ?>assets/js/pages/dashboard.init.js"></script>
-<!-- datatable js -->
-<!-- datatable init -->
-<!-- Vendor js -->
-<script src="assets/js/vendor.min.js"></script>
+
+
+<!--2 PLUGINS JS-->
+<script src="<?= base_url(); ?>assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
+<script src="<?= base_url(); ?>assets/libs/switchery/switchery.min.js"></script>
+
+<script src="<?= base_url(); ?>assets/libs/select2/select2.min.js"></script>
+<script src="<?= base_url(); ?>assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+<script src="<?= base_url(); ?>assets/libs/jquery-mask-plugin/jquery.mask.min.js"></script>
+<script src="<?= base_url(); ?>assets/libs/moment/moment.min.js"></script>
+<script src="<?= base_url(); ?>assets/libs/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
+<script src="<?= base_url(); ?>assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js"></script>
+<script src="<?= base_url(); ?>assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>js"></script>
+<script src="<?= base_url(); ?>assets/libs/switchery/switchery.min.js"></script>
+
+<script src="<?= base_url(); ?>assets/js/pages/dashboard.init.js"></script>  
 <!-- Sparkline charts -->
 <script src="<?= base_url(); ?>assets/libs/jquery-sparkline/jquery.sparkline.min.js"></script>
 <script src="<?= base_url(); ?>assets/libs/jquery-scrollto/jquery.scrollTo.min.js"></script>
@@ -57,15 +67,50 @@
 <script src="<?= base_url(); ?>assets/libs/morris-js/morris.min.js"></script>
 <script src="<?= base_url(); ?>assets/libs/raphael/raphael.min.js"></script>
 <!-- Dashboard init JS -->
-<script src="<?= base_url(); ?>assets/js/pages/dashboard3.init.js"></script>
-<!-- App js -->
-<script src="<?= base_url(); ?>assets/js/app.min.js"></script>
-<!-- Plugins js -->
-<script src="<?= base_url(); ?>assets/libs/moment/moment.min.js"></script>
-
-
+<script src="<?= base_url(); ?>assets/js/pages/dashboard3.init.js"></script> 
 <!-- SweetAlert2 script -->
 <script src="<?= base_url(); ?>assets/js/pages/sweetalert2@11.js"></script>
+
+
+<!--INIT JS-->
+<script src="<?= base_url(); ?>assets/js/pages/form-advanced.init.js"></script>
+
+<!--APP JS--> 
+<script src="<?= base_url(); ?>assets/js/app.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--FOR DEPED EMAIL REQUEST-->
 
 <!-- BUTTON ONLY -->
 <script>
@@ -155,15 +200,10 @@
     });
 </script>
 
-<!-- TABLE EXPORT TO EXCEL --> 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script> 
-
-
-<!--AJAX COMBOX BOX AUTO SELECT FOREIGN KEY VALUES BASE ON SELECTED PRIMARY KEY VALUE-->
-<!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
 
 
 </body>
 
 
 </html>
+
