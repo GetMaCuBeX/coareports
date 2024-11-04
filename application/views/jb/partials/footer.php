@@ -6,7 +6,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <?php echo isset($FOOTER) ? $FOOTER : ''; ?></a>
+                2024 - 2025 © Velonic theme</a>
             </div>
         </div>
     </div>

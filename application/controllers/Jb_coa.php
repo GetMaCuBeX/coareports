@@ -8,16 +8,16 @@ class Jb_coa extends CI_Controller {
     private $partials = 'jb/partials/';
     private $p_ppe = 'jb/coa/page/ppe';
     private $p_ppe_admin = 'jb/coa/page/ppe_admin';
-//    
+    //    
     private $ftbl_annex_a = 'jb/coa/form/table/annex_a';
     private $mp_school_ppe_annex_a = 'jb/coa/mediaprint/annex/school_ppe_annex_a';
-//
+    //
     private $ftbl_annex_b = 'jb/coa/form/table/annex_b';
     private $mp_school_ppe_annex_b = 'jb/coa/mediaprint/annex/school_ppe_annex_b';
-//
+    //
     private $ftbl_annex_c = 'jb/coa/form/table/annex_c';
     private $mp_school_ppe_annex_c = 'jb/coa/mediaprint/annex/school_ppe_annex_c';
-//    
+    //    
     private $ftbl_school_ppe_list = 'jb/coa/form/table/school_ppe_list';
     //
     private $mp_school_ppe_annex_a_division = 'jb/coa/mediaprint/annex/school_ppe_annex_a_division';
@@ -69,43 +69,21 @@ class Jb_coa extends CI_Controller {
 // ------------------------------------------------------------------------------------------------------------
 
     public function annex_a() {
-        $this->values["PAGE"] = "ANNEX A";
-        $this->_set_values();
-
         $rs['rs'] = $this->jb_ppe_school_M->ftbl_schools_annex_a();
 
-        $this->load->view($this->partials . 'header', $this->values);
-        $this->load->view($this->partials . 'topbar', $this->values);
-        $this->load->view($this->partials . 'sidebar', $this->values);
-        $this->load->view($this->ftbl_annex_a, $rs);
-        $this->load->view($this->partials . 'footer', $this->values);
+        $this->_loadview($this->ftbl_annex_a, $rs);
     }
 
     public function annex_b() {
-        $this->values["PAGE"] = "ANNEX B";
-        $this->_set_values();
-
         $rs['rs'] = $this->jb_ppe_school_M->ftbl_schools_annex_b();
 
-        $this->load->view($this->partials . 'header', $this->values);
-        $this->load->view($this->partials . 'topbar', $this->values);
-        $this->load->view($this->partials . 'sidebar', $this->values);
-        $this->load->view($this->ftbl_annex_b, $rs);
-        $this->load->view($this->partials . 'footer', $this->values);
+        $this->_loadview($this->ftbl_annex_b, $rs);
     }
 
     public function annex_c() {
-
-        $this->values["PAGE"] = "ANNEX C";
-        $this->_set_values();
-
         $rs['rs'] = $this->jb_ppe_school_M->ftbl_schools_annex_c();
 
-        $this->load->view($this->partials . 'header', $this->values);
-        $this->load->view($this->partials . 'topbar', $this->values);
-        $this->load->view($this->partials . 'sidebar', $this->values);
-        $this->load->view($this->ftbl_annex_c, $rs);
-        $this->load->view($this->partials . 'footer', $this->values);
+        $this->_loadview($this->ftbl_annex_c, $rs);
     }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -128,53 +106,35 @@ class Jb_coa extends CI_Controller {
     }
 
     public function school_ppe() {
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-
             $ppe_list_id = isset($_POST['ppe_list_id']) ? htmlspecialchars($_POST['ppe_list_id']) : null;
             $article_id = isset($_POST['article_id']) ? htmlspecialchars($_POST['article_id']) : null;
 
-            
-//            EDIT
+            // EDIT
             if ($ppe_list_id) {
-//                echo "PPE ID: " . $ppe_list_id;
-//                echo "<br>";
-//                echo "ARTICLE ID:" . $article_id; 
                 // Fetch the existing data for the given ID
                 $data['existing_data'] = $this->jb_ppe_list_M->get_selection_by_id($article_id); // get the id, group_id, name of jb_coa_ppe_group_article
                 // Fetch all groups for the dropdown
                 $data['groups'] = $this->jb_ppe_list_M->get_all_groups(); // Implement this method in your model
                 $data['articles'] = $this->jb_ppe_list_M->get_articles_by_group_id($data['existing_data']->group_id);
                 $data['ppe_list_selected'] = $this->jb_ppe_list_M->get_ppe_list_data_by_id($ppe_list_id);
-//                echo '<pre>';
-//                print_r($data);
-                // Pass the existing article ID for preselection 
-                $this->load->view($this->partials . 'header', $this->values);
-                $this->load->view($this->partials . 'topbar', $this->values);
-                $this->load->view($this->partials . 'sidebar', $this->values);
-                $this->load->view($this->crud_ppe_edit, $data);
-                $this->load->view($this->partials . 'footer', $this->values);
+
+                $this->_loadview($this->crud_ppe_edit, $data);
             } else {
 
-
-
-//SAVE
+                // SAVE
                 $action = $_POST['action'] ?? '';
                 $action = isset($_POST['action']) ? $_POST['action'] : '';
                 if ($action === 'save') {
                     $this->values["PAGE"] = "134717";
                     $groupId = $this->input->post('group', true);     // XSS Filtering
                     $articleId = $this->input->post('article', true); // XSS Filtering 
+
                     $rs['groups'] = $this->jb_ppe_list_M->get_groups(); // Get groups for the first dropdown 
                     $rs['rs'] = $this->jb_ppe_school_M->get_all_records_by_school_id(134717);
                     $rs['school_details'] = $this->jb_ppe_school_M->get_school_info_by_id(134717);
 
-                    $this->load->view($this->partials . 'header', $this->values);
-                    $this->load->view($this->partials . 'topbar', $this->values);
-                    $this->load->view($this->partials . 'sidebar', $this->values);
-                    $this->load->view($this->ftbl_school_ppe_list, $rs);
-                    $this->load->view($this->partials . 'footer', $this->values);
+                    $this->_loadview($this->ftbl_school_ppe_list, $rs);
                 } elseif ($action === 'update') {
                     echo "UPDATING";
                 } else {
@@ -183,44 +143,31 @@ class Jb_coa extends CI_Controller {
                 }
             }
         } else {
-            $this->values["PAGE"] = "129157";
             $rs['groups'] = $this->jb_ppe_list_M->get_groups(); // Get groups for the first dropdown 
             $rs['rs'] = $this->jb_ppe_school_M->get_all_records_by_school_id(129157);
             $rs['school_details'] = $this->jb_ppe_school_M->get_school_info_by_id(129157);
 
-            $this->load->view($this->partials . 'header', $this->values);
-            $this->load->view($this->partials . 'topbar', $this->values);
-            $this->load->view($this->partials . 'sidebar', $this->values);
-            $this->load->view($this->ftbl_school_ppe_list, $rs);
-            $this->load->view($this->partials . 'footer', $this->values);
+            $this->_loadview($this->ftbl_school_ppe_list, $rs);
         }
     }
 
 // ------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------
-// FORMS - DISPLAY
+// MEDIA PRINT - NEW TAB
 // ------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------
 
     public function school_ppe_annex_a() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-// Sanitize and validate the input
             $schoolId = isset($_POST['school_id']) ? trim($_POST['school_id']) : null;
-
-// Check if schoolId is valid (you can customize the validation logic)
             if ($schoolId && is_numeric($schoolId)) {
-                $this->values["PAGE"] = "&nbsp;";
-                $this->_set_values();
 
                 $rs['rs'] = $this->jb_ppe_school_M->mp_annex_a_by_schoolid($schoolId);
-
                 $this->load->view($this->mp_school_ppe_annex_a, $rs);
             } else {
-// Handle invalid schoolId
                 $this->handleError('Invalid school ID provided.');
             }
         } else {
-// Handle the case where the request method is not POST
             $this->handleError('Invalid request method.');
         }
     }
@@ -241,22 +188,15 @@ class Jb_coa extends CI_Controller {
 
     public function school_ppe_annex_b() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-// Sanitize and validate the input
             $schoolId = isset($_POST['school_id']) ? trim($_POST['school_id']) : null;
 
-// Check if schoolId is valid (you can customize the validation logic)
             if ($schoolId && is_numeric($schoolId)) {
-// Retrieve the data securely
                 $rs['rs'] = $this->jb_ppe_school_M->mp_annex_b_by_schoolid($schoolId);
-
-// Load the view
                 $this->load->view($this->mp_school_ppe_annex_b, $rs);
             } else {
-// Handle invalid schoolId
                 $this->handleError('Invalid school ID provided.');
             }
         } else {
-// Handle the case where the request method is not POST
             $this->handleError('Invalid request method.');
         }
     }
@@ -277,22 +217,16 @@ class Jb_coa extends CI_Controller {
 
     public function school_ppe_annex_c() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-// Sanitize and validate the input
+            // Sanitize and validate the input
             $schoolId = isset($_POST['school_id']) ? trim($_POST['school_id']) : null;
 
-// Check if schoolId is valid (you can customize the validation logic)
             if ($schoolId && is_numeric($schoolId)) {
-// Retrieve the data securely
                 $rs['rs'] = $this->jb_ppe_school_M->mp_annex_c_by_schoolid($schoolId);
-
-// Load the view
                 $this->load->view($this->mp_school_ppe_annex_c, $rs);
             } else {
-// Handle invalid schoolId
                 $this->handleError('Invalid school ID provided.');
             }
         } else {
-// Handle the case where the request method is not POST
             $this->handleError('Invalid request method.');
         }
     }
@@ -310,65 +244,7 @@ class Jb_coa extends CI_Controller {
             echo "Invalid request method.";
         }
     }
-
-// ------------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------------------
-// FORMS - CREATE
-// ------------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------------------
-
-    public function create_school_ppe_list() {
-        if ($this->_IS_IN_SESSION_schID()) { // CHECK IF SESSION LOGIN
-            $this->values["PAGE"] = "DASHBOARD";
-            $this->_set_values();
-            $this->load->view($this->partials . 'header', $this->values);
-            $this->load->view($this->partials . 'topbar', $this->values);
-            $this->load->view($this->partials . 'sidebar', $this->values);
-            $this->load->view($this->fcreate_ppe_list);
-            $this->load->view($this->partials . 'footer', $this->values);
-        } else {
-            
-        }
-    }
-
-// ------------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------------------
-// FORMS - UPDATE
-// ------------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------------------
-
-    public function update_school_ppe_list() {
-        if ($this->_IS_IN_SESSION_schID()) { // CHECK IF SESSION LOGIN
-            $this->values["PAGE"] = "DASHBOARD";
-            $this->_set_values();
-            $this->load->view($this->partials . 'header', $this->values);
-            $this->load->view($this->partials . 'topbar', $this->values);
-            $this->load->view($this->partials . 'sidebar', $this->values);
-            $this->load->view($this->fcreate_ppe_list);
-            $this->load->view($this->partials . 'footer', $this->values);
-        } else {
-            
-        }
-    }
-
-// ------------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------------------
-// SET VALUES
-// ------------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------------------
-    public function _SET_VALUES() {
-        if (isset($_SESSION['username']) && isset($_SESSION['position'])) {
-// ADMIN
-            if ($_SESSION['position'] == 'ADMIN') {
-// REGULAR USER
-            } else {
-                
-            }
-        } else {
-            return false;
-        }
-    }
-
+ 
 // ------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------
 // CHECK SESSION
@@ -401,20 +277,20 @@ class Jb_coa extends CI_Controller {
 // ------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------
     private function handleError($message) {
-// Log the error for debugging (not shown to the user)
+        // Log the error for debugging (not shown to the user)
         log_message('error', $message);
 
-// Optionally, redirect to an error page or show a generic error message
-// Redirect to an error page
+        // Optionally, redirect to an error page or show a generic error message
+        // Redirect to an error page
         redirect('error_page');
 
-// Or show a generic error message
-// $this->load->view('error_view', ['message' => 'An error occurred.']);
+        // Or show a generic error message
+        // $this->load->view('error_view', ['message' => 'An error occurred.']);
     }
 
 // ------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------
-// CREATE
+// CREATE - DROPDOWN LIST
 // ------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------
     public function test() {
@@ -423,11 +299,7 @@ class Jb_coa extends CI_Controller {
 
     public function ppe_create() {
         $data['groups'] = $this->jb_ppe_list_M->get_groups(); // Get groups for the first dropdown 
-        $this->load->view($this->partials . 'header', $this->values);
-        $this->load->view($this->partials . 'topbar', $this->values);
-        $this->load->view($this->partials . 'sidebar', $this->values);
-        $this->load->view($this->crud_ppe_create, $data); // Load the view
-        $this->load->view($this->partials . 'footer', $this->values);
+        $this->_loadview($this->crud_ppe_create, $data);
     }
 
     public function get_articles() {
@@ -446,13 +318,8 @@ class Jb_coa extends CI_Controller {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $action = $_POST['action'] ?? '';
 
-            // Get the selected values from the form
             $groupId = $this->input->post('group', true);     // XSS Filtering
-            $articleId = $this->input->post('article', true); // XSS Filtering
-//            echo $groupId;
-//            echo '<br>';
-//            echo $articleId;
-            // Validate the inputs
+            $articleId = $this->input->post('article', true); // XSS Filtering 
             if (!empty($groupId) && !empty($articleId)) {
                 
             } else {
@@ -476,20 +343,13 @@ class Jb_coa extends CI_Controller {
             $article_id = isset($_POST['article_id']) ? htmlspecialchars($_POST['article_id']) : null;
 
             if ($ppe_list_id) {
-//                echo "PPE ID: " . $ppe_list_id;
-//                echo "<br>";
-//                echo "ARTICLE ID:" . $article_id; 
                 // Fetch the existing data for the given ID
                 $data['existing_data'] = $this->jb_ppe_list_M->get_selection_by_id($article_id); // get the id, group_id, name of jb_coa_ppe_group_article
                 // Fetch all groups for the dropdown
                 $data['groups'] = $this->jb_ppe_list_M->get_all_groups(); // Implement this method in your model
                 $data['articles'] = $this->jb_ppe_list_M->get_articles_by_group_id($data['existing_data']->group_id);
                 // Pass the existing article ID for preselection 
-                $this->load->view($this->partials . 'header', $this->values);
-                $this->load->view($this->partials . 'topbar', $this->values);
-                $this->load->view($this->partials . 'sidebar', $this->values);
-                $this->load->view($this->crud_ppe_edit, $data);
-                $this->load->view($this->partials . 'footer', $this->values);
+                $this->_loadview($this->crud_ppe_edit, $data);
             } else {
                 echo "No Group ID received.";
             }
@@ -527,5 +387,18 @@ class Jb_coa extends CI_Controller {
             // If not a POST request, redirect or show an error
             show_error('Invalid request method', 405); // 405 Method Not Allowed
         }
+    }
+
+// ------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------
+// LOAD VIEW PAGE
+// ------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------
+    public function _loadview($page, $rs) {
+        $this->load->view($this->partials . 'header');
+        $this->load->view($this->partials . 'topbar');
+        $this->load->view($this->partials . 'sidebar');
+        $this->load->view($page, $rs);
+        $this->load->view($this->partials . 'footer');
     }
 }

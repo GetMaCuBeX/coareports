@@ -54,7 +54,7 @@ FROM
 // DROPDOWN MENU - RELATIONSHIPS
 // ------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------ 
-// FOR CREATE    
+    // FOR CREATE    
     // Get groups from jb_coa_ppe_group
     public function get_groups() {
         return $this->db->get('jb_coa_ppe_group')->result(); // Fetch all groups
@@ -66,7 +66,7 @@ FROM
         return $this->db->get('jb_coa_ppe_group_article')->result(); // Fetch articles
     }
 
-// QUERY
+    // QUERY
     public function get_group_name_by_group_id($group_id) {
         $sql = "
 SELECT
@@ -86,9 +86,9 @@ WHERE
 
         return $rs;
     }
-    
-    public function get_ppe_list_data_by_id($ppe_list_id){
-                $sql = "
+
+    public function get_ppe_list_data_by_id($ppe_list_id) {
+        $sql = "
 SELECT
 	jb_coa_ppe_list.*
 FROM
@@ -102,10 +102,8 @@ WHERE
 
         return $rs;
     }
-    
-    
 
-// FOR EDIT
+    // FOR EDIT
     public function get_selection_by_id($id) {
         return $this->db->get_where('jb_coa_ppe_group_article', ['id' => $id])->row(); // Fetch the row with the specified ID
     }
@@ -122,7 +120,7 @@ WHERE
         return $this->db->get_where('jb_coa_ppe_group_article', ['id' => $article_id])->row(); // Fetch the article row
     }
 
-// FOR UPDATE
+    // FOR UPDATE
     public function update_selection($id, $groupId, $articleId) {
         $data = array(
             'group_id' => $groupId,
