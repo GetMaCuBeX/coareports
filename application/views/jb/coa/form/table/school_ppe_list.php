@@ -180,7 +180,7 @@
                                                     <input type="hidden" name="ppe_list_id" value="<?= htmlspecialchars($row->id); ?>">
                                                     <input type="hidden" name="article_id" value="<?= htmlspecialchars($row->ARTICLE_ID); ?>">
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <!-- <p> element with onclick event to submit the form -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <!-- <p> element with onclick event to submit the form -->
                                                     <p class="submit-link" style="cursor: pointer; color: blue; margin: 0;" onclick="this.parentNode.submit();">
                                                         <?= str_pad($row->id, 5, '0', STR_PAD_LEFT); ?>
                                                     </p>
@@ -392,14 +392,31 @@
                                         <div class="form-group col-md-6">
                                             <label for="_pa" class="col-form-label">Person Accountable</label>
                                             <input  id="_pa" name="_pa" type="text" placeholder="" class="form-control" maxlength="255">
+
                                         </div>   
-                                        <div class="form-group col-md-6">
-                                            <label for="_ie" class="col-form-label">Is Existing?</label>
-                                            <input id="_ie"  name="_ie"  type="checkbox" checked data-plugin="switchery" data-color="#039cfd" />
+                                        <!--6.2-->
+                                        <div class="form-group col-md-3">
+                                            <!--6.2.1-->
+                                            <div class="form-row col-md-6"> 
+                                                <label for="_ie" class="col-form-label">Existing?</label>
+                                            </div>
+                                            <div class="form-row col-md-6"> 
+                                                <input id="_ie"  name="_ie"  type="checkbox" checked data-plugin="switchery" data-color="#039cfd" />
+                                            </div>
+                                        </div>
+                                        <!--6.3-->
+                                        <div class="form-group col-md-3">
+                                            <!--6.3.1-->
+                                            <div class="form-row col-md-6"> 
+                                                <label for="_ie" class="col-form-label">Verified?</label>
+                                            </div>
+                                            <div class="form-row col-md-6"> 
+                                                <input id="_ie"  name="_ie"  type="checkbox" data-plugin="switchery" data-color="#039cfd" />
+                                            </div>
                                         </div>
                                     </div>
 
- 
+
 
 
                                     <input id="_sin" name="_sin" type="hidden" value="">

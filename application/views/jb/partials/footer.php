@@ -31,7 +31,8 @@
 <script src="<?= base_url(); ?>assets/libs/moment/moment.min.js"></script>
 <script src="<?= base_url(); ?>assets/libs/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
 <script src="<?= base_url(); ?>assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js"></script>
-<script src="<?= base_url(); ?>assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>  
+<script src="<?= base_url(); ?>assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js"></script> 
+<script src="<?= base_url(); ?>assets/libs/switchery/switchery.min.js"></script>
 
 <script src="<?= base_url(); ?>assets/js/pages/dashboard.init.js"></script> 
 
