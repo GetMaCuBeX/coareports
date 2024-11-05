@@ -148,7 +148,7 @@
                                         <td colspan="9" style="font-size: 24px; text-align: center;"><strong>DEPARTMENT OF EDUCATION</strong></td>
                                     </tr>
                                     <tr style="text-align: center;">
-                                        <th class=" " style="text-align: center;">View</th>
+                                        <th class=" " style="text-align: center;">ID</th>
                                         <th class=" " style="text-align: center;">Verified</th>
                                         <th class="maxwidth-article">Group / Article</th>
                                         <th class="maxwidth-description">Description</th>
@@ -181,7 +181,7 @@
                                                 <input type="hidden" name="ppe_list_id" value="<?= htmlspecialchars($row->id); ?>">
                                                 <input type="hidden" name="article_id" value="<?= htmlspecialchars($row->ARTICLE_ID); ?>">
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <!-- <p> element with onclick event to submit the form -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <!-- <p> element with onclick event to submit the form -->
                                                 <p class="submit-link" style="cursor: pointer; color: blue; margin: 0;" onclick="this.parentNode.submit();">
                                                     <?= str_pad($row->id, 5, '0', STR_PAD_LEFT); ?>
                                                 </p>
@@ -189,7 +189,16 @@
                                         </td>
                                         <td style="text-align: center;">
                                             <!--SCRIPTED UPDATE--> 
-                                            <input id="_iv_table" name="_iv_table" type="checkbox" data-size="small" data-plugin="switchery" data-color="#039cfd" <?= $row->is_verified ? 'checked' : ''; ?> <?= ($_SESSION['position'] === 'ADMIN') ? '' : 'disabled'; ?>  onchange="updateIsVerified(this.checked, <?= htmlspecialchars($row->id); ?>)" />
+                                            <?php if ($_SESSION['position'] === 'ADMIN') { ?>
+                                                <input id="_iv_table" name="_iv_table" type="checkbox" data-size="small" data-plugin="switchery" data-color="#039cfd" <?= $row->is_verified ? 'checked' : ''; ?> <?= ($_SESSION['position'] === 'ADMIN') ? '' : 'disabled'; ?>  onchange="updateIsVerified(this.checked, <?= htmlspecialchars($row->id); ?>)" />
+                                                <!--<i class="fas fa-check"></i>-->
+                                                <!--<i class="fas fa-check-double"></i>-->
+                                            <?php } else { ?>
+                                                <?php if ($row->is_verified == 1) { ?>
+                                                            <!--<i class="fas fa-check-double"></i>-->
+                                                    <i class="mdi mdi-check-bold"></i>
+                                                <?php } ?>
+                                            <?php } ?>
                                         </td>
                                         <td class="maxwidth-article"><?= ($row->ARTICLE) ?></td>
                                         <td class="maxwidth-description"<?= ($row->is_existing == 0) ? ' style="color: red;"' : ''; ?>><?= ($row->DESCRIPTION) ?></td>
@@ -407,40 +416,46 @@
                                     </div>
 
                                     <!--6-->
-                                    <div class="form-row"> 
+                                    <div class="form-row "> 
                                         <!--6.1-->
                                         <div class="form-group col-md-6">
                                             <label for="_pa" class="col-form-label">Person Accountable</label>
                                             <input  id="_pa" name="_pa" type="text" placeholder="" class="form-control" maxlength="255">
-                                        </div>   
+                                        </div> 
                                         <!--6.2-->
-                                        <div class="form-group col-md-3">
-                                            <!--6.2.1-->
-                                            <div class="form-row col-md-6"> 
-                                                <label for="_ie" class="col-form-label">Existing?</label>
-                                            </div>
-                                            <div class="form-row col-md-6"> 
+                                        <div class="form-row "> 
+                                                <label for="_ie" class="col-form-label">Exist or Found at Station?</label>
+                                            <div class="form-group col-md-6"> 
                                                 <input id="_ie"  name="_ie"  type="checkbox" checked data-plugin="switchery" data-color="#039cfd" />
-                                            </div>
-                                        </div>
-                                        <!--6.3-->
-                                        <div class="form-group col-md-3">
-                                            <!--6.3.1-->
-                                            <div class="form-row col-md-6"> 
-                                                <label for="_ie" class="col-form-label">Verified?</label>
-                                            </div>
-                                            <div class="form-row col-md-6"> 
-                                                <input id="_ie"  name="_ie"  type="checkbox" data-plugin="switchery" data-color="#039cfd" />
-                                            </div>
-                                        </div>
+
+                                            </div>   
+                                        </div>  
                                     </div>
+
+                                    <!--7-->
+                                    <!--<div class="form-row ">--> 
+                                        <!--7.3-->   
+                                        <?php if ($_SESSION['position'] === 'ADMIN') { ?>
+                                            <!--                                            <div class="form-group col-md-6">
+                                                                                            <input id="_ie"  name="_ie"  type="checkbox" data-plugin="switchery" data-color="#039cfd" />
+                                            
+                                                                                            <label for="_ie" class="col-form-label">Verified?</label>
+                                                                                        </div>-->
+                                        <?php } ?>
+                                    <!--</div>-->
+
 
 
 
 
                                     <input id="_sin" name="_sin" type="hidden" value="">
-
-                                    <button type="submit" name="action" value="save" id="submitBtn" class="btn btn-primary waves-effect width-md waves-light">Save Selection</button>
+                                    <!--8-->
+                                    <div class="form-row">
+                                        <!--8.1-->
+                                        <div class="form-group text-right mb-0  col-md-12">   
+                                            <button type="submit" name="action" value="save" id="submitBtn" class="btn btn-primary waves-effect width-md waves-light">Add</button>
+                                        </div>
+                                    </div>
                                 </div>  
                             </div> 
                         </div> <!--COL END-->

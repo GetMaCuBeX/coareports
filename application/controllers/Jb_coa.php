@@ -106,9 +106,106 @@ class Jb_coa extends CI_Controller {
     }
 
     public function school_ppe() {
+//        $_SESSION['username'] = 304316;
+//        $_SESSION['position'] = 'ADMIN';
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $ppe_list_id = isset($_POST['ppe_list_id']) ? htmlspecialchars($_POST['ppe_list_id']) : null;
+            $article_id = isset($_POST['article_id']) ? htmlspecialchars($_POST['article_id']) : null;
+
+            // EDIT
+            if ($ppe_list_id) {
+                // Fetch the existing data for the given ID
+                $data['existing_data'] = $this->jb_ppe_list_M->get_selection_by_id($article_id); // get the id, group_id, name of jb_coa_ppe_group_article
+                // Fetch all groups for the dropdown
+                $data['groups'] = $this->jb_ppe_list_M->get_all_groups(); // Implement this method in your model
+                $data['articles'] = $this->jb_ppe_list_M->get_articles_by_group_id($data['existing_data']->group_id);
+                $data['ppe_list_selected'] = $this->jb_ppe_list_M->get_ppe_list_data_by_id($ppe_list_id);
+
+                $this->_loadview($this->crud_ppe_edit, $data);
+            } else {
+
+                // SAVE
+                $action = $_POST['action'] ?? '';
+                $action = isset($_POST['action']) ? $_POST['action'] : '';
+                if ($action === 'save') {
+                    $this->values["PAGE"] = "134717";
+                    $groupId = $this->input->post('group', true);     // XSS Filtering
+                    $articleId = $this->input->post('article', true); // XSS Filtering 
+
+                    $rs['groups'] = $this->jb_ppe_list_M->get_groups(); // Get groups for the first dropdown 
+                    $rs['rs'] = $this->jb_ppe_school_M->get_all_records_by_school_id(134717);
+                    $rs['school_details'] = $this->jb_ppe_school_M->get_school_info_by_id(134717);
+
+                    $this->_loadview($this->ftbl_school_ppe_list, $rs);
+                } elseif ($action === 'update') {
+                    echo "UPDATING";
+                } else {
+                    // Handle unknown action
+                    // Example: show an error or redirect
+                }
+            }
+        } else {
+            $rs['groups'] = $this->jb_ppe_list_M->get_groups(); // Get groups for the first dropdown 
+            $rs['rs'] = $this->jb_ppe_school_M->get_all_records_by_school_id($_SESSION['username']);
+            $rs['school_details'] = $this->jb_ppe_school_M->get_school_info_by_id($_SESSION['username']);
+
+            $this->_loadview($this->ftbl_school_ppe_list, $rs);
+        }
+    }
+
+    public function set_admin() {
 
         $_SESSION['username'] = 129157;
         $_SESSION['position'] = 'ADMIN';
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $ppe_list_id = isset($_POST['ppe_list_id']) ? htmlspecialchars($_POST['ppe_list_id']) : null;
+            $article_id = isset($_POST['article_id']) ? htmlspecialchars($_POST['article_id']) : null;
+
+            // EDIT
+            if ($ppe_list_id) {
+                // Fetch the existing data for the given ID
+                $data['existing_data'] = $this->jb_ppe_list_M->get_selection_by_id($article_id); // get the id, group_id, name of jb_coa_ppe_group_article
+                // Fetch all groups for the dropdown
+                $data['groups'] = $this->jb_ppe_list_M->get_all_groups(); // Implement this method in your model
+                $data['articles'] = $this->jb_ppe_list_M->get_articles_by_group_id($data['existing_data']->group_id);
+                $data['ppe_list_selected'] = $this->jb_ppe_list_M->get_ppe_list_data_by_id($ppe_list_id);
+
+                $this->_loadview($this->crud_ppe_edit, $data);
+            } else {
+
+                // SAVE
+                $action = $_POST['action'] ?? '';
+                $action = isset($_POST['action']) ? $_POST['action'] : '';
+                if ($action === 'save') {
+                    $this->values["PAGE"] = "134717";
+                    $groupId = $this->input->post('group', true);     // XSS Filtering
+                    $articleId = $this->input->post('article', true); // XSS Filtering 
+
+                    $rs['groups'] = $this->jb_ppe_list_M->get_groups(); // Get groups for the first dropdown 
+                    $rs['rs'] = $this->jb_ppe_school_M->get_all_records_by_school_id(134717);
+                    $rs['school_details'] = $this->jb_ppe_school_M->get_school_info_by_id(134717);
+
+                    $this->_loadview($this->ftbl_school_ppe_list, $rs);
+                } elseif ($action === 'update') {
+                    echo "UPDATING";
+                } else {
+                    // Handle unknown action
+                    // Example: show an error or redirect
+                }
+            }
+        } else {
+            $rs['groups'] = $this->jb_ppe_list_M->get_groups(); // Get groups for the first dropdown 
+            $rs['rs'] = $this->jb_ppe_school_M->get_all_records_by_school_id($_SESSION['username']);
+            $rs['school_details'] = $this->jb_ppe_school_M->get_school_info_by_id($_SESSION['username']);
+
+            $this->_loadview($this->ftbl_school_ppe_list, $rs);
+        }
+    }
+
+    public function set_notadmin() {
+        $_SESSION['username'] = 129157;
+        $_SESSION['position'] = 'NORMAL';
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $ppe_list_id = isset($_POST['ppe_list_id']) ? htmlspecialchars($_POST['ppe_list_id']) : null;
             $article_id = isset($_POST['article_id']) ? htmlspecialchars($_POST['article_id']) : null;

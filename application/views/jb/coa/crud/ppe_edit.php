@@ -12,7 +12,7 @@
                     <h4 class="page-title"><?= $row_ppe->SCHOOL_ID; ?> - <?= $row_ppe->SCHOOL_NAME; ?></h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb p-0 m-0">
-                            <!--<li class="breadcrumb-item"><a href="<?php //echo base_url();                  ?>jb_coa/school_ppe_annex_a_all_division" target="_blank">Print All</a></li>-->
+                            <!--<li class="breadcrumb-item"><a href="<?php //echo base_url();                                       ?>jb_coa/school_ppe_annex_a_all_division" target="_blank">Print All</a></li>-->
                             <!--<li class="breadcrumb-item"><a href="#">Dashboard</a></li>-->
                             <!--<li class="breadcrumb-item active">Dashboard 3</li>-->
                         </ol> 
@@ -67,15 +67,15 @@
                                 </div>
                                 <!--4.4-->
                                 <div class="form-group col-md-3">
-                                    <label for="_dc" class="col-form-label">Date Acquired</label>
-                                    <div>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" value="<?= htmlspecialchars($row_ppe->date_acquired ?? ''); ?>"  placeholder="mm/dd/yyyy" data-provide="datepicker" data-date-autoclose="true">
-                                            <div class="input-group-append">
-                                                <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
-                                            </div>
-                                        </div> 
-                                    </div>
+                                    <label for="_con" class="col-form-label">Condition</label>
+                                    <select id="_con" name="_con" value="" placeholder="" class="form-control" required>
+                                        <option value="">Select</option> 
+                                        <option value="Good Condition" <?= ($row_ppe->condition_name === 'Good Condition') ? 'selected' : ''; ?>>Good Condition</option>
+                                        <option value="Needs Repair" <?= ($row_ppe->condition_name === 'Needs Repair') ? 'selected' : ''; ?>>Needs Repair</option>
+                                        <option value="Unserviceable" <?= ($row_ppe->condition_name === 'Unserviceable') ? 'selected' : ''; ?>>Unserviceable</option>                                
+                                        <option value="Condemnable" <?= ($row_ppe->condition_name === 'Condemnable') ? 'selected' : ''; ?>>Condemnable</option>                                      
+                                        <option value="Damaged" <?= ($row_ppe->condition_name === 'Damaged') ? 'selected' : ''; ?>>Damaged</option>                 
+                                    </select>
                                 </div>
                             </div>
                             <!--3-->
@@ -120,15 +120,15 @@
                                 </div>
                                 <!--4.4-->
                                 <div class="form-group col-md-3">
-                                    <label for="_con" class="col-form-label">Condition</label>
-                                    <select id="_con" name="_con" value="" placeholder="" class="form-control" required>
-                                        <option value="">Select</option> 
-                                        <option value="Good Condition" <?= ($row_ppe->condition_name === 'Good Condition') ? 'selected' : ''; ?>>Good Condition</option>
-                                        <option value="Needs Repair" <?= ($row_ppe->condition_name === 'Needs Repair') ? 'selected' : ''; ?>>Needs Repair</option>
-                                        <option value="Unserviceable" <?= ($row_ppe->condition_name === 'Unserviceable') ? 'selected' : ''; ?>>Unserviceable</option>                                
-                                        <option value="Condemnable" <?= ($row_ppe->condition_name === 'Condemnable') ? 'selected' : ''; ?>>Condemnable</option>                                      
-                                        <option value="Damaged" <?= ($row_ppe->condition_name === 'Damaged') ? 'selected' : ''; ?>>Damaged</option>                 
-                                    </select>
+                                    <label for="_dc" class="col-form-label">Date Acquired</label>
+                                    <div>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" value="<?= htmlspecialchars($row_ppe->date_acquired ?? ''); ?>"  placeholder="mm/dd/yyyy" data-provide="datepicker" data-date-autoclose="true">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                            </div>
+                                        </div> 
+                                    </div>
                                 </div>
                             </div>                                    
                             <!--5-->
@@ -146,36 +146,35 @@
                             <!--6-->
                             <div class="form-row"> 
                                 <!--6.1-->
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-12">
                                     <label for="_pa" class="col-form-label">Person Accountable</label>
                                     <input  id="_pa" name="_pa" type="text" value="<?= htmlspecialchars($row_ppe->person_accountable ?? ''); ?>"  placeholder="" class="form-control" maxlength="255">
 
-                                </div>   
-                                <!--6.2--> 
-                                <div class="form-group col-md-3">
-                                    <div class="form-row col-md-6"> 
-                                        <label for="_ie" class="col-form-label">Existing?</label>
-                                    </div>
-                                    <div class="form-row col-md-6"> 
+                                </div>    
+                            </div>
+
+                            <!--7-->
+                            <div class="form-row "> 
+                                <!--7.2-->
+                                <div class="form-group col-md-6"> 
+                                    <input id="_ie"  name="_ie"  type="checkbox" checked data-plugin="switchery" data-color="#039cfd" />
+
+                                    <label for="_ie" class="col-form-label">Exist or Found at Station?</label>
+                                </div>
+                                <!--7.3-->   
+                                <?php if ($_SESSION['position'] === 'ADMIN') { ?>
+                                    <div class="form-group col-md-6">
                                         <input 
-                                            id="_ie"  
-                                            name="_ie"  
+                                            id="_ie" 
+                                            name="_ie" 
                                             type="checkbox" 
                                             data-plugin="switchery" 
                                             data-color="#039cfd"
-                                            <?= !empty($row_ppe->is_existing) ? 'checked' : ''; ?> 
-                                            />
-                                    </div>
-                                </div>                                
-                                <!--6.3-->
-                                <div class="form-group col-md-3">
-                                    <div class="form-row col-md-6"> 
+                                            <?= !empty($row_ppe->is_verified) ? 'checked' : ''; ?>  
+                                            /> 
                                         <label for="_ie" class="col-form-label">Verified?</label>
                                     </div>
-                                    <div class="form-row col-md-6"> 
-                                        <input id="_ie" name="_ie" type="checkbox" data-plugin="switchery" data-color="#039cfd"<?= !empty($row_ppe->is_verified) ? 'checked' : ''; ?> />
-                                    </div>
-                                </div>
+                                <?php } ?>
                             </div>
 
 
@@ -183,18 +182,27 @@
                             <input type="hidden" name="ppe_list_id" value="
                             <?php foreach ($ppe_list_selected as $row) { ?>
                                 <?= htmlspecialchars($row->id); ?>
-                            <?php } ?>
+                                   <?php } ?>">  <!--TABLE ID-->
+                            <input id="_sin" name="_sin" type="hidden" value=""> <!--SCHOOL ID NO-->     
 
-                                   ">  <!--TABLE ID-->
+                            <!--8-->
+                            <div class="form-row">
+                                <!--8.2-->
+                                <div class="form-group text-left mb-0  col-md-6">
+                                    <button type="button" class="btn btn-danger waves-effect width-md waves-light" onclick="window.history.back()">Delete</button>
+                                </div>
+                                <!--8.2-->
+                                <div class="form-group text-right mb-0  col-md-6">
+                                    <!--<button type="submit" name="action" value="save" id="submitBtn" class="btn btn-primary waves-effect width-md waves-light">Save Selection</button>-->
 
+                                    <?php if (($row->is_verified == 0) || ($_SESSION['position'] === 'ADMIN')) { ?> 
+                                        <button type="submit" class="btn btn-primary waves-effect width-md waves-light">Update Record</button>
 
-                            <input id="_sin" name="_sin" type="hidden" value=""> <!--SCHOOL ID NO-->
-
-                            <!--<button type="submit" name="action" value="save" id="submitBtn" class="btn btn-primary waves-effect width-md waves-light">Save Selection</button>-->
-                            <button type="submit" class="btn btn-primary waves-effect width-md waves-light">Update Record</button>
+                                    <?php } ?>
+                                    <button type="button" class="btn btn-secondary waves-effect width-md waves-light" onclick="window.history.back()">Back</button>
+                                </div>
+                            </div>
                         </form>
-
-
                     </div> <!--CARD BODY END-->
                 </div> <!--CARD END-->
             </div> <!--COL END-->
@@ -210,34 +218,31 @@
 <!--DROPDOWN GET ARTICLE BASE ON SELECTED GROUP-->
 <script src="<?= base_url(); ?>assets/js/jb/jquery-3.6.0.min.js"></script>
 <script>
-    $(document).ready(function () {
-        // When a group is selected
-        $('#group').change(function () {
-            var groupId = $(this).val();
-            $('#article').empty().append('<option value="">Select</option>');
+                                        $(document).ready(function () {
+                                            // When a group is selected
+                                            $('#group').change(function () {
+                                                var groupId = $(this).val();
+                                                $('#article').empty().append('<option value="">Select</option>');
 
-            if (groupId) {
-                $.ajax({
-                    url: '<?= base_url('jb_coa/get_articles'); ?>', // Endpoint for fetching articles
-                    type: 'GET',
-                    data: {id: groupId},
-                    success: function (data) {
-                        var articles = JSON.parse(data);
-                        articles.forEach(function (item) {
-                            $('#article').append('<option value="' + item.id + '">' + item.name + '</option>');
-                        });
-                    }
-                });
-            }
-        });
-    });
+                                                if (groupId) {
+                                                    $.ajax({
+                                                        url: '<?= base_url('jb_coa/get_articles'); ?>', // Endpoint for fetching articles
+                                                        type: 'GET',
+                                                        data: {id: groupId},
+                                                        success: function (data) {
+                                                            var articles = JSON.parse(data);
+                                                            articles.forEach(function (item) {
+                                                                $('#article').append('<option value="' + item.id + '">' + item.name + '</option>');
+                                                            });
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                        });
 </script>
 
 
-<!-- Plugins Js --> 
-<script src="<?= base_url(); ?>assets/libs/switchery/switchery.min.js"></script>
 
-
-
-<!-- Init js-->
+<script src="<?= base_url(); ?>assets/libs/switchery/switchery.min.js"></script> 
+<script src="<?= base_url(); ?>assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js"></script> 
 <script src="<?= base_url(); ?>assets/js/pages/form-advanced.init.js"></script>

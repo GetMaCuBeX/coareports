@@ -27,6 +27,9 @@
                         <li><a href="<?= base_url(); ?>jb_coa/annex_c">ANNEX C</a></li>                      
                         <li><a href="<?= base_url(); ?>jb_coa/set_session">SET SESSION</a></li>        
                         <li><a href="<?= base_url(); ?>jb_coa/unset_session">UNSET SESSION</a></li>    
+                        <li><a href="<?= base_url(); ?>jb_coa/set_admin">SET ADMIN</a></li>    
+                        <li><a href="<?= base_url(); ?>jb_coa/set_notadmin">SET NOT ADMIN</a></li>    
+                        <li><a href="<?= base_url(); ?>jb_coa/test">TEST</a></li>                            
                         <li><a href="<?= base_url(); ?>jb_coa/test">TEST</a></li>                            
                     </ul>
 
