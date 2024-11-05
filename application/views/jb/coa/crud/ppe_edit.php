@@ -12,7 +12,7 @@
                     <h4 class="page-title"><?= $row_ppe->SCHOOL_ID; ?> - <?= $row_ppe->SCHOOL_NAME; ?></h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb p-0 m-0">
-                            <!--<li class="breadcrumb-item"><a href="<?php //echo base_url();                                       ?>jb_coa/school_ppe_annex_a_all_division" target="_blank">Print All</a></li>-->
+                            <!--<li class="breadcrumb-item"><a href="<?php //echo base_url();                                                ?>jb_coa/school_ppe_annex_a_all_division" target="_blank">Print All</a></li>-->
                             <!--<li class="breadcrumb-item"><a href="#">Dashboard</a></li>-->
                             <!--<li class="breadcrumb-item active">Dashboard 3</li>-->
                         </ol> 
@@ -157,22 +157,24 @@
                             <div class="form-row "> 
                                 <!--7.2-->
                                 <div class="form-group col-md-6"> 
-                                    <input id="_ie"  name="_ie"  type="checkbox" checked data-plugin="switchery" data-color="#039cfd" />
+                                    <input id="_ie" name="_ie" type="checkbox" checked data-plugin="switchery" data-color="#039cfd" />
+                                    <label for="_ie" id="label_ie" class="col-form-label">(ON) Existing / Found at Station</label>
 
-                                    <label for="_ie" class="col-form-label">Exist or Found at Station?</label>
                                 </div>
                                 <!--7.3-->   
                                 <?php if ($_SESSION['position'] === 'ADMIN') { ?>
                                     <div class="form-group col-md-6">
                                         <input 
-                                            id="_ie" 
-                                            name="_ie" 
+                                            id="_iv" 
+                                            name="_iv" 
                                             type="checkbox" 
                                             data-plugin="switchery" 
-                                            data-color="#039cfd"
+                                            data-color="#039cfd" 
                                             <?= !empty($row_ppe->is_verified) ? 'checked' : ''; ?>  
                                             /> 
-                                        <label for="_ie" class="col-form-label">Verified?</label>
+                                        <label for="_iv" id="label_iv" class="col-form-label">
+                                            <?= !empty($row_ppe->is_verified) ? '(ON) Verified' : '(OFF) Not Verified'; ?>
+                                        </label>
                                     </div>
                                 <?php } ?>
                             </div>
@@ -188,9 +190,13 @@
                             <!--8-->
                             <div class="form-row">
                                 <!--8.2-->
-                                <div class="form-group text-left mb-0  col-md-6">
-                                    <button type="button" class="btn btn-danger waves-effect width-md waves-light" onclick="window.history.back()">Delete</button>
+
+                                <div class="form-group text-left mb-0  col-md-6">     
+                                    <?php if (($row->is_verified == 0) || ($_SESSION['position'] === 'ADMIN')) { ?> 
+                                        <button type="button" class="btn btn-danger waves-effect width-md waves-light" onclick="window.history.back()">Delete</button>
+                                    <?php } ?>
                                 </div>
+
                                 <!--8.2-->
                                 <div class="form-group text-right mb-0  col-md-6">
                                     <!--<button type="submit" name="action" value="save" id="submitBtn" class="btn btn-primary waves-effect width-md waves-light">Save Selection</button>-->
@@ -223,7 +229,6 @@
                                             $('#group').change(function () {
                                                 var groupId = $(this).val();
                                                 $('#article').empty().append('<option value="">Select</option>');
-
                                                 if (groupId) {
                                                     $.ajax({
                                                         url: '<?= base_url('jb_coa/get_articles'); ?>', // Endpoint for fetching articles
@@ -238,10 +243,42 @@
                                                     });
                                                 }
                                             });
-                                        });
+                                        });</script>
+
+<!--CHECKBOX IS EXISTING-->
+<script>
+    // Get references to the checkbox and label elements
+    const checkbox_ie = document.getElementById('_ie');
+    const label_ie = document.getElementById('label_ie');
+
+    // Function to update the label based on the checkbox state
+    function updateLabel() {
+        label_ie.textContent = checkbox_ie.checked ? '(ON) Existing / Found at Station' : '(OFF) Not Found at Station';
+    }
+
+    // Call updateLabel on page load to set the initial label text
+    window.addEventListener('load', updateLabel);
+
+    // Update the label whenever the checkbox state changes
+    checkbox_ie.addEventListener('change', updateLabel);
 </script>
+<!--CHECKBOX IS VERIFIED-->
+<script>
+    // Select the checkbox and label elements
+    const checkbox_iv = document.getElementById('_iv');
+    const label_iv = document.getElementById('label_iv');
 
+    // Function to update the label based on the checkbox state
+    function updateLabel() {
+        label_iv.textContent = checkbox_iv.checked ? '(ON) Verified' : '(OFF) Not Verified';
+    }
 
+    // Update the label on page load based on the initial checkbox state
+    window.addEventListener('load', updateLabel);
+
+    // Update the label dynamically whenever the checkbox state changes
+    checkbox_iv.addEventListener('change', updateLabel);
+</script>
 
 <script src="<?= base_url(); ?>assets/libs/switchery/switchery.min.js"></script> 
 <script src="<?= base_url(); ?>assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js"></script> 

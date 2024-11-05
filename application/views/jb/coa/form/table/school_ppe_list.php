@@ -181,7 +181,7 @@
                                                 <input type="hidden" name="ppe_list_id" value="<?= htmlspecialchars($row->id); ?>">
                                                 <input type="hidden" name="article_id" value="<?= htmlspecialchars($row->ARTICLE_ID); ?>">
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <!-- <p> element with onclick event to submit the form -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <!-- <p> element with onclick event to submit the form -->
                                                 <p class="submit-link" style="cursor: pointer; color: blue; margin: 0;" onclick="this.parentNode.submit();">
                                                     <?= str_pad($row->id, 5, '0', STR_PAD_LEFT); ?>
                                                 </p>
@@ -195,7 +195,7 @@
                                                 <!--<i class="fas fa-check-double"></i>-->
                                             <?php } else { ?>
                                                 <?php if ($row->is_verified == 1) { ?>
-                                                            <!--<i class="fas fa-check-double"></i>-->
+                                                                                            <!--<i class="fas fa-check-double"></i>-->
                                                     <i class="mdi mdi-check-bold"></i>
                                                 <?php } ?>
                                             <?php } ?>
@@ -423,25 +423,25 @@
                                             <input  id="_pa" name="_pa" type="text" placeholder="" class="form-control" maxlength="255">
                                         </div> 
                                         <!--6.2-->
-                                        <div class="form-row "> 
-                                                <label for="_ie" class="col-form-label">Exist or Found at Station?</label>
+                                        <div class="form-row"> 
+                                            <label for="_ie" id="label_ie" class="col-form-label">(ON) Existing / Found at Station</label>
                                             <div class="form-group col-md-6"> 
-                                                <input id="_ie"  name="_ie"  type="checkbox" checked data-plugin="switchery" data-color="#039cfd" />
+                                                <input id="_ie" name="_ie" type="checkbox" checked data-plugin="switchery" data-color="#039cfd" />
+                                            </div> 
 
-                                            </div>   
                                         </div>  
                                     </div>
 
                                     <!--7-->
                                     <!--<div class="form-row ">--> 
-                                        <!--7.3-->   
-                                        <?php if ($_SESSION['position'] === 'ADMIN') { ?>
-                                            <!--                                            <div class="form-group col-md-6">
-                                                                                            <input id="_ie"  name="_ie"  type="checkbox" data-plugin="switchery" data-color="#039cfd" />
-                                            
-                                                                                            <label for="_ie" class="col-form-label">Verified?</label>
-                                                                                        </div>-->
-                                        <?php } ?>
+                                    <!--7.3-->   
+                                    <?php if ($_SESSION['position'] === 'ADMIN') { ?>
+<!--                                        <div class="form-group col-md-6">
+                                            <input id="_iv" name="_iv" type="checkbox" data-plugin="switchery" data-color="#039cfd" />
+                                            <label for="_iv" id="label_iv" class="col-form-label">(ON) Verified</label>
+
+                                        </div>-->
+                                    <?php } ?>
                                     <!--</div>-->
 
 
@@ -479,7 +479,6 @@
         $('#group').change(function () {
             var groupId = $(this).val();
             $('#article').empty().append('<option value="">Select</option>');
-
             if (groupId) {
                 $.ajax({
                     url: '<?= base_url('jb_coa/get_articles'); ?>', // Endpoint for fetching articles
@@ -494,8 +493,7 @@
                 });
             }
         });
-    });
-</script>
+    });</script>
 
 <!--SUBMIT FOR FOR UPDATE-->
 <script>
@@ -504,8 +502,7 @@
             event.preventDefault(); // Prevent default action if needed
             this.closest('form').submit(); // Submit the closest form
         });
-    });
-</script>
+    });</script>
 
 
 <!--UPDATE VALUE is_verified-->
@@ -529,8 +526,41 @@
     }
 </script>
 
+<!--CHECKBOX IS EXISTING-->
+<script>
+    // Get references to the checkbox and label elements
+    const checkbox_ie = document.getElementById('_ie');
+    const label_ie = document.getElementById('label_ie');
 
+    // Function to update the label based on the checkbox_ie state
+    function updateLabel() {
+        label_ie.textContent = checkbox_ie.checked ? '(ON) Existing / Found at Station' : '(OFF) Not Found at Station';
+    }
 
+    // Set the initial label on page load
+    window.addEventListener('load', updateLabel);
+
+    // Update the label whenever the checkbox_ie state changes
+    checkbox_ie.addEventListener('change', updateLabel);
+</script>
+
+<!--CHECKBOX IS VERIFIED-->
+<script>
+    // Get references to the checkbox and label elements
+    const checkbox_iv = document.getElementById('_iv');
+    const label_iv = document.getElementById('label_iv');
+
+    // Function to update the label based on checkbox_iv state
+    function updateLabel() {
+        label_iv.textContent = checkbox_iv.checked ? '(ON) Verified' : '(OFF) Not Verified';
+    }
+
+    // Check initial state on page load
+    window.addEventListener('load', updateLabel);
+
+    // Update the label when the checkbox_iv state changes
+    checkbox_iv.addEventListener('change', updateLabel);
+</script>
 
 <!-- Vendor js -->
 <script src="<?= base_url(); ?>assets/js/vendor.min.js"></script>

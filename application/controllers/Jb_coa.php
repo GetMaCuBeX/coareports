@@ -106,9 +106,7 @@ class Jb_coa extends CI_Controller {
     }
 
     public function school_ppe() {
-//        $_SESSION['username'] = 304316;
-//        $_SESSION['position'] = 'ADMIN';
-
+        $this->_set_session();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $ppe_list_id = isset($_POST['ppe_list_id']) ? htmlspecialchars($_POST['ppe_list_id']) : null;
             $article_id = isset($_POST['article_id']) ? htmlspecialchars($_POST['article_id']) : null;
@@ -248,6 +246,16 @@ class Jb_coa extends CI_Controller {
             $rs['school_details'] = $this->jb_ppe_school_M->get_school_info_by_id($_SESSION['username']);
 
             $this->_loadview($this->ftbl_school_ppe_list, $rs);
+        }
+    }
+
+    public function _set_session() {
+        if (!isset($_SESSION['username'])) {
+            $_SESSION['username'] = '129157'; // Set a default value or a specific value as needed
+        }
+
+        if (!isset($_SESSION['position'])) {
+            $_SESSION['position'] = 'default_position'; // Set a default value or a specific value as needed
         }
     }
 
