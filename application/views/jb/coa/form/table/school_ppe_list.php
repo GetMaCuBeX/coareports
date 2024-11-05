@@ -1,6 +1,3 @@
-<!--FOR DROPDOWN SELECTION QUERY DATA-->
-<script src="<?= base_url(); ?>assets/js/jb/jquery-3.6.0.min.js"></script>
-
 
 
 
@@ -114,153 +111,153 @@
 
 
 
-<body>
-    <div>
-        <!-- start page title -->
+
+<div>
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <?php foreach ($school_details as $row) { ?>
+                    <h4 class="page-title"><?= $row->schidnumber; ?> - <?= $row->schname; ?></h4>
+                <?php } ?> 
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div> <!-- end page title -->
+
+
+
+    <?php $row_count = 1; ?>
+    <?php $group_count = 0; ?>
+    <?php $school_list_count_all = 0; ?>
+    <?php if (!empty($rs)): ?>
         <div class="row">
             <div class="col-12">
-                <div class="page-title-box">
-                    <?php foreach ($school_details as $row) { ?>
-                        <h4 class="page-title"><?= $row->schidnumber; ?> - <?= $row->schname; ?></h4>
-                    <?php } ?> 
-                    <div class="clearfix"></div>
-                </div>
-            </div>
-        </div> <!-- end page title -->
+                <div class="card">
+                    <div class="card-body">
+                        <button type="button" class="no-print btn btn-primary waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-lg">Add Data</button>
+                        <p class="mb-3"></p>
+                        <table>
+                            <!--START FOREACH-->
 
 
-
-        <?php $row_count = 1; ?>
-        <?php $group_count = 0; ?>
-        <?php $school_list_count_all = 0; ?>
-        <?php if (!empty($rs)): ?>
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <button type="button" class="no-print btn btn-primary waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-lg">Add Data</button>
-                            <p class="mb-3"></p>
-                            <table>
-                                <!--START FOREACH-->
-
-
-                                <!--HEADERS-->
-                                <?php if ($school_list_count_all == 0) { ?>
-                                    <thead>
-                                        <tr>
-                                            <td colspan="9" style="font-size: 24px; text-align: center;"><strong>DEPARTMENT OF EDUCATION</strong></td>
-                                        </tr>
-                                        <tr style="text-align: center;">
-                                            <th class=" " style="text-align: center;">View</th>
-                                            <th class=" " style="text-align: center;">Verified</th>
-                                            <th class="maxwidth-article">Group / Article</th>
-                                            <th class="maxwidth-description">Description</th>
-                                            <!--<th>Old Prty. No.</th>-->
-                                            <!--<th>New Prty. No.</th>-->
-                                            <th>Unit of Measure</th>
-                                            <th>Unit Value</th>
-                                            <!--<th>QTY (Property Card)</th>-->
-                                            <th>QTY (Physical Count)</th>
-                                            <th>Total Value</th>
-                                            <th>Date Acquired</th>
-                                            <th>Condition</th>
-                                        </tr>
-                                    </thead>
+                            <!--HEADERS-->
+                            <?php if ($school_list_count_all == 0) { ?>
+                                <thead>
+                                    <tr>
+                                        <td colspan="9" style="font-size: 24px; text-align: center;"><strong>DEPARTMENT OF EDUCATION</strong></td>
+                                    </tr>
+                                    <tr style="text-align: center;">
+                                        <th class=" " style="text-align: center;">View</th>
+                                        <th class=" " style="text-align: center;">Verified</th>
+                                        <th class="maxwidth-article">Group / Article</th>
+                                        <th class="maxwidth-description">Description</th>
+                                        <!--<th>Old Prty. No.</th>-->
+                                        <!--<th>New Prty. No.</th>-->
+                                        <th>Unit of Measure</th>
+                                        <th>Unit Value</th>
+                                        <!--<th>QTY (Property Card)</th>-->
+                                        <th>QTY (Physical Count)</th>
+                                        <th>Total Value</th>
+                                        <th>Date Acquired</th>
+                                        <th>Condition</th>
+                                    </tr>
+                                </thead>
+                            <?php } ?>
+                            <?php foreach ($rs as $row): ?>
+                                <!--GROUP NAME-->
+                                <?php if ($row->_R2 == 1) { ?>
+                                    <tr>
+                                        <td colspan="9" style="color: red; padding-left: 6px; padding-right: 6px;" class="no-outline"><strong><?= strtoupper($row->GROUP_NAME) ?></strong></td>
+                                    </tr>
                                 <?php } ?>
-                                <?php foreach ($rs as $row): ?>
-                                    <!--GROUP NAME-->
-                                    <?php if ($row->_R2 == 1) { ?>
+
+                                <!--TABLE BODY-->
+                                <tbody>
+                                    <!--VALUES-->
+                                    <tr>  
+                                        <td class="hover-red  " style="text-align: center; vertical-align: middle;">
+                                            <form method="post" class="form-horizontal" action="<?= base_url('jb_coa/school_ppe') ?>" style="display: inline;">
+                                                <input type="hidden" name="ppe_list_id" value="<?= htmlspecialchars($row->id); ?>">
+                                                <input type="hidden" name="article_id" value="<?= htmlspecialchars($row->ARTICLE_ID); ?>">
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <!-- <p> element with onclick event to submit the form -->
+                                                <p class="submit-link" style="cursor: pointer; color: blue; margin: 0;" onclick="this.parentNode.submit();">
+                                                    <?= str_pad($row->id, 5, '0', STR_PAD_LEFT); ?>
+                                                </p>
+                                            </form>
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <!--SCRIPTED UPDATE--> 
+                                            <input id="_iv_table" name="_iv_table" type="checkbox" data-size="small" data-plugin="switchery" data-color="#039cfd" <?= $row->is_verified ? 'checked' : ''; ?> <?= ($_SESSION['position'] === 'ADMIN') ? '' : 'disabled'; ?>  onchange="updateIsVerified(this.checked, <?= htmlspecialchars($row->id); ?>)" />
+                                        </td>
+                                        <td class="maxwidth-article"><?= ($row->ARTICLE) ?></td>
+                                        <td class="maxwidth-description"<?= ($row->is_existing == 0) ? ' style="color: red;"' : ''; ?>><?= ($row->DESCRIPTION) ?></td>
+                                        <!--<td><?= ($row->old_property_no_assigned) ?></td>-->
+                                        <!--<td><?= ($row->new_property_no_assigned) ?></td>-->
+                                        <td style="text-align: center;"><?= ($row->unit_of_measure) ?></td>
+                                        <td style="text-align: right;"><?= ($row->unit_value) ?></td>
+                                        <!--<td style="text-align: center;"><?= ($row->quantity_per_property_card) ?></td>-->
+                                        <td style="text-align: center;"><?= ($row->quantity_per_physical_count) ?></td>
+                                        <td style="text-align: right; <?= ($row->is_existing == 0) ? ' color: red;' : ''; ?>"><?= ($row->total_value) ?></td>
+                                        <td style="text-align: center;">
+                                            <?php
+                                            $dateAcquired = $row->date_acquired; // Assuming this is coming from your data source
+                                            // Check if date is null
+                                            if (!is_null($dateAcquired)) {
+                                                $date = new DateTime($dateAcquired);
+
+                                                // Check if the month is January and the day is 1
+                                                if ($date->format('m') === '01' && $date->format('d') === '01') {
+                                                    echo $date->format('Y'); // Display year only
+                                                } else {
+                                                    echo $date->format('Y-m-d'); // Display full date or any other format you prefer
+                                                }
+                                            }
+                                            ?>
+                                        </td>
+                                        <td><?= ($row->condition_name) ?></td>
+                                        <!--<td class="maxwidth-remarks"><?= ($row->remarks) ?></td>--> 
+                                    </tr>
+
+                                    <?php $group_count++; ?>
+                                    <?php $school_list_count_all++; ?>
+
+
+                                    <!--SUB TOTAL-->
+                                    <?php if ($group_count == $row->_R3) { ?>
+                                        <?php $group_count = 0; ?>
                                         <tr>
-                                            <td colspan="9" style="color: red; padding-left: 6px; padding-right: 6px;" class="no-outline"><strong><?= strtoupper($row->GROUP_NAME) ?></strong></td>
+                                            <td colspan="5" class="no-outline"></td>
+                                            <td colspan="1" style="text-align: left;">SUB TOTAL: </td>
+                                            <td style="text-align: right;"><?= ($row->SUM_PER_GROUP) ?></td>
+                                            <td colspan="2" class="no-outline"></td>
                                         </tr>
                                     <?php } ?>
 
-                                    <!--TABLE BODY-->
-                                    <tbody>
-                                        <!--VALUES-->
-                                        <tr>  
-                                            <td class="hover-red  " style="text-align: center; vertical-align: middle;">
-                                                <form method="post" class="form-horizontal" action="<?= base_url('jb_coa/school_ppe') ?>" style="display: inline;">
-                                                    <input type="hidden" name="ppe_list_id" value="<?= htmlspecialchars($row->id); ?>">
-                                                    <input type="hidden" name="article_id" value="<?= htmlspecialchars($row->ARTICLE_ID); ?>">
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <!-- <p> element with onclick event to submit the form -->
-                                                    <p class="submit-link" style="cursor: pointer; color: blue; margin: 0;" onclick="this.parentNode.submit();">
-                                                        <?= str_pad($row->id, 5, '0', STR_PAD_LEFT); ?>
-                                                    </p>
-                                                </form>
-                                            </td>
-                                            <td style="text-align: center;">
-                                                <!--SCRIPTED UPDATE--> 
-                                                <input id="_iv_table" name="_iv_table" type="checkbox" data-size="small" data-plugin="switchery" data-color="#039cfd" <?= $row->is_verified ? 'checked' : ''; ?> <?= ($_SESSION['position'] === 'ADMIN') ? '' : 'disabled'; ?>  onchange="updateIsVerified(this.checked, <?= htmlspecialchars($row->id); ?>)" />
-                                            </td>
-                                            <td class="maxwidth-article"><?= ($row->ARTICLE) ?></td>
-                                            <td class="maxwidth-description"<?= ($row->is_existing == 0) ? ' style="color: red;"' : ''; ?>><?= ($row->DESCRIPTION) ?></td>
-                                            <!--<td><?= ($row->old_property_no_assigned) ?></td>-->
-                                            <!--<td><?= ($row->new_property_no_assigned) ?></td>-->
-                                            <td style="text-align: center;"><?= ($row->unit_of_measure) ?></td>
-                                            <td style="text-align: right;"><?= ($row->unit_value) ?></td>
-                                            <!--<td style="text-align: center;"><?= ($row->quantity_per_property_card) ?></td>-->
-                                            <td style="text-align: center;"><?= ($row->quantity_per_physical_count) ?></td>
-                                            <td style="text-align: right; <?= ($row->is_existing == 0) ? ' color: red;' : ''; ?>"><?= ($row->total_value) ?></td>
-                                            <td style="text-align: center;">
-                                                <?php
-                                                $dateAcquired = $row->date_acquired; // Assuming this is coming from your data source
-                                                // Check if date is null
-                                                if (!is_null($dateAcquired)) {
-                                                    $date = new DateTime($dateAcquired);
-
-                                                    // Check if the month is January and the day is 1
-                                                    if ($date->format('m') === '01' && $date->format('d') === '01') {
-                                                        echo $date->format('Y'); // Display year only
-                                                    } else {
-                                                        echo $date->format('Y-m-d'); // Display full date or any other format you prefer
-                                                    }
-                                                }
-                                                ?>
-                                            </td>
-                                            <td><?= ($row->condition_name) ?></td>
-                                            <!--<td class="maxwidth-remarks"><?= ($row->remarks) ?></td>--> 
+                                    <!--GRAND TOTAL-->
+                                    <?php if ($school_list_count_all == $row->_R4) { ?>
+                                        <?php $school_list_count_all = 0; ?>
+                                        <tr class="grand-total">
+                                            <td colspan="5" class="no-outline"></td>
+                                            <td colspan="1" style="text-align: left;"><strong>GRAND TOTAL: </strong></td>
+                                            <td style="text-align: right; color: red;"><strong><?= ($row->GRAND_TOTAL) ?></strong></td>
+                                            <td colspan="2" class="no-outline"></td>
                                         </tr>
 
-                                        <?php $group_count++; ?>
-                                        <?php $school_list_count_all++; ?>
-
-
-                                        <!--SUB TOTAL-->
-                                        <?php if ($group_count == $row->_R3) { ?>
-                                            <?php $group_count = 0; ?>
-                                            <tr>
-                                                <td colspan="5" class="no-outline"></td>
-                                                <td colspan="1" style="text-align: left;">SUB TOTAL: </td>
-                                                <td style="text-align: right;"><?= ($row->SUM_PER_GROUP) ?></td>
-                                                <td colspan="2" class="no-outline"></td>
-                                            </tr>
-                                        <?php } ?>
-
-
-                                        <!--GRAND TOTAL-->
-                                        <?php if ($school_list_count_all == $row->_R4) { ?>
-                                            <?php $school_list_count_all = 0; ?>
-                                            <tr class="grand-total">
-                                                <td colspan="5" class="no-outline"></td>
-                                                <td colspan="1" style="text-align: left;"><strong>GRAND TOTAL: </strong></td>
-                                                <td style="text-align: right; color: red;"><strong><?= ($row->GRAND_TOTAL) ?></strong></td>
-                                                <td colspan="2" class="no-outline"></td>
-                                            </tr>
-
-                                            <!--EXTRA COLUMN-->
-                                            <tr class="grand-total">
-                                                <td class="no-outline" colspan="12" >&nbsp;</td>
-                                            </tr>
-                                        <?php } ?>
-                                    </tbody>
-                                <?php endforeach; ?> <!--END FOREACH-->
-                            </table>
-                        </div> 
+                                        <!--EXTRA COLUMN-->
+                                        <tr class="grand-total">
+                                            <td class="no-outline" colspan="12" >&nbsp;</td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            <?php endforeach; ?> <!--END FOREACH-->
+                        </table>
                     </div> 
                 </div> 
             </div> 
+        </div> 
 
 
 
@@ -274,11 +271,11 @@
 
 
 
-        <?php else: ?>
-            <p>No records found.</p>
-        <?php endif; ?> 
-    </div> 
-</body>
+    <?php else: ?>
+        <p>No records found.</p>
+    <?php endif; ?> 
+</div> 
+
 
 
 
@@ -287,7 +284,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel">PPE</h5>
+                <h5 class="modal-title" id="myLargeModalLabel">CREATE</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <div class="modal-body">
@@ -518,8 +515,25 @@
 </script>
 
 
-<!-- Responsive Table js -->
-<script src="<?= base_url(); ?>assets/libs/rwd-table/rwd-table.min.js"></script>
 
-<!-- Init js -->
-<script src="<?= base_url(); ?>assets/js/pages/responsive-table.init.js"></script>
+
+<!-- Vendor js -->
+<script src="<?= base_url(); ?>assets/js/vendor.min.js"></script>
+
+<!-- Plugins Js -->
+<script src="<?= base_url(); ?>assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
+<script src="<?= base_url(); ?>assets/libs/switchery/switchery.min.js"></script>
+
+<script src="<?= base_url(); ?>assets/libs/select2/select2.min.js"></script>
+<script src="<?= base_url(); ?>assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+<script src="<?= base_url(); ?>assets/libs/jquery-mask-plugin/jquery.mask.min.js"></script>
+<script src="<?= base_url(); ?>assets/libs/moment/moment.min.js"></script>
+<script src="<?= base_url(); ?>assets/libs/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
+<script src="<?= base_url(); ?>assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js"></script>
+<script src="<?= base_url(); ?>assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+
+<!-- Init js-->
+<script src="<?= base_url(); ?>assets/js/pages/form-advanced.init.js"></script>
+
+<!-- App js -->
+<script src="<?= base_url(); ?>assets/js/app.min.js"></script>

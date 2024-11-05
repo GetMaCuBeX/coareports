@@ -1,4 +1,7 @@
- 
+<!-- Plugins css --> 
+<link href="<?= base_url(); ?>assets/libs/switchery/switchery.min.css" rel="stylesheet" type="text/css" /> 
+
+
 
 <?php foreach ($ppe_list_selected as $row_ppe) { ?>
     <div>
@@ -229,3 +232,12 @@
         });
     });
 </script>
+
+
+<!-- Plugins Js --> 
+<script src="<?= base_url(); ?>assets/libs/switchery/switchery.min.js"></script>
+
+
+
+<!-- Init js-->
+<script src="<?= base_url(); ?>assets/js/pages/form-advanced.init.js"></script>
