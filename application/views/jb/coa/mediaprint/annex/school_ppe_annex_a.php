@@ -7,7 +7,7 @@
         <meta content="Responsive bootstrap 4 admin template" name="description" />
         <meta content="Coderthemes" name="author" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-       <!--1. APP FAVICON-->
+        <!--1. APP FAVICON-->
         <link rel="shortcut icon" href="<?= base_url(); ?>assets/images/favicon.ico">
 
         <!--2. PLUGINS CSS--> 
@@ -16,13 +16,13 @@
 
 
         <!--4. APP CSS-->
-   
+
 
         <!--DATATABLES CSS-->
-   
+
         <!--UNKNOWN CSS-->
- 
-        
+
+
         <style>
             /*https://www.docuseal.co/blog/css-print-page-style*/
             @media print {
@@ -32,6 +32,10 @@
                     margin-bottom: 0.4in;
                     margin-left: 0.15in;
                     margin-right: 0.15in;
+                }
+
+
+                body{
                     font-family: sans-serif;
                 }
 
@@ -60,6 +64,7 @@
                     width: 100%;
                     border: 1px solid gray;
                     border-collapse: collapse;
+                    font-family: sans-serif;
 
                     thead, th, td {
                         font-size: 9px;
@@ -79,6 +84,11 @@
 
             }  /*end of @media print*/
 
+            body{
+                font-family: sans-serif;
+            }
+
+
             table {
                 font-family: sans-serif;
                 width: 100%;
@@ -93,6 +103,8 @@
                 .maxwidth-article {
                     max-width: 150px;
                 }
+
+
 
             }
 
@@ -110,6 +122,8 @@
                 border: none;
                 outline: none;
             }
+
+
 
         </style>
     </head>

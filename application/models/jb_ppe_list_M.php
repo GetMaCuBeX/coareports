@@ -90,9 +90,35 @@ WHERE
     public function get_ppe_list_data_by_id($ppe_list_id) {
         $sql = "
 SELECT
-	jb_coa_ppe_list.*
+	jb_coa_ppe_list.id, 
+	jb_coa_ppe_list.article_id, 
+	jb_coa_ppe_list.description, 
+	jb_coa_ppe_list.old_property_no_assigned, 
+	jb_coa_ppe_list.new_property_no_assigned, 
+	jb_coa_ppe_list.unit_of_measure, 
+	jb_coa_ppe_list.unit_value, 
+	jb_coa_ppe_list.quantity_per_property_card, 
+	jb_coa_ppe_list.quantity_per_physical_count, 
+	jb_coa_ppe_list.total_value, 
+	jb_coa_ppe_list.date_acquired, 
+	jb_coa_ppe_list.location_whereabouts, 
+	jb_coa_ppe_list.condition_name, 
+	jb_coa_ppe_list.remarks, 
+	jb_coa_ppe_list.school_idnumber, 
+	jb_coa_ppe_list.created_at, 
+	jb_coa_ppe_list.updated_at, 
+	jb_coa_ppe_list.is_existing, 
+	jb_coa_ppe_list.person_accountable, 
+	jb_coa_ppe_list.is_verified, 
+	jb_coa_ppe_list.is_removed, 
+	jb_school.school_idnumber as `SCHOOL_ID`, 
+	jb_school.`name` as `SCHOOL_NAME`
 FROM
 	jb_coa_ppe_list
+	INNER JOIN
+	jb_school
+	ON 
+		jb_coa_ppe_list.school_idnumber = jb_school.school_idnumber
 WHERE
 	jb_coa_ppe_list.id = " . $ppe_list_id . "
     ";
@@ -130,4 +156,16 @@ WHERE
         $this->db->where('id', $id);
         return $this->db->update('jb_coa_ppe_list', $data);
     }
+    
+    // UPDATE is_verified
+   public function update_is_verified_by_id($id, $is_verified) {
+    // Prepare the data to update
+    $data = [
+        'is_verified' => $is_verified
+    ];
+    
+    // Update the record in the database where the ID matches
+    $this->db->where('id', $id); // Replace 'id' with your actual primary key column if different
+    return $this->db->update('jb_coa_ppe_list', $data);  
+}
 }

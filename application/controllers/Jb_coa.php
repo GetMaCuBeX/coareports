@@ -143,9 +143,10 @@ class Jb_coa extends CI_Controller {
                 }
             }
         } else {
+            $_test_id = 304336;
             $rs['groups'] = $this->jb_ppe_list_M->get_groups(); // Get groups for the first dropdown 
-            $rs['rs'] = $this->jb_ppe_school_M->get_all_records_by_school_id(129157);
-            $rs['school_details'] = $this->jb_ppe_school_M->get_school_info_by_id(129157);
+            $rs['rs'] = $this->jb_ppe_school_M->get_all_records_by_school_id($_test_id);
+            $rs['school_details'] = $this->jb_ppe_school_M->get_school_info_by_id($_test_id);
 
             $this->_loadview($this->ftbl_school_ppe_list, $rs);
         }
@@ -401,4 +402,25 @@ class Jb_coa extends CI_Controller {
         $this->load->view($page, $rs);
         $this->load->view($this->partials . 'footer');
     }
+    
+    
+// ------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------
+// UPDATE
+// ------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------
+    public function update_verification_status() {
+    // Get the data from the AJAX request
+    $is_verified = $this->input->post('is_verified'); // Get the checkbox state
+    $id = $this->input->post('id'); // Get the ID of the row
+
+    // Call the model method to update the verification status
+    if ($this->jb_ppe_list_M->update_is_verified_by_id($id, $is_verified)) {
+        // Return a success response
+        echo json_encode(['status' => 'success']);
+    } else {
+        // Return an error response
+        echo json_encode(['status' => 'error']);
+    }
+}
 }

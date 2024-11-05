@@ -55,7 +55,7 @@ jb_coa_ppe_list.id,
 	jb_coa_ppe_list.quantity_per_physical_count, 
 	FORMAT(jb_coa_ppe_list.total_value,2) AS total_value, 
 	jb_coa_ppe_list.date_acquired, 
-	jb_coa_ppe_list.localtion_whereabouts, 
+	jb_coa_ppe_list.location_whereabouts, 
 	jb_coa_ppe_list.condition_name, 
 	jb_coa_ppe_list.remarks, 
 	jb_coa_ppe_list.is_existing
@@ -217,7 +217,7 @@ SELECT
 	jb_coa_ppe_list.quantity_per_physical_count, 
 	FORMAT(jb_coa_ppe_list.total_value,2) as total_value, 
 	jb_coa_ppe_list.date_acquired, 
-	jb_coa_ppe_list.localtion_whereabouts, 
+	jb_coa_ppe_list.location_whereabouts, 
 	jb_coa_ppe_list.condition_name, 
 	jb_coa_ppe_list.remarks, 
 	jb_coa_ppe_list.is_existing
@@ -291,7 +291,7 @@ SELECT
 	jb_coa_ppe_list.quantity_per_physical_count, 
 	FORMAT(jb_coa_ppe_list.total_value,2) as total_value, 
 	jb_coa_ppe_list.date_acquired, 
-	jb_coa_ppe_list.localtion_whereabouts, 
+	jb_coa_ppe_list.location_whereabouts, 
 	jb_coa_ppe_list.condition_name, 
 	jb_coa_ppe_list.remarks, 
 	jb_coa_ppe_list.is_existing
@@ -449,7 +449,7 @@ SELECT
 	jb_coa_ppe_list.quantity_per_physical_count, 
 	FORMAT(jb_coa_ppe_list.total_value,2) as total_value, 
 	jb_coa_ppe_list.date_acquired, 
-	jb_coa_ppe_list.localtion_whereabouts, 
+	jb_coa_ppe_list.location_whereabouts, 
 	jb_coa_ppe_list.condition_name, 
 	jb_coa_ppe_list.remarks, 
 	jb_coa_ppe_list.is_existing
@@ -523,7 +523,7 @@ SELECT
 	jb_coa_ppe_list.quantity_per_physical_count, 
 	FORMAT(jb_coa_ppe_list.total_value,2) as total_value, 
 	jb_coa_ppe_list.date_acquired, 
-	jb_coa_ppe_list.localtion_whereabouts, 
+	jb_coa_ppe_list.location_whereabouts, 
 	jb_coa_ppe_list.condition_name, 
 	jb_coa_ppe_list.remarks, 
 	jb_coa_ppe_list.is_existing
@@ -746,7 +746,7 @@ SELECT
 	jb_coa_ppe_list.quantity_per_physical_count, 
 	FORMAT(jb_coa_ppe_list.total_value,2) as total_value, 
 	jb_coa_ppe_list.date_acquired, 
-	jb_coa_ppe_list.localtion_whereabouts, 
+	jb_coa_ppe_list.location_whereabouts, 
 	jb_coa_ppe_list.condition_name, 
 	jb_coa_ppe_list.remarks, 
 	jb_coa_ppe_list.is_existing
@@ -820,7 +820,7 @@ SELECT
 	jb_coa_ppe_list.quantity_per_physical_count, 
 	FORMAT(jb_coa_ppe_list.total_value,2) as total_value, 
 	jb_coa_ppe_list.date_acquired, 
-	jb_coa_ppe_list.localtion_whereabouts, 
+	jb_coa_ppe_list.location_whereabouts, 
 	jb_coa_ppe_list.condition_name, 
 	jb_coa_ppe_list.remarks, 
 	jb_coa_ppe_list.is_existing
@@ -896,10 +896,11 @@ SELECT
 	jb_coa_ppe_list.quantity_per_physical_count, 
 	FORMAT(jb_coa_ppe_list.total_value,2) as total_value, 
 	jb_coa_ppe_list.date_acquired, 
-	jb_coa_ppe_list.localtion_whereabouts, 
+	jb_coa_ppe_list.location_whereabouts, 
 	jb_coa_ppe_list.condition_name, 
 	jb_coa_ppe_list.remarks, 
-	jb_coa_ppe_list.is_existing
+	jb_coa_ppe_list.is_existing,
+	jb_coa_ppe_list.is_verified
 FROM
 	jb_coa_ppe_list
 	INNER JOIN
