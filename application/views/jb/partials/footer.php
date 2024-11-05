@@ -23,7 +23,6 @@
 
 <!--2 PLUGINS JS-->
 <script src="<?= base_url(); ?>assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
-<script src="<?= base_url(); ?>assets/libs/switchery/switchery.min.js"></script> 
 
 <script src="<?= base_url(); ?>assets/libs/select2/select2.min.js"></script>
 <script src="<?= base_url(); ?>assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
@@ -66,28 +65,12 @@
 <!-- Datatables init -->
 <script src="<?= base_url(); ?>assets/js/pages/datatables.init.js"></script>
 
-<!-- Chat app -->
-<script src="<?= base_url(); ?>assets/js/pages/jquery.chat.js"></script>
-
-<!-- Todo app -->
-<script src="<?= base_url(); ?>assets/js/pages/jquery.todo.js"></script>
-
-<!--Morris Chart-->
-<script src="<?= base_url(); ?>assets/libs/morris-js/morris.min.js"></script>
-<script src="<?= base_url(); ?>assets/libs/raphael/raphael.min.js"></script>
 
 <!-- Dashboard init JS -->
 <script src="<?= base_url(); ?>assets/js/pages/dashboard3.init.js"></script> 
 
 <!-- SweetAlert2 script -->
 <script src="<?= base_url(); ?>assets/js/pages/sweetalert2@11.js"></script>
-
-<!-- Responsive Table js -->
-<script src="<?= base_url(); ?>assets/libs/rwd-table/rwd-table.min.js"></script>
-
-<!-- Init js -->
-<script src="<?= base_url(); ?>assets/js/pages/responsive-table.init.js"></script>
-
 
 
 <!--INIT JS-->

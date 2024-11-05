@@ -92,7 +92,7 @@ class Jb_coa extends CI_Controller {
 // ------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------
     public function set_session() {
-        $_SESSION['username'] = 109430;
+        $_SESSION['username'] = 129157;
         $_SESSION['position'] = 'ADMIN';
         redirect($this->index());
     }
@@ -106,6 +106,9 @@ class Jb_coa extends CI_Controller {
     }
 
     public function school_ppe() {
+
+        $_SESSION['username'] = 129157;
+        $_SESSION['position'] = 'ADMIN';
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $ppe_list_id = isset($_POST['ppe_list_id']) ? htmlspecialchars($_POST['ppe_list_id']) : null;
             $article_id = isset($_POST['article_id']) ? htmlspecialchars($_POST['article_id']) : null;
@@ -143,10 +146,9 @@ class Jb_coa extends CI_Controller {
                 }
             }
         } else {
-            $_test_id = 304336;
             $rs['groups'] = $this->jb_ppe_list_M->get_groups(); // Get groups for the first dropdown 
-            $rs['rs'] = $this->jb_ppe_school_M->get_all_records_by_school_id($_test_id);
-            $rs['school_details'] = $this->jb_ppe_school_M->get_school_info_by_id($_test_id);
+            $rs['rs'] = $this->jb_ppe_school_M->get_all_records_by_school_id($_SESSION['username']);
+            $rs['school_details'] = $this->jb_ppe_school_M->get_school_info_by_id($_SESSION['username']);
 
             $this->_loadview($this->ftbl_school_ppe_list, $rs);
         }
@@ -245,7 +247,7 @@ class Jb_coa extends CI_Controller {
             echo "Invalid request method.";
         }
     }
- 
+
 // ------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------
 // CHECK SESSION
@@ -402,25 +404,23 @@ class Jb_coa extends CI_Controller {
         $this->load->view($page, $rs);
         $this->load->view($this->partials . 'footer');
     }
-    
-    
+
 // ------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------
 // UPDATE
 // ------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------
     public function update_verification_status() {
-    // Get the data from the AJAX request
-    $is_verified = $this->input->post('is_verified'); // Get the checkbox state
-    $id = $this->input->post('id'); // Get the ID of the row
-
-    // Call the model method to update the verification status
-    if ($this->jb_ppe_list_M->update_is_verified_by_id($id, $is_verified)) {
-        // Return a success response
-        echo json_encode(['status' => 'success']);
-    } else {
-        // Return an error response
-        echo json_encode(['status' => 'error']);
+        // Get the data from the AJAX request
+        $is_verified = $this->input->post('is_verified'); // Get the checkbox state
+        $id = $this->input->post('id'); // Get the ID of the row
+        // Call the model method to update the verification status
+        if ($this->jb_ppe_list_M->update_is_verified_by_id($id, $is_verified)) {
+            // Return a success response
+            echo json_encode(['status' => 'success']);
+        } else {
+            // Return an error response
+            echo json_encode(['status' => 'error']);
+        }
     }
-}
 }

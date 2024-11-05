@@ -184,7 +184,7 @@
                                                     <input type="hidden" name="ppe_list_id" value="<?= htmlspecialchars($row->id); ?>">
                                                     <input type="hidden" name="article_id" value="<?= htmlspecialchars($row->ARTICLE_ID); ?>">
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <!-- <p> element with onclick event to submit the form -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <!-- <p> element with onclick event to submit the form -->
                                                     <p class="submit-link" style="cursor: pointer; color: blue; margin: 0;" onclick="this.parentNode.submit();">
                                                         <?= str_pad($row->id, 5, '0', STR_PAD_LEFT); ?>
                                                     </p>
@@ -263,7 +263,7 @@
             </div> 
 
 
- 
+
 
 
 
@@ -282,7 +282,7 @@
 
 
 
-<!--  Modal content for the above example -->
+<!--MODAL CONTAINER-->
 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -331,17 +331,17 @@
                                             <label for="_des" class="col-form-label">Description</label>
                                             <input  id="_des" name="_des" type="text" value="" placeholder="" class="form-control"  maxlength="255">
                                         </div>
-                                        <!--4.4-->
+                                        <!--2.2-->
                                         <div class="form-group col-md-3">
-                                            <label for="_dc" class="col-form-label">Date Acquired</label>
-                                            <div>
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" placeholder="mm/dd/yyyy" data-provide="datepicker" data-date-autoclose="true">
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
-                                                    </div>
-                                                </div> 
-                                            </div>
+                                            <label for="_con" class="col-form-label">Condition</label>
+                                            <select id="_con" name="_con" value="" placeholder="" class="form-control" required>
+                                                <option value="">Select</option> 
+                                                <option value="Good Condition">Good Condition</option> 
+                                                <option value="Needs Repair">Needs Repair</option> 
+                                                <option value="Unserviceable">Unserviceable</option>                           
+                                                <option value="Condemnable">Condemnable</option>                                      
+                                                <option value="Damaged">Damaged</option>      
+                                            </select>
                                         </div>
                                     </div>
                                     <!--3-->
@@ -386,15 +386,15 @@
                                         </div>
                                         <!--4.4-->
                                         <div class="form-group col-md-3">
-                                            <label for="_con" class="col-form-label">Condition</label>
-                                            <select id="_con" name="_con" value="" placeholder="" class="form-control" required>
-                                                <option value="">Select</option> 
-                                                <option value="Good Condition">Good Condition</option> 
-                                                <option value="Needs Repair">Needs Repair</option> 
-                                                <option value="Unserviceable">Unserviceable</option>                           
-                                                <option value="Condemnable">Condemnable</option>                                      
-                                                <option value="Damaged">Damaged</option>      
-                                            </select>
+                                            <label for="_dc" class="col-form-label">Date Acquired</label>
+                                            <div>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" placeholder="mm/dd/yyyy" data-provide="datepicker" data-date-autoclose="true">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                                    </div>
+                                                </div> 
+                                            </div>
                                         </div>
                                     </div>                                    
                                     <!--5-->
@@ -516,3 +516,10 @@
         });
     }
 </script>
+
+
+<!-- Responsive Table js -->
+<script src="<?= base_url(); ?>assets/libs/rwd-table/rwd-table.min.js"></script>
+
+<!-- Init js -->
+<script src="<?= base_url(); ?>assets/js/pages/responsive-table.init.js"></script>
