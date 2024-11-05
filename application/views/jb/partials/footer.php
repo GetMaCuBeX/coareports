@@ -82,7 +82,11 @@
 <!-- SweetAlert2 script -->
 <script src="<?= base_url(); ?>assets/js/pages/sweetalert2@11.js"></script>
 
+<!-- Responsive Table js -->
+<script src="<?= base_url(); ?>assets/libs/rwd-table/rwd-table.min.js"></script>
 
+<!-- Init js -->
+<script src="<?= base_url(); ?>assets/js/pages/responsive-table.init.js"></script>
 
 
 

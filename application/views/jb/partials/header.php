@@ -41,8 +41,9 @@
         <link href="<?= base_url(); ?>assets/libs/bootstrap-timepicker/bootstrap-timepicker.min.css" rel="stylesheet">
         <link href="<?= base_url(); ?>assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css" rel="stylesheet">
         <link href="<?= base_url(); ?>assets/libs/bootstrap-datepicker/bootstrap-datepicker.css" rel="stylesheet">
-
         <!--3. THIRD PARTY CSS-->
+        <!--RESPONSIVE TABLE CSS-->
+        <link href="<?= base_url(); ?>assets/libs/rwd-table/rwd-table.min.css" rel="stylesheet" type="text/css" />
 
 
         <!--4. APP CSS-->
