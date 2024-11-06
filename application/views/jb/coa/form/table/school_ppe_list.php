@@ -145,7 +145,7 @@
                             <?php if ($school_list_count_all == 0) { ?>
                                 <thead>
                                     <tr>
-                                        <td colspan="9" style="font-size: 24px; text-align: center;"><strong>DEPARTMENT OF EDUCATION</strong></td>
+                                        <td colspan="10" style="font-size: 24px; text-align: center;"><strong>DEPARTMENT OF EDUCATION</strong></td>
                                     </tr>
                                     <tr style="text-align: center;">
                                         <th class=" " style="text-align: center;">ID</th>
@@ -181,7 +181,7 @@
                                                 <input type="hidden" name="ppe_list_id" value="<?= htmlspecialchars($row->id); ?>">
                                                 <input type="hidden" name="article_id" value="<?= htmlspecialchars($row->ARTICLE_ID); ?>">
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <!-- <p> element with onclick event to submit the form -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <!-- <p> element with onclick event to submit the form -->
                                                 <p class="submit-link" style="cursor: pointer; color: blue; margin: 0;" onclick="this.parentNode.submit();">
                                                     <?= str_pad($row->id, 5, '0', STR_PAD_LEFT); ?>
                                                 </p>
@@ -195,7 +195,7 @@
                                                 <!--<i class="fas fa-check-double"></i>-->
                                             <?php } else { ?>
                                                 <?php if ($row->is_verified == 1) { ?>
-                                                                                            <!--<i class="fas fa-check-double"></i>-->
+                                                                                                        <!--<i class="fas fa-check-double"></i>-->
                                                     <i class="mdi mdi-check-bold"></i>
                                                 <?php } ?>
                                             <?php } ?>
@@ -237,7 +237,7 @@
                                     <?php if ($group_count == $row->_R3) { ?>
                                         <?php $group_count = 0; ?>
                                         <tr>
-                                            <td colspan="5" class="no-outline"></td>
+                                            <td colspan="6" class="no-outline"></td>
                                             <td colspan="1" style="text-align: left;">SUB TOTAL: </td>
                                             <td style="text-align: right;"><?= ($row->SUM_PER_GROUP) ?></td>
                                             <td colspan="2" class="no-outline"></td>
@@ -249,7 +249,7 @@
                                     <?php if ($school_list_count_all == $row->_R4) { ?>
                                         <?php $school_list_count_all = 0; ?>
                                         <tr class="grand-total">
-                                            <td colspan="5" class="no-outline"></td>
+                                            <td colspan="6" class="no-outline"></td>
                                             <td colspan="1" style="text-align: left;"><strong>GRAND TOTAL: </strong></td>
                                             <td style="text-align: right; color: red;"><strong><?= ($row->GRAND_TOTAL) ?></strong></td>
                                             <td colspan="2" class="no-outline"></td>
@@ -395,7 +395,9 @@
                                             <label for="_dc" class="col-form-label">Date Acquired</label>
                                             <div>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" placeholder="mm/dd/yyyy" data-provide="datepicker" data-date-autoclose="true">
+                                                    <input type="text" class="form-control" id="dateInput" placeholder="mm/dd/yyyy" 
+                                                           data-provide="datepicker" data-date-autoclose="true">
+
                                                     <div class="input-group-append">
                                                         <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                                     </div>
@@ -436,11 +438,11 @@
                                     <!--<div class="form-row ">--> 
                                     <!--7.3-->   
                                     <?php if ($_SESSION['position'] === 'ADMIN') { ?>
-<!--                                        <div class="form-group col-md-6">
-                                            <input id="_iv" name="_iv" type="checkbox" data-plugin="switchery" data-color="#039cfd" />
-                                            <label for="_iv" id="label_iv" class="col-form-label">(ON) Verified</label>
-
-                                        </div>-->
+                                        <!--                                        <div class="form-group col-md-6">
+                                                                                    <input id="_iv" name="_iv" type="checkbox" data-plugin="switchery" data-color="#039cfd" />
+                                                                                    <label for="_iv" id="label_iv" class="col-form-label">(ON) Verified</label>
+                                        
+                                                                                </div>-->
                                     <?php } ?>
                                     <!--</div>-->
 
@@ -561,6 +563,8 @@
     // Update the label when the checkbox_iv state changes
     checkbox_iv.addEventListener('change', updateLabel);
 </script>
+ 
+
 
 <!-- Vendor js -->
 <script src="<?= base_url(); ?>assets/js/vendor.min.js"></script>

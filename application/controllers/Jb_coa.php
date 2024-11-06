@@ -4,6 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Jb_coa extends CI_Controller {
 
+    private $_username = 129435;
     private $values;
     private $partials = 'jb/partials/';
     private $p_ppe = 'jb/coa/page/ppe';
@@ -92,7 +93,7 @@ class Jb_coa extends CI_Controller {
 // ------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------
     public function set_session() {
-        $_SESSION['username'] = 129157;
+        $_SESSION['username'] = $this->_username;
         $_SESSION['position'] = 'ADMIN';
         redirect($this->index());
     }
@@ -154,7 +155,7 @@ class Jb_coa extends CI_Controller {
 
     public function set_admin() {
 
-        $_SESSION['username'] = 129157;
+        $_SESSION['username'] =  $this->_username;
         $_SESSION['position'] = 'ADMIN';
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $ppe_list_id = isset($_POST['ppe_list_id']) ? htmlspecialchars($_POST['ppe_list_id']) : null;
@@ -202,7 +203,7 @@ class Jb_coa extends CI_Controller {
     }
 
     public function set_notadmin() {
-        $_SESSION['username'] = 129157;
+        $_SESSION['username'] =  $this->_username;
         $_SESSION['position'] = 'NORMAL';
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $ppe_list_id = isset($_POST['ppe_list_id']) ? htmlspecialchars($_POST['ppe_list_id']) : null;
@@ -251,7 +252,7 @@ class Jb_coa extends CI_Controller {
 
     public function _set_session() {
         if (!isset($_SESSION['username'])) {
-            $_SESSION['username'] = '129157'; // Set a default value or a specific value as needed
+            $_SESSION['username'] =  $this->_username; // Set a default value or a specific value as needed
         }
 
         if (!isset($_SESSION['position'])) {

@@ -12,7 +12,7 @@
                     <h4 class="page-title"><?= $row_ppe->SCHOOL_ID; ?> - <?= $row_ppe->SCHOOL_NAME; ?></h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb p-0 m-0">
-                            <!--<li class="breadcrumb-item"><a href="<?php //echo base_url();                                                ?>jb_coa/school_ppe_annex_a_all_division" target="_blank">Print All</a></li>-->
+                            <!--<li class="breadcrumb-item"><a href="<?php //echo base_url();                                                 ?>jb_coa/school_ppe_annex_a_all_division" target="_blank">Print All</a></li>-->
                             <!--<li class="breadcrumb-item"><a href="#">Dashboard</a></li>-->
                             <!--<li class="breadcrumb-item active">Dashboard 3</li>-->
                         </ol> 
@@ -123,7 +123,13 @@
                                     <label for="_dc" class="col-form-label">Date Acquired</label>
                                     <div>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" value="<?= htmlspecialchars($row_ppe->date_acquired ?? ''); ?>"  placeholder="mm/dd/yyyy" data-provide="datepicker" data-date-autoclose="true">
+                                            <?php
+// Format the date to 'm/d/Y' if it exists; otherwise, use an empty string
+                                            $date_acquired = !empty($row_ppe->date_acquired) ? date('m/d/Y', strtotime($row_ppe->date_acquired)) : '';
+                                            ?>
+
+                                            <input type="text" class="form-control" value="<?= htmlspecialchars($date_acquired); ?>" 
+                                                   placeholder="mm/dd/yyyy" data-provide="datepicker" data-date-autoclose="true">
                                             <div class="input-group-append">
                                                 <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                             </div>
