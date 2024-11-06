@@ -12,7 +12,7 @@
                     <h4 class="page-title"><?= $row_ppe->SCHOOL_ID; ?> - <?= $row_ppe->SCHOOL_NAME; ?></h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb p-0 m-0">
-                            <!--<li class="breadcrumb-item"><a href="<?php //echo base_url();                                                 ?>jb_coa/school_ppe_annex_a_all_division" target="_blank">Print All</a></li>-->
+                            <!--<li class="breadcrumb-item"><a href="<?php //echo base_url();                                                  ?>jb_coa/school_ppe_annex_a_all_division" target="_blank">Print All</a></li>-->
                             <!--<li class="breadcrumb-item"><a href="#">Dashboard</a></li>-->
                             <!--<li class="breadcrumb-item active">Dashboard 3</li>-->
                         </ol> 
@@ -198,8 +198,8 @@
                                 <!--8.2-->
 
                                 <div class="form-group text-left mb-0  col-md-6">     
-                                    <?php if (($row->is_verified == 0) || ($_SESSION['position'] === 'ADMIN')) { ?> 
-                                        <button type="button" class="btn btn-danger waves-effect width-md waves-light" onclick="window.history.back()">Delete</button>
+                                    <?php if (($row->is_verified == 0) || ($_SESSION['position'] === 'ADMIN')) { ?>  
+                                        <button type="button" class="btn btn-danger waves-effect width-md waves-light" onclick="confirmDelete()">Delete</button> 
                                     <?php } ?>
                                 </div>
 
@@ -209,7 +209,6 @@
 
                                     <?php if (($row->is_verified == 0) || ($_SESSION['position'] === 'ADMIN')) { ?> 
                                         <button type="submit" class="btn btn-primary waves-effect width-md waves-light">Update Record</button>
-
                                     <?php } ?>
                                     <button type="button" class="btn btn-secondary waves-effect width-md waves-light" onclick="window.history.back()">Back</button>
                                 </div>
@@ -284,6 +283,24 @@
 
     // Update the label dynamically whenever the checkbox state changes
     checkbox_iv.addEventListener('change', updateLabel);
+</script>
+<!--CONFIRM DELETE-->
+<script>
+    function confirmDelete() {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "This action cannot be undone!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.history.back(); // Go back if confirmed
+            }
+        });
+    }
 </script>
 
 <script src="<?= base_url(); ?>assets/libs/switchery/switchery.min.js"></script> 
