@@ -97,9 +97,9 @@ WHERE
         $sql = "  
 WITH SchoolTotals AS (
     SELECT
-        ROW_NUMBER() OVER (PARTITION BY jb_division.division_id ) AS `_R1`,
-        ROW_NUMBER() OVER (PARTITION BY jb_division.division_id, jb_district.district_id ) AS `_R5`, -- New row number for division and district
-        ROW_NUMBER() OVER (PARTITION BY jb_division.division_id, jb_district.district_id, jb_school.school_idnumber ) AS `_R6`, -- New row number for division and district
+        ROW_NUMBER() OVER (PARTITION BY jb_division.division_id) AS `_R1`,
+        ROW_NUMBER() OVER (PARTITION BY jb_division.division_id, jb_district.district_id) AS `_R5`, -- New row number for division and district
+        ROW_NUMBER() OVER (PARTITION BY jb_division.division_id, jb_district.district_id, jb_school.school_idnumber) AS `_R6`, -- New row number for division, district, and school
         FORMAT(SUM(jb_coa_ppe_list.total_value) OVER (PARTITION BY jb_division.division_id), 2) AS `_R2`, -- Total for division, formatted to 2 decimals
         FORMAT(SUM(jb_coa_ppe_list.total_value) OVER (PARTITION BY jb_district.district_id), 2) AS `_R3`, -- Total for district, formatted to 2 decimals
         FORMAT(SUM(jb_coa_ppe_list.total_value) OVER (PARTITION BY jb_school.school_idnumber), 2) AS `_R4`, -- Total for school, formatted to 2 decimals
@@ -108,11 +108,11 @@ WITH SchoolTotals AS (
         jb_district.district_id AS DISTRICT_ID, 
         jb_district.`name` AS DISTRICT, 
         jb_school.school_idnumber AS SCHOOLID, 
-        jb_school.congressional_district as CONG_DISTRICT,
+        jb_school.congressional_district AS CONG_DISTRICT,
         jb_school.`name` AS SCHOOLNAME, 
         jb_school_administrator.administrator_name AS ADMINISTRATOR, 
         jb_school_administrator.contact_number AS CN, 
-        jb_school_administrator.email_deped AS DEMAIL
+        jb_school_administrator.official_email AS DEMAIL
     FROM
         jb_school
     INNER JOIN
@@ -123,6 +123,8 @@ WITH SchoolTotals AS (
         jb_school_administrator ON jb_school.school_idnumber = jb_school_administrator.school_idnumber
     INNER JOIN
         jb_coa_ppe_list ON jb_school.school_idnumber = jb_coa_ppe_list.school_idnumber 
+    WHERE
+        jb_school.school_type_name NOT LIKE 'Private School' 
 ),
 DistrictSchoolCounts AS (
     SELECT
@@ -153,17 +155,18 @@ SELECT
     st.DISTRICT,
     st.SCHOOLID,
     st.SCHOOLNAME,
-    st.ADMINISTRATOR,
-    st.CN,
-    st.DEMAIL
+    MAX(st.ADMINISTRATOR) AS ADMINISTRATOR, -- Use MAX to avoid ONLY_FULL_GROUP_BY errors
+    MAX(st.CN) AS CN,
+    MAX(st.DEMAIL) AS DEMAIL
 FROM
     SchoolTotals AS st
 LEFT JOIN
     DistrictSchoolCounts AS dsc ON st.DISTRICT_ID = dsc.district_id
 GROUP BY
-    st.DIVISION, st.DISTRICT_ID, st.SCHOOLID 
+    st.DIVISION, st.DISTRICT_ID, st.SCHOOLID
 ORDER BY
     st._R5 ASC, st.DISTRICT ASC, st.SCHOOLNAME ASC;
+
 
 
         ";
@@ -327,9 +330,9 @@ WHERE
         $sql = "
 WITH SchoolTotals AS (
     SELECT
-        ROW_NUMBER() OVER (PARTITION BY jb_division.division_id ) AS `_R1`,
-        ROW_NUMBER() OVER (PARTITION BY jb_division.division_id, jb_district.district_id ) AS `_R5`, -- New row number for division and district
-        ROW_NUMBER() OVER (PARTITION BY jb_division.division_id, jb_district.district_id, jb_school.school_idnumber ) AS `_R6`, -- New row number for division and district
+        ROW_NUMBER() OVER (PARTITION BY jb_division.division_id) AS `_R1`,
+        ROW_NUMBER() OVER (PARTITION BY jb_division.division_id, jb_district.district_id) AS `_R5`, -- New row number for division and district
+        ROW_NUMBER() OVER (PARTITION BY jb_division.division_id, jb_district.district_id, jb_school.school_idnumber) AS `_R6`, -- New row number for division and district
         FORMAT(SUM(jb_coa_ppe_list.total_value) OVER (PARTITION BY jb_division.division_id), 2) AS `_R2`, -- Total for division, formatted to 2 decimals
         FORMAT(SUM(jb_coa_ppe_list.total_value) OVER (PARTITION BY jb_district.district_id), 2) AS `_R3`, -- Total for district, formatted to 2 decimals
         FORMAT(SUM(jb_coa_ppe_list.total_value) OVER (PARTITION BY jb_school.school_idnumber), 2) AS `_R4`, -- Total for school, formatted to 2 decimals
@@ -338,11 +341,11 @@ WITH SchoolTotals AS (
         jb_district.district_id AS DISTRICT_ID, 
         jb_district.`name` AS DISTRICT, 
         jb_school.school_idnumber AS SCHOOLID, 
-        jb_school.congressional_district as CONG_DISTRICT,
+        jb_school.congressional_district AS CONG_DISTRICT,
         jb_school.`name` AS SCHOOLNAME, 
         jb_school_administrator.administrator_name AS ADMINISTRATOR, 
         jb_school_administrator.contact_number AS CN, 
-        jb_school_administrator.email_deped AS DEMAIL
+        jb_school_administrator.official_email AS DEMAIL
     FROM
         jb_school
     INNER JOIN
@@ -354,7 +357,8 @@ WITH SchoolTotals AS (
     INNER JOIN
         jb_coa_ppe_list ON jb_school.school_idnumber = jb_coa_ppe_list.school_idnumber 
     WHERE
-        jb_coa_ppe_list.is_existing = TRUE
+        jb_coa_ppe_list.is_existing = TRUE AND
+        jb_school.school_type_name NOT LIKE 'Private School' 
 ),
 DistrictSchoolCounts AS (
     SELECT
@@ -387,17 +391,20 @@ SELECT
     st.DISTRICT,
     st.SCHOOLID,
     st.SCHOOLNAME,
-    st.ADMINISTRATOR,
-    st.CN,
-    st.DEMAIL
+    MAX(st.ADMINISTRATOR) AS ADMINISTRATOR, -- Use MAX for non-aggregated columns
+    MAX(st.CN) AS CN,
+    MAX(st.DEMAIL) AS DEMAIL
 FROM
     SchoolTotals AS st
 LEFT JOIN
     DistrictSchoolCounts AS dsc ON st.DISTRICT_ID = dsc.district_id
 GROUP BY
-    st.DIVISION, st.DISTRICT_ID, st.SCHOOLID 
+    st.DIVISION, st.DISTRICT_ID, st.SCHOOLID
 ORDER BY
     st._R5 ASC, st.DISTRICT ASC, st.SCHOOLNAME ASC;
+
+    
+
         ";
 
         $query = $this->db->query($sql);
@@ -574,7 +581,7 @@ WITH SchoolTotals AS (
         jb_school.`name` AS SCHOOLNAME, 
         jb_school_administrator.administrator_name AS ADMINISTRATOR, 
         jb_school_administrator.contact_number AS CN, 
-        jb_school_administrator.email_deped AS DEMAIL
+        jb_school_administrator.official_email AS DEMAIL
     FROM
         jb_school
     INNER JOIN
@@ -624,9 +631,9 @@ ORDER BY
         $sql = "
 WITH SchoolTotals AS (
     SELECT
-        ROW_NUMBER() OVER (PARTITION BY jb_division.division_id ) AS `_R1`,
-        ROW_NUMBER() OVER (PARTITION BY jb_division.division_id, jb_district.district_id ) AS `_R5`, -- New row number for division and district
-        ROW_NUMBER() OVER (PARTITION BY jb_division.division_id, jb_district.district_id, jb_school.school_idnumber ) AS `_R6`, -- New row number for division and district
+        ROW_NUMBER() OVER (PARTITION BY jb_division.division_id) AS `_R1`,
+        ROW_NUMBER() OVER (PARTITION BY jb_division.division_id, jb_district.district_id) AS `_R5`, -- New row number for division and district
+        ROW_NUMBER() OVER (PARTITION BY jb_division.division_id, jb_district.district_id, jb_school.school_idnumber) AS `_R6`, -- New row number for division, district, and school
         FORMAT(SUM(jb_coa_ppe_list.total_value) OVER (PARTITION BY jb_division.division_id), 2) AS `_R2`, -- Total for division, formatted to 2 decimals
         FORMAT(SUM(jb_coa_ppe_list.total_value) OVER (PARTITION BY jb_district.district_id), 2) AS `_R3`, -- Total for district, formatted to 2 decimals
         FORMAT(SUM(jb_coa_ppe_list.total_value) OVER (PARTITION BY jb_school.school_idnumber), 2) AS `_R4`, -- Total for school, formatted to 2 decimals
@@ -635,11 +642,11 @@ WITH SchoolTotals AS (
         jb_district.district_id AS DISTRICT_ID, 
         jb_district.`name` AS DISTRICT, 
         jb_school.school_idnumber AS SCHOOLID, 
-        jb_school.congressional_district as CONG_DISTRICT,
+        jb_school.congressional_district AS CONG_DISTRICT,
         jb_school.`name` AS SCHOOLNAME, 
         jb_school_administrator.administrator_name AS ADMINISTRATOR, 
         jb_school_administrator.contact_number AS CN, 
-        jb_school_administrator.email_deped AS DEMAIL
+        jb_school_administrator.official_email AS DEMAIL
     FROM
         jb_school
     INNER JOIN
@@ -651,7 +658,8 @@ WITH SchoolTotals AS (
     INNER JOIN
         jb_coa_ppe_list ON jb_school.school_idnumber = jb_coa_ppe_list.school_idnumber 
     WHERE
-        jb_coa_ppe_list.is_existing = FALSE
+        jb_coa_ppe_list.is_existing = FALSE AND
+        jb_school.school_type_name NOT LIKE 'Private School' 
 ),
 DistrictSchoolCounts AS (
     SELECT
@@ -684,17 +692,20 @@ SELECT
     st.DISTRICT,
     st.SCHOOLID,
     st.SCHOOLNAME,
-    st.ADMINISTRATOR,
-    st.CN,
-    st.DEMAIL
+    MAX(st.ADMINISTRATOR) AS ADMINISTRATOR, -- Use MAX for non-aggregated columns
+    MAX(st.CN) AS CN,
+    MAX(st.DEMAIL) AS DEMAIL
 FROM
     SchoolTotals AS st
 LEFT JOIN
     DistrictSchoolCounts AS dsc ON st.DISTRICT_ID = dsc.district_id
 GROUP BY
-    st.DIVISION, st.DISTRICT_ID, st.SCHOOLID 
+    st.DIVISION, st.DISTRICT_ID, st.SCHOOLID
 ORDER BY
     st._R5 ASC, st.DISTRICT ASC, st.SCHOOLNAME ASC;
+
+    
+
         ";
 
         $query = $this->db->query($sql);
@@ -957,5 +968,16 @@ WHERE
         $rs = $query->result();
 
         return $rs;
+    }
+
+    // RETURN BOOLEAN - QUERY BUILDER
+    public function is_school_idnumber_exist($school_idnumber) {
+        $query = $this->db->select('school_idnumber')
+                ->from('jb_school')
+                ->where('school_idnumber', $school_idnumber)
+                ->get();
+
+        // Check if any rows are returned
+        return $query->num_rows() > 0;
     }
 }
