@@ -134,5 +134,6 @@ $autoload['language'] = array();
  */
 $autoload['model'] = array( 
     'jb_ppe_list_M',
-    'jb_ppe_school_M'
+    'jb_ppe_school_M',
+    'jb_location_M'
 );

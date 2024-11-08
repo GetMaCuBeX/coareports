@@ -30,7 +30,8 @@
                         <li><a href="<?= base_url(); ?>jb_coa/set_admin">SET ADMIN</a></li>    
                         <li><a href="<?= base_url(); ?>jb_coa/set_notadmin">SET NOT ADMIN</a></li>    
                         <li><a href="<?= base_url(); ?>jb_coa/test">TEST</a></li>                            
-                        <li><a href="<?= base_url(); ?>jb_coa/test">TEST</a></li>                            
+                        <li><a href="<?= base_url(); ?>jb_coa/test">TEST</a></li>                           
+                        <li><a href="<?= base_url(); ?>jb_coa/refer_barangay">GET BARANGAY</a></li>                            
                     </ul>
 
                 </li> 

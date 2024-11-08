@@ -29,6 +29,7 @@ class Jb_coa extends CI_Controller {
     //
     private $crud_ppe_create = 'jb/coa/crud/ppe_create';
     private $crud_ppe_edit = 'jb/coa/crud/ppe_edit';
+    private $crud_refer_barangay = 'jb/coa/crud/refer_barangay';
 
     public function __construct() {
         parent::__construct();
@@ -155,7 +156,7 @@ class Jb_coa extends CI_Controller {
 
     public function set_admin() {
 
-        $_SESSION['username'] =  $this->_username;
+        $_SESSION['username'] = $this->_username;
         $_SESSION['position'] = 'ADMIN';
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $ppe_list_id = isset($_POST['ppe_list_id']) ? htmlspecialchars($_POST['ppe_list_id']) : null;
@@ -203,7 +204,7 @@ class Jb_coa extends CI_Controller {
     }
 
     public function set_notadmin() {
-        $_SESSION['username'] =  $this->_username;
+        $_SESSION['username'] = $this->_username;
         $_SESSION['position'] = 'NORMAL';
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $ppe_list_id = isset($_POST['ppe_list_id']) ? htmlspecialchars($_POST['ppe_list_id']) : null;
@@ -252,12 +253,50 @@ class Jb_coa extends CI_Controller {
 
     public function _set_session() {
         if (!isset($_SESSION['username'])) {
-            $_SESSION['username'] =  $this->_username; // Set a default value or a specific value as needed
+            $_SESSION['username'] = $this->_username; // Set a default value or a specific value as needed
         }
 
         if (!isset($_SESSION['position'])) {
             $_SESSION['position'] = 'default_position'; // Set a default value or a specific value as needed
         }
+    }
+
+    public function refer_barangay() {
+        $rs['regions'] = $this->jb_location_M->get_jb_region();
+        $this->_loadview($this->crud_refer_barangay, $rs);
+    }
+
+    // Get Provinces based on selected Region ID
+    public function get_provinces($region_id) {
+        $provinces = $this->jb_location_M->get_jb_province($region_id);
+        echo json_encode($provinces);
+    }
+
+    // Get Municipalities based on selected Province ID
+    public function get_municipalities($province_id) {
+        $municipalities = $this->jb_location_M->get_jb_city_municipality($province_id);
+        echo json_encode($municipalities);
+    }
+
+    // Get Barangays based on selected Municipality ID
+    public function get_barangays($city_municipality_id) {
+        $barangays = $this->jb_location_M->get_jb_barangay($city_municipality_id);
+        echo json_encode($barangays);
+    }
+
+    public function get_form_data_location() {
+        // Get the selected values from the form
+        $region_id = $this->input->post('region');
+        $province_id = $this->input->post('province');
+        $municipality_id = $this->input->post('municipality');
+        $barangay_id = $this->input->post('barangay');
+
+        // You can process the data here or pass it to the view
+        echo "<h3>Selected Values:</h3>";
+        echo "Region ID: " . $region_id . "<br>";
+        echo "Province ID: " . $province_id . "<br>";
+        echo "Municipality ID: " . $municipality_id . "<br>";
+        echo "Barangay ID: " . $barangay_id . "<br>";
     }
 
 // ------------------------------------------------------------------------------------------------------------
