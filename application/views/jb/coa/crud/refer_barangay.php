@@ -1,42 +1,65 @@
 <!--DROPDOWN SCRIPT BASE ON SELECTED GROUP-->
 <script src="<?= base_url(); ?>assets/js/jb/jquery-3.6.0.min.js"></script>
+<!--PAGE TITLE START-->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box"> 
+            <h4 class="page-title">DROPDOWN WITH SUBMIT</h4>
+            <div class="clearfix"></div> 
+        </div>
+    </div>
+</div> <!--PAGE TITLE END-->
 
-<h2>Cascading Dropdown with Submit</h2>
-<form method="POST" action="<?= site_url('jb_coa/get_form_data_location') ?>">
-    <div>
-        <label for="region">Region:</label>
-        <select id="region" name="region">
-            <option value="">Select Region</option>
-            <?php foreach ($regions as $region): ?>
-                <option value="<?= $region->region_id ?>"><?= $region->name ?></option>
-            <?php endforeach; ?>
-        </select>
-    </div>
+<div class="row"> <!--ROW START-->
+    <div class="col-12"> <!--COL START-->
+        <div class="card"> <!--CARD BODY START-->
+            <div class="card-body"> <!--CARD BODY START-->
 
-    <div>
-        <label for="province">Province:</label>
-        <select id="province" name="province" disabled>
-            <option value="">Select Province</option>
-        </select>
-    </div>
 
-    <div>
-        <label for="municipality">Municipality:</label>
-        <select id="municipality" name="municipality" disabled>
-            <option value="">Select Municipality</option>
-        </select>
-    </div>
+                <form method="POST" action="<?= site_url('jb_coa/get_form_data_location') ?>">
+                    <div>
+                        <label for="region" class="col-form-label">Region:</label>
+                        <select id="region" name="region" class="form-control" required>
+                            <option value="">Select Region</option>
+                            <?php foreach ($regions as $region): ?>
+                                <option value="<?= $region->region_id ?>"><?= $region->name ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
 
-    <div>
-        <label for="barangay">Barangay:</label>
-        <select id="barangay" name="barangay" disabled>
-            <option value="">Select Barangay</option>
-        </select>
-    </div>
-    <div>
-        <button type="submit">Submit</button>
-    </div>
-</form>
+                    <div>
+                        <label for="province" class="col-form-label">Province:</label>
+                        <select id="province" name="province" disabled class="form-control" required>
+                            <option value="">Select Province</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="municipality" class="col-form-label">Municipality:</label>
+                        <select id="municipality" name="municipality" disabled class="form-control" required>
+                            <option value="">Select Municipality</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="barangay" class="col-form-label">Barangay:</label>
+                        <select id="barangay" name="barangay" disabled class="form-control" required>
+                            <option value="">Select Barangay</option>
+                        </select>
+                    </div>
+                    <br>
+                    <div>
+                        <button type="submit" class="btn btn-primary waves-effect width-md waves-light">Submit</button>
+                    </div>
+                </form>
+
+
+            </div> <!--CARD BODY END-->
+        </div> <!--CARD END-->
+    </div> <!--COL END-->
+</div> <!--ROW END-->
+
+
 <script type="text/javascript">
     $(document).ready(function () {
         // When Region changes

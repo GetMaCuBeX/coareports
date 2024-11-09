@@ -1,7 +1,7 @@
 <body>
     <div>
 
-        <!--PAGE TITLE-->
+        <!--PAGE TITLE START-->
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box">
@@ -10,7 +10,7 @@
                     <?php } ?> 
                     <div class="page-title-right">
                         <ol class="breadcrumb p-0 m-0">
-                            <!--<li class="breadcrumb-item"><a href="<?php //echo base_url();          ?>jb_coa/school_ppe_annex_a_all_division" target="_blank">Print All</a></li>-->
+                            <!--<li class="breadcrumb-item"><a href="<?php //echo base_url();           ?>jb_coa/school_ppe_annex_a_all_division" target="_blank">Print All</a></li>-->
                             <!--<li class="breadcrumb-item"><a href="#">Dashboard</a></li>-->
                             <!--<li class="breadcrumb-item active">Dashboard 3</li>-->
                         </ol> 
@@ -21,10 +21,10 @@
         </div> <!--PAGE TITLE END-->
 
         <?php if (!empty($rs)): ?>
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
+            <div class="row"> <!--ROW START-->
+                <div class="col-12"> <!--COL START-->
+                    <div class="card"> <!--CARD BODY START-->
+                        <div class="card-body"> <!--CARD BODY START-->
 
                             <!--1--> 
                             <div class="form-row"> 
