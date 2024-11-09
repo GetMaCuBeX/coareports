@@ -29,7 +29,7 @@ class Jb_coa extends CI_Controller {
     //
     private $crud_ppe_create = 'jb/coa/crud/ppe_create';
     private $crud_ppe_edit = 'jb/coa/crud/ppe_edit';
-    private $crud_location = 'jb/coa/crud/location';
+    private $crud_location_barangay = 'jb/coa/crud/location_barangay';
 
     public function __construct() {
         parent::__construct();
@@ -263,7 +263,7 @@ class Jb_coa extends CI_Controller {
 
     public function refer_barangay() {
         $rs['regions'] = $this->jb_location_M->get_jb_region();
-        $this->_loadview($this->crud_location, $rs);
+        $this->_loadview($this->crud_location_barangay, $rs);
     }
 
     // Get Provinces based on selected Region ID
