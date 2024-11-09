@@ -76,7 +76,9 @@
                         $.each(data, function (i, province) {
                             provinceDropdown.append('<option value="' + province.province_id + '">' + province.name + '</option>');
                         });
-                        provinceDropdown.prop('disabled', false);  // Enable the Province dropdown
+                        provinceDropdown.prop('disabled', false);  // Enable the Province dropdown 
+                        $('#municipality').prop('disabled', true).empty().append('<option value="">Select Municipality</option>');
+                        $('#barangay').prop('disabled', true).empty().append('<option value="">Select Barangay</option>');
                     }
                 });
             } else {
@@ -100,7 +102,8 @@
                         $.each(data, function (i, municipality) {
                             municipalityDropdown.append('<option value="' + municipality.city_municipality_id + '">' + municipality.name + '</option>');
                         });
-                        municipalityDropdown.prop('disabled', false);  // Enable the Municipality dropdown
+                        municipalityDropdown.prop('disabled', false);  // Enable the Municipality dropdown 
+                        $('#barangay').prop('disabled', true).empty().append('<option value="">Select Barangay</option>');
                     }
                 });
             } else {
