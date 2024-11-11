@@ -145,7 +145,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="_rem" class="col-form-label">Remarks</label> 
-                                    <textarea id="_rem" name="_lw" placeholder="" class="form-control" rows="5"><?= htmlspecialchars($row_ppe->remarks ?? ''); ?></textarea>
+                                    <textarea id="_rem" name="_rem" placeholder="" class="form-control" rows="5"><?= htmlspecialchars($row_ppe->remarks ?? ''); ?></textarea>
                                 </div>
                             </div>
 

@@ -129,15 +129,47 @@ class Jb_coa extends CI_Controller {
                 $action = $_POST['action'] ?? '';
                 $action = isset($_POST['action']) ? $_POST['action'] : '';
                 if ($action === 'save') {
-                    $this->values["PAGE"] = "134717";
-                    $groupId = $this->input->post('group', true);     // XSS Filtering
-                    $articleId = $this->input->post('article', true); // XSS Filtering 
+//                    $this->values["PAGE"] = "134717";
+//                    $groupId = $this->input->post('group', true);     // XSS Filtering
+//                    $articleId = $this->input->post('article', true); // XSS Filtering 
+//
+//                    $rs['groups'] = $this->jb_ppe_list_M->get_groups(); // Get groups for the first dropdown 
+//                    $rs['rs'] = $this->jb_ppe_school_M->get_all_records_by_school_id(134717);
+//                    $rs['school_details'] = $this->jb_ppe_school_M->get_school_info_by_id(134717);
+//
+//                    $this->_loadview($this->ftbl_school_ppe_list, $rs) 
+//                    // Load form validation library if needed
+                    // Load form validation library if needed
+                    // Load form validation library if needed
+                    $this->load->library('form_validation');
 
-                    $rs['groups'] = $this->jb_ppe_list_M->get_groups(); // Get groups for the first dropdown 
-                    $rs['rs'] = $this->jb_ppe_school_M->get_all_records_by_school_id(134717);
-                    $rs['school_details'] = $this->jb_ppe_school_M->get_school_info_by_id(134717);
+                    // Get form data
+                    $data = [
+                        'group' => $this->input->post('group'),
+                        'article' => $this->input->post('article'),
+                        '_des' => $this->input->post('_des'),
+                        '_con' => $this->input->post('_con'),
+                        '_opn' => $this->input->post('_opn'),
+                        '_npn' => $this->input->post('_npn'),
+                        '_uom' => $this->input->post('_uom'),
+                        '_uv' => $this->input->post('_uv'),
+                        '_qpproc' => $this->input->post('_qpproc'),
+                        '_qpphyc' => $this->input->post('_qpphyc'),
+                        '_tv' => $this->input->post('_tv'),
+                        '_dc' => $this->input->post('_dc') ?: date('Y-m-d'), // Set current date if _dc is null
+                        '_lw' => $this->input->post('_lw'),
+                        '_rem' => $this->input->post('_rem'),
+                        '_pa' => $this->input->post('_pa'),
+                        '_ie' => $this->input->post('_ie') ? 1 : 0, // Checkbox handling: 1 if checked, 0 if unchecked
+                        '_sin' => $this->input->post('_sin'),
+                    ];
 
-                    $this->_loadview($this->ftbl_school_ppe_list, $rs);
+                    // Display all values
+                    echo "<h3>Form Values Received:</h3><ul>";
+                    foreach ($data as $key => $value) {
+                        echo "<li><strong>{$key}:</strong> " .($value) . "</li>";
+                    }
+                    echo "</ul>";
                 } elseif ($action === 'update') {
                     echo "UPDATING";
                 } else {

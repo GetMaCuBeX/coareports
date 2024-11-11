@@ -181,7 +181,7 @@
                                                 <input type="hidden" name="ppe_list_id" value="<?= htmlspecialchars($row->id); ?>">
                                                 <input type="hidden" name="article_id" value="<?= htmlspecialchars($row->ARTICLE_ID); ?>">
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <!-- <p> element with onclick event to submit the form -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <!-- <p> element with onclick event to submit the form -->
                                                 <p class="submit-link" style="cursor: pointer; color: blue; margin: 0;" onclick="this.parentNode.submit();">
                                                     <?= str_pad($row->id, 5, '0', STR_PAD_LEFT); ?>
                                                 </p>
@@ -195,7 +195,7 @@
                                                 <!--<i class="fas fa-check-double"></i>-->
                                             <?php } else { ?>
                                                 <?php if ($row->is_verified == 1) { ?>
-                                                                                                        <!--<i class="fas fa-check-double"></i>-->
+                                                                                                            <!--<i class="fas fa-check-double"></i>-->
                                                     <i class="mdi mdi-check-bold"></i>
                                                 <?php } ?>
                                             <?php } ?>
@@ -413,7 +413,7 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="_rem" class="col-form-label">Remarks</label> 
-                                            <textarea id="_rem" name="_lw" placeholder="" class="form-control" rows="5"></textarea>
+                                            <textarea id="_rem" name="_rem" placeholder="" class="form-control" rows="5"></textarea>
                                         </div>
                                     </div>
 
@@ -563,7 +563,7 @@
     // Update the label when the checkbox_iv state changes
     checkbox_iv.addEventListener('change', updateLabel);
 </script>
- 
+
 
 
 <!-- Vendor js -->
