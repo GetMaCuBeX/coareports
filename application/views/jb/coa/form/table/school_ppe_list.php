@@ -395,7 +395,7 @@
                                             <label for="_dc" class="col-form-label">Date Acquired</label>
                                             <div>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" id="dateInput" placeholder="mm/dd/yyyy" 
+                                                    <input type="text" class="form-control" id="_dc" name="_dc" placeholder="mm/dd/yyyy" 
                                                            data-provide="datepicker" data-date-autoclose="true">
 
                                                     <div class="input-group-append">
@@ -450,7 +450,7 @@
 
 
 
-                                    <input id="_sin" name="_sin" type="hidden" value="">
+                                    <input id="_sin" name="_sin" type="hidden" value="<?= $_SESSION['username']; ?>">
                                     <!--8-->
                                     <div class="form-row">
                                         <!--8.1-->
@@ -495,6 +495,23 @@
                 });
             }
         });
+   
+         // Reset dropdowns after form submission
+//        $('#myForm').submit(function (event) {
+//            // Optionally, you can stop form submission to test the reset
+//            // event.preventDefault(); 
+//
+//            // Reset the dropdown menus
+//            $('#group').val('');    // Reset group dropdown
+//            $('#article').empty().append('<option value="">Select</option>'); // Reset article dropdown
+//             $('#_con').val('');     // Reset _con dropdown
+//
+//
+//            // Optionally, clear other fields if needed
+//            $('#_des, #_opn, #_npn, #_uom, #_uv, #_qpproc, #_qpphyc, #_tv, #_dc, #_lw, #_rem, #_pa').val('');
+//            $('#_ie').prop('checked', true); // Reset checkbox to default state
+//        });
+        
     });</script>
 
 <!--SUBMIT FOR FOR UPDATE-->

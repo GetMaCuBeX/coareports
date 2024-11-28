@@ -156,16 +156,35 @@ WHERE
         $this->db->where('id', $id);
         return $this->db->update('jb_coa_ppe_list', $data);
     }
-    
+
     // UPDATE is_verified
-   public function update_is_verified_by_id($id, $is_verified) {
-    // Prepare the data to update
-    $data = [
-        'is_verified' => $is_verified
-    ];
-    
-    // Update the record in the database where the ID matches
-    $this->db->where('id', $id); // Replace 'id' with your actual primary key column if different
-    return $this->db->update('jb_coa_ppe_list', $data);  
-}
+    public function update_is_verified_by_id($id, $is_verified) {
+        // Prepare the data to update
+        $data = [
+            'is_verified' => $is_verified
+        ];
+
+        // Update the record in the database where the ID matches
+        $this->db->where('id', $id); // Replace 'id' with your actual primary key column if different
+        return $this->db->update('jb_coa_ppe_list', $data);
+    }
+
+    // DELETE 
+    public function delete_by_id($id) {
+        $this->db->where('id', $id);
+        $deleted = $this->db->delete($this->tb_1);
+        if ($deleted) {
+            $affectedRows = $this->db->affected_rows(); // CHECK THE NUMBER OF AFFECTED ROWS
+            if ($affectedRows > 0) {
+                return 1;
+                // return "RECORD DELETED SUCCESSFULLY.";
+            } else {
+                return 0;
+                // return "NO RECORD FOUND TO DELETE.";
+            }
+        } else {
+            return 0;
+            // return "DELETION FAILED.";
+        }
+    }
 }

@@ -12,7 +12,7 @@
                     <h4 class="page-title"><?= $row_ppe->SCHOOL_ID; ?> - <?= $row_ppe->SCHOOL_NAME; ?></h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb p-0 m-0">
-                            <!--<li class="breadcrumb-item"><a href="<?php //echo base_url();                                                   ?>jb_coa/school_ppe_annex_a_all_division" target="_blank">Print All</a></li>-->
+                            <!--<li class="breadcrumb-item"><a href="<?php //echo base_url();                                                     ?>jb_coa/school_ppe_annex_a_all_division" target="_blank">Print All</a></li>-->
                             <!--<li class="breadcrumb-item"><a href="#">Dashboard</a></li>-->
                             <!--<li class="breadcrumb-item active">Dashboard 3</li>-->
                         </ol> 
@@ -30,7 +30,7 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <form id="myForm" method="post" action="<?= site_url('jb_coa/update_selection/' . $existing_data->id); ?>">
+                        <form id="myForm" method="post" action="<?= site_url('jb_coa/update_selection/'); ?>">
                             <!--1--> 
                             <div class="form-row"> 
                                 <!--1.1-->
@@ -128,7 +128,7 @@
                                             $date_acquired = !empty($row_ppe->date_acquired) ? date('m/d/Y', strtotime($row_ppe->date_acquired)) : '';
                                             ?>
 
-                                            <input type="text" class="form-control" value="<?= htmlspecialchars($date_acquired); ?>" 
+                                            <input type="text" class="form-control" id="_dc" name="_dc" value="<?= htmlspecialchars($date_acquired); ?>" 
                                                    placeholder="mm/dd/yyyy" data-provide="datepicker" data-date-autoclose="true">
                                             <div class="input-group-append">
                                                 <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
@@ -187,20 +187,22 @@
 
 
 
-                            <input type="hidden" name="ppe_list_id" value="
+                            <input type="hidden" id="ppe_list_id" name="ppe_list_id" value="
                             <?php foreach ($ppe_list_selected as $row) { ?>
                                 <?= htmlspecialchars($row->id); ?>
                                    <?php } ?>">  <!--TABLE ID-->
-                            <input id="_sin" name="_sin" type="hidden" value=""> <!--SCHOOL ID NO-->     
+                            <input id="_sin" name="_sin" type="hidden" value="<?= $row_ppe->school_idnumber ?>"> <!--SCHOOL ID NO-->     
 
                             <!--8-->
                             <div class="form-row">
                                 <!--8.2-->
 
-                                <div class="form-group text-left mb-0  col-md-6">     
-                                    <?php if (($row->is_verified == 0) || ($_SESSION['position'] === 'ADMIN')) { ?>  
-                                        <button type="button" class="btn btn-danger waves-effect width-md waves-light" onclick="confirmDelete()">Delete</button> 
-                                    <?php } ?>
+                                <div class="form-group text-left mb-0  col-md-6">   
+                                    <form id="myForm" method="post" action="<?= site_url('jb_coa/update_selection/'); ?>">
+                                        <?php if (($row->is_verified == 0) || ($_SESSION['position'] === 'ADMIN')) { ?>  
+                                            <button type="button" name="action" value="delete" class="btn btn-danger waves-effect width-md waves-light" onclick="return confirmDelete()">Delete</button>
+                                        <?php } ?>
+                                    </form>
                                 </div>
 
                                 <!--8.2-->
@@ -208,12 +210,12 @@
                                     <!--<button type="submit" name="action" value="save" id="submitBtn" class="btn btn-primary waves-effect width-md waves-light">Save Selection</button>-->
 
                                     <?php if (($row->is_verified == 0) || ($_SESSION['position'] === 'ADMIN')) { ?> 
-                                        <button type="submit" class="btn btn-primary waves-effect width-md waves-light">Update Record</button>
+                                        <button  type="submit"  name="action" value="update" class="btn btn-primary waves-effect width-md waves-light">Update Record</button>
                                     <?php } ?>
                                     <button type="button" class="btn btn-secondary waves-effect width-md waves-light" onclick="window.history.back()">Back</button>
                                 </div>
                             </div>
-                        </form>
+                        </form> <!-- FORM END -->
                     </div> <!--CARD BODY END-->
                 </div> <!--CARD END-->
             </div> <!--COL END-->
@@ -297,7 +299,14 @@
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.history.back(); // Go back if confirmed
+                // Add the delete action value to the form before submitting
+                const deleteButton = document.createElement('input');
+                deleteButton.type = 'hidden';
+                deleteButton.name = 'action';
+                deleteButton.value = 'delete';
+                document.getElementById('myForm').appendChild(deleteButton);
+
+                document.getElementById('myForm').submit(); // Submit the form
             }
         });
     }

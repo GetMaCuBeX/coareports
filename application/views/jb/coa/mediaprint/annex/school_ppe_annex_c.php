@@ -152,7 +152,7 @@
                         <?php if ($school_list_count_all == 0) { ?>
                             <thead>
                                 <tr>
-                                    <td colspan="12" style="font-size: 18px; text-align: center; vertical-align: middle; border: none;">
+                                    <td colspan="9" style="font-size: 18px; text-align: center; vertical-align: middle; border: none;">
                                         <a><strong>DEPARTMENT OF EDUCATION</strong></a>
                                     </td> 
 
@@ -177,8 +177,8 @@
                         <!--SCHOOL ID - SCHOOL NAME-->    
                         <?php if ($school_list_count_all == 0) { ?>
                             <tr>
-                                <td colspan="6" style="text-align: left; color: green; border-right: 0;"><strong><?= ($row->SCHOOLID) . ' - ' . strtoupper($row->SCHOOLNAME) ?></strong></td>
-                                <td colspan="6" style="text-align: right; color: blue; border-left: 0;"><strong><?= strtoupper($row->DISTRICT) ?></strong></td>
+                                <td colspan="5" style="text-align: left; color: green; border-right: 0;"><strong><?= ($row->SCHOOLID) . ' - ' . strtoupper($row->SCHOOLNAME) ?></strong></td>
+                                <td colspan="4" style="text-align: right; color: blue; border-left: 0;"><strong><?= strtoupper($row->DISTRICT) ?></strong></td>
                             </tr>
                         <?php } ?>
 

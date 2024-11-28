@@ -46,7 +46,6 @@ class Jb_coa extends CI_Controller {
     }
 
     public function index() {
-
 //        if ($this->_IS_IN_SESSION_schID()) { // CHECK IF SESSION LOGIN
 //            $this->values["PAGE"] = "DASHBOARD";
 //            $this->_set_values();
@@ -156,22 +155,23 @@ class Jb_coa extends CI_Controller {
                         '_qpproc' => $this->input->post('_qpproc'),
                         '_qpphyc' => $this->input->post('_qpphyc'),
                         '_tv' => $this->input->post('_tv'),
-                        '_dc' => $this->input->post('_dc') ?: date('Y-m-d'), // Set current date if _dc is null
+                        '_dc' => $this->input->post('_dc'),
                         '_lw' => $this->input->post('_lw'),
                         '_rem' => $this->input->post('_rem'),
                         '_pa' => $this->input->post('_pa'),
                         '_ie' => $this->input->post('_ie') ? 1 : 0, // Checkbox handling: 1 if checked, 0 if unchecked
+                        '_iv' => $this->input->post('_iv') ? 1 : 0, // Checkbox handling: 1 if checked, 0 if uncheckedF
                         '_sin' => $this->input->post('_sin'),
                     ];
 
                     // Display all values
                     echo "<h3>Form Values Received:</h3><ul>";
                     foreach ($data as $key => $value) {
-                        echo "<li><strong>{$key}:</strong> " .($value) . "</li>";
+                        echo "<li><strong>{$key}:</strong> " . ($value) . "</li>";
                     }
                     echo "</ul>";
                 } elseif ($action === 'update') {
-                    echo "UPDATING";
+                    echo "UPDATINGs";
                 } else {
                     // Handle unknown action
                     // Example: show an error or redirect
@@ -538,30 +538,16 @@ class Jb_coa extends CI_Controller {
         }
     }
 
-    public function update_selection($id) {
-
-        ECHO 'UPDATING';
-        echo "<br>";
-
+    public function update_selection() {
         // Check if the request is a POST request
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
-            // Get the selected values from the form
-            $ppe_list_id = $this->input->post('ppe_list_id');
-            $groupId = $this->input->post('group', true);
-            $articleId = $this->input->post('article', true);
-
-            echo "PPE ID: " . $ppe_list_id;
-
-            echo "<br>";
-            echo "article id: " . $articleId;
-            echo "<br>";
-            echo "group id: " . $groupId;
-
-            // Validate the inputs
-            if (!empty($groupId) && !empty($articleId)) {
-                
+            $action = $this->input->post('action'); // Get the value of the clicked button
+            if ($action === 'delete') {
+                $this->delete_data();
+            } elseif ($action === 'update') {
+                $this->update_data();
             } else {
-                
+                echo "No action triggered.";
             }
         } else {
             // If not a POST request, redirect or show an error
@@ -569,6 +555,53 @@ class Jb_coa extends CI_Controller {
         }
     }
 
+    public function update_data() {
+        ECHO 'UPDATING';
+        echo "<br>";
+        // Get the selected values from the form
+        $ppe_list_id = $this->input->post('ppe_list_id');
+        $groupId = $this->input->post('group', true);
+        $articleId = $this->input->post('article', true);
+
+        // Get form data
+        $data = [
+            'group' => $this->input->post('group'),
+            'article' => $this->input->post('article'),
+            '_des' => $this->input->post('_des'),
+            '_con' => $this->input->post('_con'),
+            '_opn' => $this->input->post('_opn'),
+            '_npn' => $this->input->post('_npn'),
+            '_uom' => $this->input->post('_uom'),
+            '_uv' => $this->input->post('_uv'),
+            '_qpproc' => $this->input->post('_qpproc'),
+            '_qpphyc' => $this->input->post('_qpphyc'),
+            '_tv' => $this->input->post('_tv'),
+            '_dc' => $this->input->post('_dc'),
+            '_lw' => $this->input->post('_lw'),
+            '_rem' => $this->input->post('_rem'),
+            '_pa' => $this->input->post('_pa'),
+            '_ie' => $this->input->post('_ie') ? 1 : 0, // Checkbox handling: 1 if checked, 0 if unchecked
+            '_iv' => $this->input->post('_iv') ? 1 : 0, // Checkbox handling: 1 if checked, 0 if unchecked
+            '_sin' => $this->input->post('_sin'),
+        ];
+
+        // Display all values
+        echo "<h3>Form Values Received:</h3><ul>";
+        foreach ($data as $key => $value) {
+            echo "<li><strong>{$key}:</strong> " . ($value) . "</li>";
+        }
+        echo "</ul>";
+    }
+
+    public function delete_data() {
+        $ppe_list_id = $this->input->post('ppe_list_id');
+        echo "Delete action triggered for ID: " . $ppe_list_id;
+    }
+
+// ------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------
+// DELETE
+// ------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------
 // LOAD VIEW PAGE
