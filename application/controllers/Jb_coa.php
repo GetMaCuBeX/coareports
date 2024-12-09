@@ -107,7 +107,10 @@ class Jb_coa extends CI_Controller {
     }
 
     public function school_ppe() {
-        $this->_set_session(); // set DEFAULT USER ACCOUNT LOGIN
+        
+        unset($_SESSION['username']); // COMMENT THIS ON PRODUCTION
+        unset($_SESSION['position']); // COMMENT THIS ON PRODUCTION
+//        $this->_set_session(); // set DEFAULT USER ACCOUNT LOGIN
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $ppe_list_id = isset($_POST['ppe_list_id']) ? htmlspecialchars($_POST['ppe_list_id']) : null;
             $article_id = isset($_POST['article_id']) ? htmlspecialchars($_POST['article_id']) : null;
