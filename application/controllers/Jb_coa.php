@@ -107,7 +107,7 @@ class Jb_coa extends CI_Controller {
     }
 
     public function school_ppe() {
-        $this->_set_session();
+        $this->_set_session(); // set DEFAULT USER ACCOUNT LOGIN
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $ppe_list_id = isset($_POST['ppe_list_id']) ? htmlspecialchars($_POST['ppe_list_id']) : null;
             $article_id = isset($_POST['article_id']) ? htmlspecialchars($_POST['article_id']) : null;
@@ -142,26 +142,58 @@ class Jb_coa extends CI_Controller {
                     // Load form validation library if needed
                     $this->load->library('form_validation');
 
+                    echo "SAVE HERE";
+
+//                    // Get form data
+//                    $data = [
+//                        'group' => $this->input->post('group'),
+//                        'article' => $this->input->post('article'),
+//                        '_des' => $this->input->post('_des'),
+//                        '_con' => $this->input->post('_con'),
+//                        '_opn' => $this->input->post('_opn'),
+//                        '_npn' => $this->input->post('_npn'),
+//                        '_uom' => $this->input->post('_uom'),
+//                        '_uv' => $this->input->post('_uv'),
+//                        '_qpproc' => $this->input->post('_qpproc'),
+//                        '_qpphyc' => $this->input->post('_qpphyc'),
+//                        '_tv' => $this->input->post('_tv'),
+//                        '_dc' => $this->input->post('_dc'),
+//                        '_lw' => $this->input->post('_lw'),
+//                        '_rem' => $this->input->post('_rem'),
+//                        '_pa' => $this->input->post('_pa'),
+//                        '_ie' => $this->input->post('_ie') ? 1 : 0, // Checkbox handling: 1 if checked, 0 if unchecked
+//                        '_iv' => $this->input->post('_iv') ? 1 : 0, // Checkbox handling: 1 if checked, 0 if uncheckedF
+//                        '_sin' => $this->input->post('_sin'),
+//                    ];
+
+                    $groupId = $this->input->post('group', true);
+                    $articleId = $this->input->post('article', true);
+
+                    // Get the raw date input
+                    $raw_date = $this->input->post('_dc');
+                    // Convert to 'YYYY-MM-DD' format or leave empty if invalid
+                    $date_acquired = !empty($raw_date) ? DateTime::createFromFormat('m/d/Y', $raw_date)->format('Y-m-d') : null;
+
                     // Get form data
                     $data = [
-                        'group' => $this->input->post('group'),
-                        'article' => $this->input->post('article'),
-                        '_des' => $this->input->post('_des'),
-                        '_con' => $this->input->post('_con'),
-                        '_opn' => $this->input->post('_opn'),
-                        '_npn' => $this->input->post('_npn'),
-                        '_uom' => $this->input->post('_uom'),
-                        '_uv' => $this->input->post('_uv'),
-                        '_qpproc' => $this->input->post('_qpproc'),
-                        '_qpphyc' => $this->input->post('_qpphyc'),
-                        '_tv' => $this->input->post('_tv'),
-                        '_dc' => $this->input->post('_dc'),
-                        '_lw' => $this->input->post('_lw'),
-                        '_rem' => $this->input->post('_rem'),
-                        '_pa' => $this->input->post('_pa'),
-                        '_ie' => $this->input->post('_ie') ? 1 : 0, // Checkbox handling: 1 if checked, 0 if unchecked
-                        '_iv' => $this->input->post('_iv') ? 1 : 0, // Checkbox handling: 1 if checked, 0 if uncheckedF
-                        '_sin' => $this->input->post('_sin'),
+//            'group' => $this->input->post('group'),
+                        'article_id' => $this->input->post('article'),
+                        'description' => $this->input->post('_des'),
+                        'condition_name' => $this->input->post('_con'),
+                        'old_property_no_assigned' => $this->input->post('_opn'),
+                        'new_property_no_assigned' => $this->input->post('_npn'),
+                        'unit_of_measure' => $this->input->post('_uom'),
+                        'unit_value' => $this->input->post('_uv'),
+                        'quantity_per_property_card' => $this->input->post('_qpproc'),
+                        'quantity_per_physical_count' => $this->input->post('_qpphyc'),
+                        'total_value' => $this->input->post('_tv'),
+                        'date_acquired' => $date_acquired,
+                        'location_whereabouts' => $this->input->post('_lw'),
+                        'remarks' => $this->input->post('_rem'),
+                        'person_accountable' => $this->input->post('_pa'),
+                        'is_existing' => $this->input->post('_ie') ? 1 : 0, // Checkbox handling: 1 if checked, 0 if unchecked
+                        'is_verified' => $this->input->post('_iv') ? 1 : 0, // Checkbox handling: 1 if checked, 0 if unchecked
+                        'school_idnumber' => $this->input->post('_sin'),
                     ];
 
                     // Display all values
@@ -170,19 +202,34 @@ class Jb_coa extends CI_Controller {
                         echo "<li><strong>{$key}:</strong> " . ($value) . "</li>";
                     }
                     echo "</ul>";
+
+                    $inserted = $this->db->insert('jb_coa_ppe_list', $data);
+
+                    if ($inserted) { // INSERT WAS SUCCESSFUL
+                        // return "RECORD INSERTED SUCCESSFULLY."; 
+//                        echo "SUCCESS";
+                        redirect('jb_coa/school_ppe');
+                    } else { // INSERT FAILED, YOU CAN GET THE ERROR MESSAGE IF NEEDED 
+                        // return "INSERT FAILED: " . $error['message']; 
+//                        echo "FAILED";
+                    }
                 } elseif ($action === 'update') {
-                    echo "UPDATINGs";
+
+                    echo "UPDATING 1";
                 } else {
                     // Handle unknown action
                     // Example: show an error or redirect
                 }
             }
         } else {
-            $rs['groups'] = $this->jb_ppe_list_M->get_groups(); // Get groups for the first dropdown 
-            $rs['rs'] = $this->jb_ppe_school_M->get_all_records_by_school_id($_SESSION['username']);
-            $rs['school_details'] = $this->jb_ppe_school_M->get_school_info_by_id($_SESSION['username']);
 
-            $this->_loadview($this->ftbl_school_ppe_list, $rs);
+            if ($this->_IS_IN_SESSION_schID()) {
+                $rs['groups'] = $this->jb_ppe_list_M->get_groups(); // Get groups for the first dropdown 
+                $rs['rs'] = $this->jb_ppe_school_M->get_all_records_by_school_id($_SESSION['username']);
+                $rs['school_details'] = $this->jb_ppe_school_M->get_school_info_by_id($_SESSION['username']);
+
+                $this->_loadview($this->ftbl_school_ppe_list, $rs);
+            }  
         }
     }
 
@@ -556,46 +603,78 @@ class Jb_coa extends CI_Controller {
     }
 
     public function update_data() {
-        ECHO 'UPDATING';
+        ECHO 'UPDATING 2';
         echo "<br>";
         // Get the selected values from the form
         $ppe_list_id = $this->input->post('ppe_list_id');
         $groupId = $this->input->post('group', true);
         $articleId = $this->input->post('article', true);
 
+        // Get the raw date input
+        $raw_date = $this->input->post('_dc');
+        // Convert to 'YYYY-MM-DD' format or leave empty if invalid
+        $date_acquired = !empty($raw_date) ? DateTime::createFromFormat('m/d/Y', $raw_date)->format('Y-m-d') : null;
+
         // Get form data
         $data = [
-            'group' => $this->input->post('group'),
-            'article' => $this->input->post('article'),
-            '_des' => $this->input->post('_des'),
-            '_con' => $this->input->post('_con'),
-            '_opn' => $this->input->post('_opn'),
-            '_npn' => $this->input->post('_npn'),
-            '_uom' => $this->input->post('_uom'),
-            '_uv' => $this->input->post('_uv'),
-            '_qpproc' => $this->input->post('_qpproc'),
-            '_qpphyc' => $this->input->post('_qpphyc'),
-            '_tv' => $this->input->post('_tv'),
-            '_dc' => $this->input->post('_dc'),
-            '_lw' => $this->input->post('_lw'),
-            '_rem' => $this->input->post('_rem'),
-            '_pa' => $this->input->post('_pa'),
-            '_ie' => $this->input->post('_ie') ? 1 : 0, // Checkbox handling: 1 if checked, 0 if unchecked
-            '_iv' => $this->input->post('_iv') ? 1 : 0, // Checkbox handling: 1 if checked, 0 if unchecked
-            '_sin' => $this->input->post('_sin'),
+//            'group' => $this->input->post('group'),
+            'article_id' => $this->input->post('article'),
+            'description' => $this->input->post('_des'),
+            'condition_name' => $this->input->post('_con'),
+            'old_property_no_assigned' => $this->input->post('_opn'),
+            'new_property_no_assigned' => $this->input->post('_npn'),
+            'unit_of_measure' => $this->input->post('_uom'),
+            'unit_value' => $this->input->post('_uv'),
+            'quantity_per_property_card' => $this->input->post('_qpproc'),
+            'quantity_per_physical_count' => $this->input->post('_qpphyc'),
+            'total_value' => $this->input->post('_tv'),
+            'date_acquired' => $date_acquired,
+            'location_whereabouts' => $this->input->post('_lw'),
+            'remarks' => $this->input->post('_rem'),
+            'person_accountable' => $this->input->post('_pa'),
+            'is_existing' => $this->input->post('_ie') ? 1 : 0, // Checkbox handling: 1 if checked, 0 if unchecked
+            'is_verified' => $this->input->post('_iv') ? 1 : 0, // Checkbox handling: 1 if checked, 0 if unchecked
+//            '_sin' => $this->input->post('_sin'),
         ];
 
         // Display all values
+        echo "id:" . $ppe_list_id;
         echo "<h3>Form Values Received:</h3><ul>";
         foreach ($data as $key => $value) {
             echo "<li><strong>{$key}:</strong> " . ($value) . "</li>";
         }
         echo "</ul>";
+
+        $returned = $this->jb_ppe_list_M->update_jb_coa_ppe_list($ppe_list_id, $data);
+
+        if ($returned) {
+            // Redirect to the controller after successful update 
+            redirect('jb_coa/school_ppe');
+        } else {
+            // Redirect back to the form page in case of failure
+            // You can use `redirect()` with the URI of the form, or use `previous_url` if you need to go back to the previous page
+            // Set flashdata for "no changes" message
+            // $this->session->set_flashdata('error', 'No changes were made.');
+            redirect($this->agent->referrer());  // Redirect back to the form
+        }
+//        echo "RETURNED" . $returned;
+//        redirect($this->school_ppe); // UPDATE WAS SUCCESSFUL
+//            $rs['groups'] = $this->jb_ppe_list_M->get_groups(); // Get groups for the first dropdown 
+//            $rs['rs'] = $this->jb_ppe_school_M->get_all_records_by_school_id($_SESSION['username']);
+//            $rs['school_details'] = $this->jb_ppe_school_M->get_school_info_by_id($_SESSION['username']);
+//
+//            $this->_loadview($this->ftbl_school_ppe_list, $rs);
     }
 
     public function delete_data() {
         $ppe_list_id = $this->input->post('ppe_list_id');
         echo "Delete action triggered for ID: " . $ppe_list_id;
+        $rs = $this->jb_ppe_list_M->_delete_where($ppe_list_id); // CALL MODEL FUNCTION
+        if ($rs) {
+            redirect('jb_coa/school_ppe');
+        } else {
+            echo "FAILED TO DELETE THE ROW.";  // Deletion failed
+        }
     }
 
 // ------------------------------------------------------------------------------------------------------------

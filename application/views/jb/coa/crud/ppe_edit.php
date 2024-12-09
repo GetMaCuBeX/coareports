@@ -128,8 +128,8 @@
                                             $date_acquired = !empty($row_ppe->date_acquired) ? date('m/d/Y', strtotime($row_ppe->date_acquired)) : '';
                                             ?>
 
-                                            <input type="text" class="form-control" id="_dc" name="_dc" value="<?= htmlspecialchars($date_acquired); ?>" 
-                                                   placeholder="mm/dd/yyyy" data-provide="datepicker" data-date-autoclose="true">
+                                            <input type="text" class="form-control" id="_dc" name="_dc" value="<?= $date_acquired; ?>" 
+                                                   placeholder="m/d/yyyy" data-provide="datepicker" data-date-autoclose="true">
                                             <div class="input-group-append">
                                                 <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                             </div>
@@ -163,9 +163,17 @@
                             <div class="form-row "> 
                                 <!--7.2-->
                                 <div class="form-group col-md-6"> 
-                                    <input id="_ie" name="_ie" type="checkbox" checked data-plugin="switchery" data-color="#039cfd" />
-                                    <label for="_ie" id="label_ie" class="col-form-label">(ON) Existing / Found at Station</label>
-
+                                    <input 
+                                        id="_ie"
+                                        name="_ie" 
+                                        type="checkbox" 
+                                        data-plugin="switchery" 
+                                        data-color="#039cfd" 
+                                        <?= !empty($row_ppe->is_existing) && $row_ppe->is_existing == 1 ? 'checked' : ''; ?>  
+                                    />
+                                    <label for="_ie" id="label_ie" class="col-form-label">
+                                        <?= !empty($row_ppe->is_existing) && $row_ppe->is_existing == 1 ? '(ON) Existing / Found at Station' : '(OFF) Not Found at Station'; ?>
+                                    </label>
                                 </div>
                                 <!--7.3-->   
                                 <?php if ($_SESSION['position'] === 'ADMIN') { ?>
@@ -176,10 +184,10 @@
                                             type="checkbox" 
                                             data-plugin="switchery" 
                                             data-color="#039cfd" 
-                                            <?= !empty($row_ppe->is_verified) ? 'checked' : ''; ?>  
+                                            <?= !empty($row_ppe->is_verified) && $row_ppe->is_verified == 1  ? 'checked' : ''; ?>  
                                             /> 
                                         <label for="_iv" id="label_iv" class="col-form-label">
-                                            <?= !empty($row_ppe->is_verified) ? '(ON) Verified' : '(OFF) Not Verified'; ?>
+                                            <?= !empty($row_ppe->is_verified) && $row_ppe->is_verified == 1  ? '(ON) Verified' : '(OFF) Not Verified'; ?>
                                         </label>
                                     </div>
                                 <?php } ?>
@@ -213,6 +221,13 @@
                                         <button  type="submit"  name="action" value="update" class="btn btn-primary waves-effect width-md waves-light">Update Record</button>
                                     <?php } ?>
                                     <button type="button" class="btn btn-secondary waves-effect width-md waves-light" onclick="window.history.back()">Back</button>
+                                    
+                                    <!--$agent error fix-->
+                                    <?php if ($this->session->flashdata('error')): ?>
+                                        <div class="alert alert-warning">
+                                            <?= $this->session->flashdata('error'); ?>
+                                        </div>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </form> <!-- FORM END -->

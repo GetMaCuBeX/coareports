@@ -187,4 +187,51 @@ WHERE
             // return "DELETION FAILED.";
         }
     }
+
+    // UPDATE jb_coa_ppe_list
+    public function update_jb_coa_ppe_list($id, $data) {
+        $this->db->where('id', $id);
+        $updated = $this->db->update('jb_coa_ppe_list', $data);
+
+        if ($updated) {
+            $affectedRows = $this->db->affected_rows(); // CHECK THE NUMBER OF AFFECTED ROWS
+            if ($affectedRows > 0) {
+                // UPDATE WAS SUCCESSFUL AND AT LEAST ONE ROW WAS AFFECTED
+                // return "RECORD UPDATED SUCCESSFULLY.";
+                return 1;
+            } else {
+                // UPDATE WAS SUCCESSFUL, BUT NO ROWS WERE AFFECTED (E.G., ID NOT FOUND)
+                // return "NO CHANGES WERE MADE (RECORD NOT FOUND).";
+                return 0;
+            }
+        } else {
+            return 0;
+            // UPDATE FAILED
+            // return "UPDATE FAILED.";
+        }
+    }
+
+// ------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------
+// DELETE
+// ------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------
+    public function _delete_where($id) {
+        $this->db->where('id', $id);
+        $deleted = $this->db->delete('jb_coa_ppe_list');
+
+        if ($deleted) {
+            $affectedRows = $this->db->affected_rows(); // CHECK THE NUMBER OF AFFECTED ROWS
+            if ($affectedRows > 0) {
+                return 1;
+                // return "RECORD DELETED SUCCESSFULLY.";
+            } else {
+                return 0;
+                // return "NO RECORD FOUND TO DELETE.";
+            }
+        } else {
+            return 0;
+            // return "DELETION FAILED.";
+        }
+    }
 }
