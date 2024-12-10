@@ -301,6 +301,7 @@
     // Update the label dynamically whenever the checkbox state changes
     checkbox_iv.addEventListener('change', updateLabel);
 </script>
+
 <!--CONFIRM DELETE-->
 <script>
     function confirmDelete() {
